@@ -86,7 +86,7 @@ class MongoOperator(Singleton):
             return self.get_collection(collection_name)
 
 
-db = MongoOperator('10.150.20.82', 27017, 'houbank_pay_day_loan', 'mobileDataInfo')
+db = MongoOperator('10.*.*.*', 27017, '*', 'mobileDataInfo')
 # item = {}
 # item['name'] = 'mebiuw'
 # item['age'] = '23'

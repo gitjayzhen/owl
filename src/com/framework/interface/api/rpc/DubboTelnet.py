@@ -30,9 +30,9 @@ def coondoubble_data(Host,Port,interface,method,param):
 
 
 if __name__ == "__main__":
-    Host = '10.141.180.227'  # Doubble服务器IP
+    Host = '*.*.*.*'  # Doubble服务器IP
     Port = 20887  # Doubble服务端口
-    interface = 'com.auto.Interface.WenwenAutoInterface'  # 接口
+    interface = 'com.auto.Interface.*'  # 接口
     method = 'getAllfunctioninfo'  # 方法
     param = ''  # 参数
     data = coondoubble_data(Host,Port,interface,method,param)

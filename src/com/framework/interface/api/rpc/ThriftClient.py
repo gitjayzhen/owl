@@ -13,7 +13,6 @@ import time
 from thrift.transport import TTransport
 from thrift.transport import TSocket
 from thrift.protocol import TBinaryProtocol,TCompactProtocol
-from app.thrift_py.wencai.WenCaiSvr import *
 from unittest import TestCase
 
 
@@ -21,7 +20,7 @@ class TestWencai(TestCase):
 
     def setUp(self):
         TestCase.setUp(self)
-        host = "10.134.10.225"
+        host = "*.*.*.*"
         port = 8880
 
         tsocket = TSocket.TSocket(host, port)
@@ -51,7 +50,7 @@ class TestWencai(TestCase):
         dta.Title = "文采的后台thrift接口测试".decode("UTF-8")
         dta.SimpleContent = "文章内容列表页使用".decode("UTF-8")
         dta.RichContent = "文章内容详情页使用".decode("UTF-8")
-        dta.DocContent = DocRes(Type=1, Url="www.sogou.com", PageNum=1)
+        dta.DocContent = DocRes(Type=1, Url="www.**.com", PageNum=1)
         dta.Pictures = None
         dta.Videos = None
 
@@ -61,8 +60,8 @@ class TestWencai(TestCase):
         dta.Tags = [tg]
         dta.CreateTime = None
         dta.LastEditTime = None  # int(str(time.localtime())) * 1000
-        dta.DisplayTextLink = "www.sogou.com"
-        dta.OriginTextLink = "www.sogou.com"
+        dta.DisplayTextLink = "www.**.com"
+        dta.OriginTextLink = "www.**.com"
         dta.State = 2
         dta.Origin = 1
         dta.LastTags = None
@@ -89,7 +88,7 @@ class TestWencai(TestCase):
         dta.Title = "jwensh的后台thrift接口测试".decode("UTF-8")
         dta.SimpleContent = "jwensh文章内容列表页使用".decode("UTF-8")
         dta.RichContent = "jwensh文章内容详情页使用".decode("UTF-8")
-        dta.DocContent = DocRes(Type=1, Url="www.sogou.com", PageNum=1)
+        dta.DocContent = DocRes(Type=1, Url="www.**.com", PageNum=1)
         dta.Pictures = None
         dta.Videos = None
 
@@ -99,8 +98,8 @@ class TestWencai(TestCase):
         dta.Tags = [tg]
         dta.CreateTime = None
         dta.LastEditTime = int(time.time())
-        dta.DisplayTextLink = "www.sogou.com"
-        dta.OriginTextLink = "www.sogou.com"
+        dta.DisplayTextLink = "www.**.com"
+        dta.OriginTextLink = "www.**.com"
         dta.State = 2
         dta.Origin = 1
         dta.LastTags = None
