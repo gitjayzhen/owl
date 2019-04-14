@@ -1,0 +1,1 @@
+python D:\software\python2.7_32\pyinstaller-2.0\pyinstaller.py -F event_windows.py
