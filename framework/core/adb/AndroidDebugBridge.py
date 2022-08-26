@@ -18,10 +18,6 @@ import string
 import EventKeys
 import json
 
-reload(sys)
-sys.setdefaultencoding('utf8')
-
-
 class AndroidDebugBridge(object):
     """
         利用可变参数来初始化*（tuple），**（dict）:约定参数中的key只能是sno
