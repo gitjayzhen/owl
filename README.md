@@ -3,7 +3,7 @@
 这个工程是为了什么而建立？因为想把 ui自动化(client、browser)、接口自动化、网络爬虫都融合在同一个工具里，使用 python 来实现。
 因为当前都是脚本曾层面的实现，希望后面有精力结合 flask/tornado 把 web 展示端也实现了。
 
-![ ](./resources/image/owl.jpg "owl")
+![](./resources/image/owl.jpg "owl")
 
 ## 项目管理
 
