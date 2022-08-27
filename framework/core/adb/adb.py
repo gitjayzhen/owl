@@ -18,10 +18,17 @@ import string
 import EventKeys
 import json
 
+"""
+利用可变参数来初始化*（tuple），**（dict）:约定参数中的key只能是sno
+a(1,2,3,4,4,Z=8,k=2) ： *接受k=v之前的内容，**接受k=v 
+"""
+
 class AndroidDebugBridge(object):
+    """adb 相关操作命令封装
+
+    Args:
+        object (_type_): _description_
     """
-        利用可变参数来初始化*（tuple），**（dict）:约定参数中的key只能是sno
-	    a(1,2,3,4,4,Z=8,k=2) ： *接受k=v之前的内容，**接受k=v """
 
     def __init__(self, **serialno_num):
         self.system = None

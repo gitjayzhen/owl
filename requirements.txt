@@ -1,0 +1,4 @@
+allure
+allure-pytest
+pytest
+allure-pytset-adapter  

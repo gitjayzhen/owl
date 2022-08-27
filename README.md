@@ -49,9 +49,9 @@ resources : 测试配置文件
     image：图片
     shell： 一些bat和sh脚本
 result:
- log: 公共log日志
- mbile：手机特殊的日志目录
- web： web特殊的日志目录
+    log: 公共log日志
+    mobile：手机特殊的日志目录
+    web： web特殊的日志目录
 ```
 
 ## 环境管理（开始选择了 virtualenv, 升级3后用的 conda）
@@ -101,8 +101,7 @@ result:
 1. allure
 2. allure-pytest
 3. pytest
-4. allure-pytset-adapter  
-通过pytest测试产生数据，让allure来展示
+4. allure-pytset-adapter 通过 pytest 测试产生数据，让allure来展示
 
 ## 对于http，thrift，dubbo，hessian协议的测试
 
@@ -115,8 +114,6 @@ result:
 
 详细的功能模块内容：
 
-`com/framework/mobile/README.md`
-
-`com/framework/web/readme.md`
-
-`com/framework/interface/readme.md`
+* [mobile](framework/mobile/README.md)
+* [web](framework/web/readme.md)
+* [interface](framework/interface/readme.md)

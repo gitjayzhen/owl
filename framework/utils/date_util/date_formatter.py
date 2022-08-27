@@ -55,13 +55,13 @@ def get_time():
     return datetime.datetime.now().strftime("%H%M%S%f")
 
 
-def formated_time(formatime):
+def get_formate_time(format_scheme):
     """
-     * 根据自定义格式化获取系统当前时间
-     * @param format：时间格式化如yyyy-MM-dd HH:mm:ss:SSS  "%Y%m%d%H%M%S%f"
-     * @return 根据自定义格式化返回系统当前时间
-     """
-    return datetime.datetime.now().strftime(formatime)
+    * 根据自定义格式化获取系统当前时间
+    * @param format: 时间格式化如yyyy-MM-dd HH:mm:ss:SSS  "%Y%m%d%H%M%S%f"
+    * @return 根据自定义格式化返回系统当前时间
+    """
+    return datetime.datetime.now().strftime(format_scheme)
 
 
 def add_days_by_formatter(adddays,dateFormat):

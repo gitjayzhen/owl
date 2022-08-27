@@ -9,6 +9,7 @@
 @file: DubboClientTest.py
 @time: 2018/09/14 12:25 
 """
+
 import time
 from dubbo_client import ApplicationConfig, ZookeeperRegistry, DubboClient
 from dubbo_client import DubboClientError

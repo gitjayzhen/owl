@@ -27,6 +27,11 @@ handlers = {logging.DEBUG: [hd, hds], logging.INFO: [hd, hds], logging.WARNING: 
 
 
 class LoggingPorter(object):
+    """日志报告
+
+    Args:
+        object (_type_): _description_
+    """
 
     def __init__(self, level = logging.NOTSET):
         self.__loggers = {}
