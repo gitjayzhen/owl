@@ -1,4 +1,6 @@
 allure
 allure-pytest
 pytest
-allure-pytset-adapter  
+allure-pytset-adapter
+requests==2.28.1
+httpx==0.23.0

@@ -4,11 +4,11 @@
 """
 @version: v1.0
 @author: jayzhen
-@license: Apache Licence 
+@license: Apache License 
 @email: jayzhen_testing@163.com
 @software: PyCharm
 @file: SuperFormatUtil
-@time: 2017/12/12  13:59
+@time: 2022/08/12  13:59
 """
 import re
 import urllib
@@ -30,15 +30,15 @@ def sformat(source, param):
     """
 
     if source is None or source.strip() == "":
-        print "lstring 语句不能是空"
+        print("lstring 语句不能是空")
         return None
     if param is None:
-        print "格式化的参数不能是None"
+        print("格式化的参数不能是None")
         return None
 
     res = re.findall(re.compile('{(.+?)}'), source)
     if res is None or len(res) <= 0:
-        print "请检查你的String格式，是否为:'--{a}-{b}--',或者你可以直接只用python内置的方法str.format"
+        print("请检查你的String格式，是否为:'--{a}-{b}--',或者你可以直接只用python内置的方法str.format")
         return None
 
     res_set = set(res)
@@ -46,7 +46,7 @@ def sformat(source, param):
 
     if isinstance(param, str) or isinstance(param, int):
         if param.strip() == '':
-            print "要格式化的内容为空"
+            print("要格式化的内容为空")
         if length == 1:
             strs2 = source.split("{")
             result = []
@@ -57,7 +57,7 @@ def sformat(source, param):
                 result.extend(tmp)
             return '\''.join(result)
         elif length >= 1:
-            print "你的参数个数少于字符串中占位的变量数"
+            print( "你的参数个数少于字符串中占位的变量数")
             return None
 
     if not isinstance(param, dict) and not isinstance(param, str):
@@ -77,8 +77,8 @@ def sformat(source, param):
                 l[0] = str(param[l[0]])
             result.extend(l)
         return '\''.join(result)
-    except KeyError, e:
-        print "你的参数与原数据中的占位参数对应不上：(str='--{a}--', b=1) 应是 a=a, 不是 a=b"
+    except KeyError as e:
+        print( "你的参数与原数据中的占位参数对应不上：(str='--{a}--', b=1) 应是 a=a, 不是 a=b")
         return None
 
 
@@ -102,28 +102,29 @@ def oct2chr(oct_str):
     return bin_data
 
 
-def string_lines_to_dict(strs):
+def lines_str_to_dict(strs):
     '''
-    将一个多行的String内容转化为dict或是json格式，场景是我们对接口中header进行快速修改时需要加各种引号什么的，费时
-    :param strs:
-    :return:
+    将一个多行的String内容转化为dict或是json格式，场景是我们对接口中header进行快速修改时需要加各种引号什么的费时
+    :param strs: \n 换行的多行字符串内容
+    :return: dict 格式的对象
     '''
     if strs is None or strs.strip() == "":
         return None
-    str_dict = {}
+    
+    result = {}
     for i in strs.split("\n"):
         i = i.strip()
         if i is not None and i != "":
-            str_list = i.split(":", 1)
+            str_list = i.split(": ", 1)
             length = len(str_list)
             if length > 2:
-                str_dict[str_list[0]] = ":".join(str_list[1:])
+                result[str_list[0]] = ":".join(str_list[1:])
             elif length == 2:
-                str_dict[str_list[0]] = str_list[1].strip()
+                result[str_list[0]] = str_list[1].strip()
             else:
-                print "data is data, cant be dict"
+                print( "data is data, cant be dict")
                 return None
-    print str_dict
+    return result
 
 
 def string_to_dict(line_str):
@@ -147,8 +148,8 @@ def string_to_dict(line_str):
             # 例如中文。否则如果客户端浏览器和服务端浏览器支持的字符集不同的情况下，中文可能会造成问题。）
             try:
                 str_dict[str_list[0]] = urllib.unquote(str_list[1].strip())
-            except IndexError, e:
-                print "Confirm your data"
+            except IndexError as e:
+                print( "Confirm your data")
                 return None
-    print str_dict
+    print( str_dict)
 
