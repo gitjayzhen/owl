@@ -10,11 +10,11 @@ Created on 2017年4月28日
 import time
 import requests
 from requests import exceptions
-from com.framework.config.WebConfigGetter import WebConfingGetter
-from com.framework.utils.dateUtil.DateFormator import formated_time
-from com.framework.utils.reporterUtil.LoggingPorter import LoggingPorter
-from com.framework.web.api.SeleniumBaseApi import SeleniumBaseApi
-from com.framework.web.services.SeleniumService import InitWebDriver
+from framework.config.WebConfigGetter import WebConfingGetter
+from framework.utils.dateUtil.DateFormator import formated_time
+from framework.utils.reporterUtil.LoggingPorter import LoggingPorter
+from framework.web.api.SeleniumBaseApi import SeleniumBaseApi
+from framework.web.services.SeleniumService import InitWebDriver
 
 
 class WebDriverDoBeforeTest(object):

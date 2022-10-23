@@ -1,11 +1,10 @@
 # -*- coding:UTF-8 -*-
 import os
 import time
-from com.framework.utils.reporterUtil.LoggingPorter import LoggingPorter
-from com.framework.utils.dateUtil.DateFormator import formated_time
-from com.framework.utils.fileUtil.ConfigReader import ConfigReader
-from com.framework.utils.fileUtil.FileInspector import FileInspector
-import thread
+from framework.utils.reporter_util.logging_porter import LoggingPorter
+from framework.utils.date_util.date_formatter import formated_time
+from framework.utils.fileUtil.ConfigReader import ConfigReader
+from framework.utils.fileUtil.FileInspector import FileInspector
 from selenium import webdriver
 from selenium.common import exceptions
 from selenium.webdriver.common.action_chains import ActionChains
@@ -39,7 +38,7 @@ class SeleniumBaseApi(object):
         try:
             self.driver.quit()
             self.log4py.debug("stop Driver")
-        except Exception, e:
+        except Exception as e:
             self.log4py.error("执行stopWebDriver()方法发生异常，异常信息："+ str(e))
 
     def pause(self, second):
@@ -50,7 +49,7 @@ class SeleniumBaseApi(object):
         """
         try:
             time.sleep(second)
-        except Exception, e:
+        except Exception as e:
             self.log4py.error("pause error:"+str(e))
 
     def capture_screenshot(self, file_path):
@@ -62,7 +61,7 @@ class SeleniumBaseApi(object):
         try:
             self.log4py.info("截图文件请查看：{}".format(file_path))
             self.driver.get_screenshot_as_file(file_path)
-        except Exception, e:
+        except Exception as e:
             self.log4py.error("保存屏幕截图失败，失败信息：" + str(e))
 
     def operation_check(self, method_name, is_succeed):
@@ -95,7 +94,7 @@ class SeleniumBaseApi(object):
                 is_succeed = True
                 self.log4py.debug("navigate to url [ " + url + " ]")
                 break
-            except Exception, e:
+            except Exception as e:
                 self.log4py.error(e)
         self.operation_check("get", is_succeed)
         
@@ -128,7 +127,7 @@ class SeleniumBaseApi(object):
                 self.driver.switch_to.alert()
                 is_succeed = True
                 break
-            except Exception,e:
+            except Exception as e:
                 self.log4py.error(e)
         self.operation_check("isAlertExists", is_succeed)
         return is_succeed
@@ -151,7 +150,7 @@ class SeleniumBaseApi(object):
                 is_succeed = True
                 self.log4py.debug("find element [" + str(value) + "] success")
                 break
-            except Exception, e:
+            except Exception as e:
                 self.log4py.error(e)
         self.operation_check("find_element", is_succeed)
         return element
@@ -174,7 +173,7 @@ class SeleniumBaseApi(object):
                 is_succeed = True
                 self.log4py.debug("find element [" + str(value) + "] success") 
                 break 
-            except Exception, e:
+            except Exception as e:
                 self.log4py.error(e) 
         self.operation_check("find_elements", is_succeed)
         return elements 
@@ -339,7 +338,7 @@ class SeleniumBaseApi(object):
                 is_succeed = True
                 self.log4py.debug("find element [" + value+ "] success")
                 break
-            except Exception, e:
+            except Exception as e:
                 self.log4py.error(e)
             self.pause(self.pauseTime)
         self.operation_check("is_element_present", is_succeed)
@@ -366,7 +365,7 @@ class SeleniumBaseApi(object):
                 is_succeed = True
                 self.log4py.debug("item selected by item value [ " + item_value + " ] on [ " + str(by) + " ]")
                 break
-            except Exception, e:
+            except Exception as e:
                 self.log4py.error(e)
             self.pause(self.pauseTime)
         self.operation_check("weblist_random_select", is_succeed)
@@ -380,7 +379,7 @@ class SeleniumBaseApi(object):
                 select.select_by_value(item_value)
                 self.log4py.debug("item selected by item value [ " + item_value + " ] on [ " + value + " ]")
                 is_succeed = True
-        except Exception, e:
+        except Exception as e:
             self.log4py.error(e)
         self.operation_check("selectByValue", is_succeed)
 
@@ -426,7 +425,7 @@ class SeleniumBaseApi(object):
         try:
             is_display = self.driver.find_element(by, value).is_displayed()
             self.log4py.debug("element [ " + str(by) + " ] displayed? " + str(is_display))
-        except Exception, e:
+        except Exception as e:
             self.log4py.error("element元素没有点位到"+str(e))
         return is_display
     
@@ -441,7 +440,7 @@ class SeleniumBaseApi(object):
             try:
                 self.driver.switch_to().window(handle)
                 self.driver.title()
-            except Exception, e:
+            except Exception as e:
                 errors.append(str(handle))
                 self.log4py.debug("window handle " + str(errors) + " does not exist acturely!")
         for i in range(len(errors)):
@@ -464,7 +463,7 @@ class SeleniumBaseApi(object):
                     self.driver.switch_to().window(handle)
                     is_succeed = True
                     break 
-        except Exception, e:  
+        except Exception as e:
             self.log4py.error(e)
         self.operation_check("select_window_handle", is_succeed)
 
@@ -495,7 +494,7 @@ class SeleniumBaseApi(object):
         try:
             self.driver.switch_to.alert().accept()
             self.log4py.debug("切换到弹窗，并点击确定按钮")
-        except Exception, e:
+        except Exception as e:
             self.log4py.error("接受弹窗，出现异常："+str(e))
 
     def close_window(self, window_title, index):
@@ -522,7 +521,7 @@ class SeleniumBaseApi(object):
             self.driver.close() 
             self.log4py.debug("window [ " + window_title + " ] closed  index [" + index + "]")
             is_succeed = True
-        except Exception, e:  
+        except Exception as e:
             self.log4py.error(e) 
          
         self.operation_check("close_window", is_succeed)
@@ -551,7 +550,7 @@ class SeleniumBaseApi(object):
                     self.driver.close() 
             self.log4py.debug("keep only window [ " + window_title + " ]  title index [ " + index + " ]")
             is_succeed = True
-        except Exception, e:  
+        except Exception as e:
             self.log4py.error(e) 
         self.operation_check("close_window_except", is_succeed)
 
@@ -574,7 +573,7 @@ class SeleniumBaseApi(object):
                     break 
             self.log4py.debug("window [ " + window_handle + " ] closed ")
             is_succeed = True
-        except Exception, e:  
+        except Exception as e:
             self.log4py.error(e) 
         self.operation_check("close_window_handle", is_succeed)
      
@@ -596,7 +595,7 @@ class SeleniumBaseApi(object):
                     self.driver.close() 
             self.log4py.debug("all windows closed except handle [ " + window_handle + " ]")
             is_succeed = True
-        except Exception, e:  
+        except Exception as e:
             self.log4py.error(e) 
         self.operation_check("close_window_except_handle", is_succeed)
 
@@ -607,7 +606,7 @@ class SeleniumBaseApi(object):
             ActionChains(self.driver).double_click(element).perform()
             self.log4py.debug("doubleClick on element [ " + str(by)+ " ] ")
             is_succeed = True
-        except Exception, e:
+        except Exception as e:
             self.log4py.error(e) 
         self.operation_check("double_click", is_succeed)
      
@@ -627,7 +626,7 @@ class SeleniumBaseApi(object):
             self.log4py.debug("moveToElement [ " + str(by) + " ] ") 
             is_succeed = True
              
-        except Exception, e:  
+        except Exception as e:
             self.log4py.error(e) 
         self.operation_check("move_to_element", is_succeed)
      
@@ -648,7 +647,7 @@ class SeleniumBaseApi(object):
             ActionChains(self.driver).context_click(element).perform()
             self.log4py.debug("rightClick on element [ " + str(by) + " ] ")
             is_succeed = True
-        except Exception, e:
+        except Exception as e:
             self.log4py.error(e) 
         self.operation_check("right_click", is_succeed)
      
@@ -659,7 +658,7 @@ class SeleniumBaseApi(object):
                 self.find_element(by, value).submit()
                 self.log4py.debug("submit on element [ " + str(by) + " ]") 
                 is_succeed = True
-        except Exception, e:  
+        except Exception as e:
             self.log4py.error(e) 
         self.operation_check("submit", is_succeed)
 
@@ -671,7 +670,7 @@ class SeleniumBaseApi(object):
             ActionChains(self.driver).drag_and_drop(source, target).perform()
             self.log4py.info("drap and drop func had exce")
             is_succeed = True
-        except Exception, e:
+        except Exception as e:
             self.log4py.error("drag and drop func happed error: " + str(e))
         self.operation_check("drag_and_drop", is_succeed)
 

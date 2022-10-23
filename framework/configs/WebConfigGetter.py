@@ -63,6 +63,6 @@ class WebConfingGetter(object):
                 d['maxinstance'] = self.conf.get_value('remoteProfile', 'maxinstance')
                 d['platform'] = self.conf.get_value('remoteProfile', 'platform')
                 wp.remoteProfile = d
-        except Exception, e:
+        except Exception as e:
             self.log4py.error("实例化selenium配置文件对象时，出现异常 ：" + str(e))
         return wp

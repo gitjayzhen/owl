@@ -60,7 +60,7 @@ class LoggingPorter(object):
             relative_path = relative_path.replace("\\", ".")
             relative_path = relative_path.replace(".", "", 1)
         except IndexError as ie:
-            print "日志获取当前脚本的绝对路径发生了错误{}".format(str(ie)).decode("utf-8")
+            print ("日志获取当前脚本的绝对路径发生了错误{}".format(str(ie)).decode("utf-8"))
             relative_path = filename
         return "%s [%s] %s %s - %s" % (self.time_now_formate(), level, relative_path, lineNo, message)
 

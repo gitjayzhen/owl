@@ -6,7 +6,7 @@ Created on 2016年4月26日
 import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from com.framework.utils.reporterUtil.LoggingPorter import LoggingPorter
+from framework.utils.reporter_util.logging_porter import LoggingPorter
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 
@@ -66,7 +66,7 @@ class InitWebDriver(object):
             self.log4py.debug("初始化火狐浏览器成功")
             driver.maximize_window()
             self.get(driver, self.properties.baseURL, 3)
-        except Exception, e:
+        except Exception as e:
             self.log4py.error("getFirefoxDriver()方法发生异常，异常信息：" + str(e))
             driver.quit()
             return None
@@ -110,11 +110,11 @@ class InitWebDriver(object):
             self.log4py.debug("初始化谷歌浏览器成功")
             driver.maximize_window()
             self.get(driver, self.properties.baseURL, 3)
-        except Exception, e:
+        except Exception as e:
             self.log4py.error("getChromeDriver()方法出现异常 : " + str(e))
             try:
                 driver.quit()
-            except Exception, e:
+            except Exception as e:
                 self.log4py.error("及时没有启动浏览器，也要有关闭操作")
             return None
         return driver
@@ -141,7 +141,7 @@ class InitWebDriver(object):
             
             self.log4py.debug("初始化IE浏览器成功")
             self.get(driver, self.properties.baseURL, 3)
-        except Exception, e:
+        except Exception as e:
             self.log4py.error("getInternetExplorerDriver()方法出现异常"+ str(e))
             driver.quit()
             return None
@@ -151,7 +151,7 @@ class InitWebDriver(object):
         try: 
             self.driver.quit()
             self.log4py.debug("stop Driver")
-        except Exception, e:
+        except Exception as e:
             self.log4py.error("执行stopWebDriver()方法发生异常，异常信息："+ str(e))
 
     def get(self, driver, url, actionCount):
@@ -160,7 +160,7 @@ class InitWebDriver(object):
                 driver.get(url)
                 self.log4py.debug("navigate to url [ " + url + " ]")
                 break
-            except Exception, e:
+            except Exception as e:
                 self.log4py.error("访问初始化URL报错 ： " + str(e))
 
 
