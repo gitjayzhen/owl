@@ -7,7 +7,7 @@
 @license: Apache Licence 
 @email: jayzhen_testing@163.com
 @software: PyCharm
-@file: SeIniDomain.py
+@file: se_Ini_domain.py
 @time: 2018/4/3 12:49
 """
 
@@ -15,7 +15,6 @@
 class SeIniDomain(object):
 
     def __init__(self):
-
         # 页面加载等待时间，单位：秒
         self.pageLoadTimeout = 0
         # 定位元素等待时间，单位：秒
@@ -41,15 +40,15 @@ class SeIniDomain(object):
         self.remoteProfile = None
 
     def __str__(self):
-        return "页面加载等待时间，单位：秒 :" +  str(self.pageLoadTimeout) + \
-        " ;\n定位元素等待时间，单位：秒 :" +  str(self.waitTimeout) + \
-        " ;\n异步加载等待时间 : " + str(self.scriptTimeout) + \
-        " ;\n延迟时间，单位：毫秒： " + str(self.pauseTime) + \
-        " ;\n截图保存的路径 : " + str(self.capturePath) + \
-        " ;\nhtml报告路径 : " + str(self.htmlreportPath) + \
-        " ;\n日志路径 : " + str(self.logsPath) + \
-        " ;\n浏览器初始化界面URL :" + str(self.baseURL) + \
-        " ;\n启动的浏览器 : " + str(self.browser) + \
-        " ;\nrun那个浏览器 就取那个浏览器的驱动 : " + str( self.browserdriver) + \
-        " ;\n执行本地浏览器还是远程浏览器 ： " + str(self.type) + \
-        " ;\n远程浏览器配置 : " + str(self.remoteProfile)
+        return "页面加载等待时间，单位：秒 :" + str(self.pageLoadTimeout) + \
+               " ;\n定位元素等待时间，单位：秒 :" + str(self.waitTimeout) + \
+               " ;\n异步加载等待时间 : " + str(self.scriptTimeout) + \
+               " ;\n延迟时间，单位：毫秒： " + str(self.pauseTime) + \
+               " ;\n截图保存的路径 : " + str(self.capturePath) + \
+               " ;\nhtml报告路径 : " + str(self.htmlreportPath) + \
+               " ;\n日志路径 : " + str(self.logsPath) + \
+               " ;\n浏览器初始化界面URL :" + str(self.baseURL) + \
+               " ;\n启动的浏览器 : " + str(self.browser) + \
+               " ;\nrun那个浏览器 就取那个浏览器的驱动 : " + str(self.browserdriver) + \
+               " ;\n执行本地浏览器还是远程浏览器 ： " + str(self.type) + \
+               " ;\n远程浏览器配置 : " + str(self.remoteProfile)

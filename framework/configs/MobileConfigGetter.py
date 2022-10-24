@@ -5,10 +5,10 @@ Created on 2016年4月26日
 """
 
 import os
-from com.framework.utils.fileUtil.ConfigReader import ConfigReader
-from com.framework.utils.fileUtil.FileInspector import FileInspector
-from com.framework.utils.reporterUtil.LoggingPorter import LoggingPorter
-from com.framework.mobile.domain.AppiumIniDomain import AppiumIniDomain
+from framework.utils.fileUtil.ConfigReader import ConfigReader
+from framework.utils.fileUtil.FileInspector import FileInspector
+from framework.mobile.domain.AppiumIniDomain import AppiumIniDomain
+from framework.utils.reporter_util.logging_porter import LoggingPorter
 
 """
 读取配置文件.conf的内容，返回driver的绝对路径
@@ -57,7 +57,7 @@ class MobileConfigGetter(object):
                 os.makedirs(ap.permissionPath)
             ap.appiumService = os.path.join(self.__projectpath, self.cf.get_value("ResultPath", "appiumService"))
 
-        except Exception, e:
+        except Exception as e:
             self.log4py.error("实例化appium配置文件对象时，出现异常 ：" + str(e))
         return ap
 

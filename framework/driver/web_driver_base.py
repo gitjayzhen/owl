@@ -10,11 +10,12 @@ Created on 2017年4月28日
 import time
 import requests
 from requests import exceptions
-from framework.config.WebConfigGetter import WebConfingGetter
-from framework.utils.dateUtil.DateFormator import formated_time
-from framework.utils.reporterUtil.LoggingPorter import LoggingPorter
-from framework.web.api.SeleniumBaseApi import SeleniumBaseApi
-from framework.web.services.SeleniumService import InitWebDriver
+
+from framework.services.SeleniumService import InitWebDriver
+from framework.configs.WebConfigGetter import WebConfingGetter
+from framework.api.browser.selenium_api import SeleniumBaseApi
+from framework.utils.date_util.date_formatter import get_formate_time
+from framework.utils.reporter_util.logging_porter import LoggingPorter
 
 
 class WebDriverDoBeforeTest(object):
@@ -50,18 +51,18 @@ class WebDriverDoBeforeTest(object):
         return SeleniumBaseApi(self.driver, self.seProperties)
     
     def before_suite(self):
-        begins = formated_time("%Y-%m-%d %H:%M:%S:%f")
+        begins = get_formate_time("%Y-%m-%d %H:%M:%S:%f")
         self.__beforeSuiteStarts = time.time()
         self.log4py.info("======" + begins + "：测试集开始======")
 
     def after_suite(self):
-        ends = formated_time("%Y-%m-%d %H:%M:%S:%f")
+        ends = get_formate_time("%Y-%m-%d %H:%M:%S:%f")
         self.__afterSuiteStops = time.time()
         self.log4py.info("======" + ends + "：测试集结束======")
         self.log4py.info("======本次测试集运行消耗时间 " + str(self.__afterSuiteStops - self.__beforeSuiteStarts) + " 秒！======")
 
     def before_class(self):
-        begins = formated_time("%Y-%m-%d %H:%M:%S:%f")
+        begins = get_formate_time("%Y-%m-%d %H:%M:%S:%f")
         self.__beforeClassStarts = time.time()
         self.log4py.info("======" + str(begins) + "：测试【" + str(self.className) + "】开始======")
 
@@ -69,25 +70,25 @@ class WebDriverDoBeforeTest(object):
         # 如果执行了case，必然已经启动了webdriver，在这里做一次关闭操作
         try:
             self.init.stop_web_driver()
-        except Exception, e:
+        except Exception as e:
             self.log4py.error("after class with stoping web driver happend error")
-        ends = formated_time("%Y-%m-%d %H:%M:%S:%f")
+        ends = get_formate_time("%Y-%m-%d %H:%M:%S:%f")
         self.__afterClassStops = time.time()
         self.log4py.info("======" + str(ends) + "：测试【" + str(self.className) + "】结束======")
         self.log4py.info("======本次测试运行消耗时间 " + str(self.__afterClassStops - self.__beforeClassStarts) + " 秒！======")
 
     def befor_test(self, methodName):
-        begins = formated_time("%Y-%m-%d %H:%M:%S:%f")
+        begins = get_formate_time("%Y-%m-%d %H:%M:%S:%f")
         self.__beforeTestStarts = time.time()
         self.log4py.info("======" + begins + "：案例【" + str(self.className) + "." + methodName+ "】开始======")
 
     def after_test(self, methodName, isSucceed):
-        ends = formated_time("%Y-%m-%d %H:%M:%S:%f")
+        ends = get_formate_time("%Y-%m-%d %H:%M:%S:%f")
         captureName = ""
         if (isSucceed):
             self.log4py.info("案例 【" + str(self.className) + "." + methodName + "】 运行通过！")
         else:
-            dateTime = formated_time("-%Y%m%d-%H%M%S%f")
+            dateTime = get_formate_time("-%Y%m%d-%H%M%S%f")
             captureName = self.seProperties.capturePath + str(self.className)+"."+methodName+str(dateTime)+".png"
             self.capture_screenshot(captureName)
             self.log4py.error("案例 【" + str(self.className) + "." + methodName+ "】 运行失败，请查看截图快照：" + captureName)
@@ -103,7 +104,7 @@ class WebDriverDoBeforeTest(object):
          * @return 无
          '''
         time.sleep(3)
-        dateTime = formated_time("-%Y%m%d-%H%M%S-%f")
+        dateTime = get_formate_time("-%Y%m%d-%H%M%S-%f")
         captureName = self.seProperties.capturePath + name + dateTime+".png"
         self.capture_screenshot(captureName)
         self.log4py.debug("请查看截图快照：" + captureName)
@@ -118,7 +119,7 @@ class WebDriverDoBeforeTest(object):
         """
         try:
             self.driver.get_screenshot_as_file(filepath)
-        except Exception, e:
+        except Exception as e:
             self.log4py.error("保存屏幕截图失败，失败信息："+str(e))
 
     def operation_check(self, methodName, isSucceed):

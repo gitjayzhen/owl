@@ -6,10 +6,10 @@ Created on 2016年4月26日
 
 import os
 
-from com.framework.utils.fileUtil.ConfigReader import ConfigReader
-from com.framework.utils.fileUtil.FileInspector import FileInspector
-from com.framework.utils.reporterUtil.LoggingPorter import LoggingPorter
-from com.framework.web.domain.SeIniDomain import SeIniDomain
+from framework.domain import se_Ini_domain
+from framework.utils.fileUtil.ConfigReader import ConfigReader
+from framework.utils.fileUtil.FileInspector import FileInspector
+from framework.utils.reporter_util.logging_porter import LoggingPorter
 
 """
 读取配置文件.conf的内容，返回driver的绝对路径
@@ -34,7 +34,7 @@ class WebConfingGetter(object):
         获取配置文件中的内容并返回对应的对象
         :return:
         """
-        wp = SeIniDomain()
+        wp = se_Ini_domain()
         try:
             wp.pageLoadTimeout = self.conf.get_value("TimeSet", "pageLoadTimeout")
             wp.waitTimeout = self.conf.get_value("TimeSet", "waitTimeout")

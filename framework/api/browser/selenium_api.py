@@ -2,7 +2,7 @@
 import os
 import time
 from framework.utils.reporter_util.logging_porter import LoggingPorter
-from framework.utils.date_util.date_formatter import formated_time
+from framework.utils.date_util.date_formatter import get_formate_time
 from framework.utils.fileUtil.ConfigReader import ConfigReader
 from framework.utils.fileUtil.FileInspector import FileInspector
 from selenium import webdriver
@@ -74,7 +74,7 @@ class SeleniumBaseApi(object):
         if is_succeed:
             self.log4py.info("method 【" + method_name + "】 运行通过！")
         else:
-            dateTime = formated_time("-%Y%m%d-%H%M%S%f")
+            dateTime = get_formate_time("-%Y%m%d-%H%M%S%f")
             captureName = self.capturePath + method_name+dateTime+".png"
             self.capture_screenshot(captureName)
             self.log4py.error("method 【" + method_name + "】 运行失败，请查看截图快照："+ captureName)

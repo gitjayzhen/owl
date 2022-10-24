@@ -26,8 +26,3 @@ class FindBy(Enum):
     PARTIAL_LINK_TEXT = By.PARTIAL_LINK_TEXT
     TAG_NAME = By.TAG_NAME
     XPATH = By.XPATH
-
-
-print type(FindBy.ID)
-print FindBy.ID.value
-print By.ID
