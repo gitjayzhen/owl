@@ -7,7 +7,7 @@
 @license: Apache Licence 
 @email: jayzhen_testing@163.com
 @software: PyCharm
-@file: se_Ini_domain.py
+@file: se_config_domain.py
 @time: 2018/4/3 12:49
 """
 

@@ -37,13 +37,10 @@ class WebDriverDoBeforeTest(object):
         self.init = InitWebDriver(self.seProperties)
         try:
             resp = requests.get(self.seProperties.baseURL)
-
             if resp.status_code != 200:
                 self.log4py.error("浏览器实例化driver失败，请检查你的被测试服务是否启动或baseURL是否设置正确: {}".format(self.seProperties.baseURL))
-                return None
         except exceptions.ConnectionError as e:
             self.log4py.error("浏览器实例化driver失败，请检查你的被测试服务是否启动或baseURL是否设置正确: {}".format(self.seProperties.baseURL))
-            return None
         self.driver = self.init.run_browser()
         if self.driver is None:
             self.log4py.error("浏览器实例化driver失败，请重新检查驱动及启动参数")

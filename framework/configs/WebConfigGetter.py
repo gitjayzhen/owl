@@ -6,7 +6,7 @@ Created on 2016年4月26日
 
 import os
 
-from framework.domain import se_Ini_domain
+from framework.domain.se_config_domain import SeIniDomain
 from framework.utils.fileUtil.ConfigReader import ConfigReader
 from framework.utils.fileUtil.FileInspector import FileInspector
 from framework.utils.reporter_util.logging_porter import LoggingPorter
@@ -34,7 +34,7 @@ class WebConfingGetter(object):
         获取配置文件中的内容并返回对应的对象
         :return:
         """
-        wp = se_Ini_domain()
+        wp = SeIniDomain()
         try:
             wp.pageLoadTimeout = self.conf.get_value("TimeSet", "pageLoadTimeout")
             wp.waitTimeout = self.conf.get_value("TimeSet", "waitTimeout")
