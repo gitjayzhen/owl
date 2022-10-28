@@ -33,7 +33,7 @@ class LoggingPorter(object):
         object (_type_): _description_
     """
 
-    def __init__(self, level = logging.NOTSET):
+    def __init__(self, level=logging.NOTSET):
         self.__loggers = {}
         log_levels = handlers.keys()
         for level in log_levels:

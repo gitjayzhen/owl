@@ -1,8 +1,5 @@
 # -*- coding:UTF-8 -*-
-'''
-Created on 2016年4月26日
-@author: jayzhen
-'''
+
 import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -10,7 +7,7 @@ from framework.utils.reporter_util.logging_porter import LoggingPorter
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 
-class InitWebDriver(object):
+class SeleniumWebDriver(object):
     """
         这边是通过驱动实例化selenium webdriver，的服务启动者, 并返回webdriver
     """

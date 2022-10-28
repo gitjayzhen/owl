@@ -9,17 +9,15 @@
 @file: test_se_local.py
 @time: 2022/10/27 18:49
 """
-from framework.driver.web_driver_base import WebDriverDoBeforeTest
+import pytest
+from framework.driver.se_web_driver import WebDriverDoBeforeTest
 
 
-class TestSeleniumInLocal(WebDriverDoBeforeTest):
-    
-    def __init__(self):
-        super(TestSeleniumInLocal, self).__init__(self)
+class TestSeleniumInLocal:
 
-    def test_local_webdriver_run(self):
-        se_driver = self.get_api_driver()
-        se_driver.get("http://baidu.com")
+    @pytest.mark.parametrize("driver", WebDriverDoBeforeTest().get_api_driver())
+    def test_local_webdriver_run(self, driver):
+        driver.get("http://baidu.com")
 
 
 if __name__ == '__main__':

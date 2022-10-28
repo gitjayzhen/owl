@@ -25,6 +25,9 @@ import random
 
 
 class SeleniumBaseApi(object):
+    """
+    对 selenium 的原生 api 进行一定的改造和封装
+    """
 
     def __init__(self, driver, properties):
         self.capturePath = properties.capturePath
@@ -39,7 +42,7 @@ class SeleniumBaseApi(object):
             self.driver.quit()
             self.log4py.debug("stop Driver")
         except Exception as e:
-            self.log4py.error("执行stopWebDriver()方法发生异常，异常信息："+ str(e))
+            self.log4py.error("执行stopWebDriver()方法发生异常，异常信息：" + str(e))
 
     def pause(self, second):
         """

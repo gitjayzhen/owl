@@ -25,12 +25,13 @@ class WebDriverDoBeforeTest(object):
     2. 实例化 webdriver 对象
     """
 
-    def __init__(self, clzss):
+    def __init__(self):
         """
         :param clzss: 获取脚本的文件名和class名
         """
         self.driver = None
-        self.className = clzss.__class__.__module__ + "." + clzss.__class__.__name__
+        # self.className = clzss.__class__.__module__ + "." + clzss.__class__.__name__
+        self.className = "Testing"
         self.seProperties = WebConfingGetter().properties
         self.log4py = LoggingPorter()
         self.__beforeSuiteStarts = 0
@@ -38,8 +39,7 @@ class WebDriverDoBeforeTest(object):
         self.__beforeTestStarts = 0
         self.init = None
 
-    @classmethod
-    def get_api_driver(cls):
+    def get_api_driver(self):
         self.init = SeleniumWebDriver(self.seProperties)
         try:
             resp = requests.get(self.seProperties.baseURL)
