@@ -11,7 +11,7 @@ import time
 import requests
 from requests import exceptions
 
-from framework.services.SeleniumService import InitWebDriver
+from framework.services.selenium_service import SeleniumWebDriver
 from framework.configs.WebConfigGetter import WebConfingGetter
 from framework.api.browser.selenium_api import SeleniumBaseApi
 from framework.utils.date_util.date_formatter import get_formate_time
@@ -19,6 +19,11 @@ from framework.utils.reporter_util.logging_porter import LoggingPorter
 
 
 class WebDriverDoBeforeTest(object):
+    """
+    作为被用例使用的 selenium 操作入口，完成两个工作
+    1. 读取参数配置
+    2. 实例化 webdriver 对象
+    """
 
     def __init__(self, clzss):
         """
@@ -33,8 +38,9 @@ class WebDriverDoBeforeTest(object):
         self.__beforeTestStarts = 0
         self.init = None
 
-    def get_api_driver(self):
-        self.init = InitWebDriver(self.seProperties)
+    @classmethod
+    def get_api_driver(cls):
+        self.init = SeleniumWebDriver(self.seProperties)
         try:
             resp = requests.get(self.seProperties.baseURL)
             if resp.status_code != 200:
