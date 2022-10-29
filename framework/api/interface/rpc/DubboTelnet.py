@@ -10,11 +10,10 @@
 @time: 2018/09/14 13:28 
 """
 
-
 import dubbo_telnet
 
 
-def coondoubble_data(Host,Port,interface,method,param):
+def coondoubble_data(Host, Port, interface, method, param):
     try:
         # 初始化dubbo对象
         conn = dubbo_telnet.connect(Host, Port)
@@ -23,7 +22,7 @@ def coondoubble_data(Host,Port,interface,method,param):
         # 设置dubbo服务返回响应的编码
         conn.set_encoding('gbk')
         conn.invoke(interface, method, param)
-        command = 'invoke %s.%s(%s)'%(interface,method,param)
+        command = 'invoke %s.%s(%s)' % (interface, method, param)
         return conn.do(command)
     except:
         return Exception
@@ -35,5 +34,5 @@ if __name__ == "__main__":
     interface = 'com.auto.Interface.*'  # 接口
     method = 'getAllfunctioninfo'  # 方法
     param = ''  # 参数
-    data = coondoubble_data(Host,Port,interface,method,param)
-    print data
+    data = coondoubble_data(Host, Port, interface, method, param)
+    print(data)

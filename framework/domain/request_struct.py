@@ -6,7 +6,7 @@ __author__ = 'jayzhen'
 # 定义结构体,最好继承object，不让有些方法无法使用
 
 
-class DataStructer(object):
+class DataStruct(object):
 
     """
       于接收读取的测试数据,记录要写入测试报告的数据

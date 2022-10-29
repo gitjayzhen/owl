@@ -7,7 +7,7 @@
 @license: Apache Licence 
 @email: jayzhen_testing@163.com
 @software: PyCharm
-@file: Requester.py
+@file: requester.py
 @time: 2017/9/4 23:25
 
 单下划线、双下划线、头尾双下划线说明：
@@ -109,23 +109,10 @@ class RequestData(object):
         self.json = json
 
     def to_string(self):
-        print self.class_var
-        print self.__private_var
+        print(self.class_var)
+        print(self.__private_var)
         return "RequestData [method:"+str(self.method)+", url:"+str(self.url) + \
                ", params:"+str(self.params)+", data:"+str(self.data) + \
                ", headers:"+str(self.headers)+", cookies:"+str(self.cookies) + \
                ", timeout"+str(self.timeout)+", verify:"+str(self.verify) + \
                ", cert:"+str(self.cert)+", json:"+str(self.json) + "]"
-
-
-if __name__ == "__main__":
-    print RequestData.class_var
-    # print RequestData.__private_var
-
-    a = RequestData()
-    print a.__private_var
-    a.class_var = "qerqe"
-    print a.class_var
-    a.method = "get"
-    a.headers = "122334546789"
-    print a.to_string()

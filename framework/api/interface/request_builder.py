@@ -6,15 +6,16 @@
 @email: jayzhen_testing@163.com
 @site: https://github.com/gitjayzhen
 @software: PyCharm & Python 2.7
-@file: RequestBuilder.py 
+@file: request_builder.py
 @time: 2018/06/26 19:13 
 """
-from com.framework.utils.fileUtil.FileInspector import FileInspector
-from com.framework.interface.domian.DataStruct import DataStructer
-from com.framework.interface.api.HttpClient import Requester
-from StyleFrame import Styler, utils, StyleFrame
-import pandas as pd
 import re
+import pandas as pd
+
+from framework.utils.fileUtil.FileInspector import FileInspector
+from framework.domain.request_struct import DataStruct
+from framework.api.interface.http_requests import Requester
+from styleframe import Styler, utils, StyleFrame
 
 
 class RequestBuilder(object):
@@ -37,12 +38,12 @@ class RequestBuilder(object):
         """
         if source is None:
             return None
-        if isinstance(source, tuple) and isinstance(obj, DataStructer):
-                obj_attr = dir(obj)
-                for i in obj_attr:
-                    if i.startswith("__"):
-                        continue
-                    obj.__setattr__(i, source.__getattribute__(i))
+        if isinstance(source, tuple) and isinstance(obj, DataStruct):
+            obj_attr = dir(obj)
+            for i in obj_attr:
+                if i.startswith("__"):
+                    continue
+                obj.__setattr__(i, source.__getattribute__(i))
         return obj
 
     def send_req(self, ds):
@@ -65,18 +66,18 @@ class RequestBuilder(object):
         :return:
         """
         # 读取一个excel的文本文件（当前默认时读一个文件的一个sheet页）
-        ex = pd.read_excel(unicode(self.filepath, "utf8"))
+        ex = pd.read_excel(self.filepath.encode('utf-8').decode("unicode_escape"))
         # 用pd格式化
         df = pd.DataFrame(ex)
         # 迭代器遍历sheet页里的内容
         for row in df.itertuples(name="RowData"):
             # 实例化一个数据模型对象
-            ds = DataStructer()
+            ds = DataStruct()
             # 用读到的excel行数据来填充这个对象
             self.data_mapping(row, ds)
             # 通过这个对象的属性值，来发起一次request请求，在请求的过程把结果及校验的数据处理完后，
             self.send_req(ds)
-            print ds.__dict__
+            print(ds.__dict__)
             # 接口发起后的结果写入到excel对应行的对应列中
             # 执行修改操作
             df.update(pd.Series(ds.result, name="test_result", index=[row.Index]))
@@ -102,7 +103,7 @@ class RequestBuilder(object):
         sf.set_column_width_dict(col_width_dict={
             ('cid', 'type', 'method', 'result'): 7,
             ('project', 'module', 'function', 'desc', 'protocol', 'assertion'): 13,
-            ('url', ): 20,
+            ('url',): 20,
             ('header', 'cookie', 'entity', 'assertion', 'notes'): 30
         })
         row_num = sf.row_indexes
@@ -113,8 +114,8 @@ class RequestBuilder(object):
 
         sf.apply_headers_style(styler_obj=Styler(bg_color=utils.colors.grey))
 
-        sf.to_excel(unicode(self.filepath, "utf8")).save()
-        print 30*"*"
+        sf.to_excel(self.filepath.encode('utf-8').decode("unicode_escape")).save()
+        print(30 * "*")
 
 
 if __name__ == "__main__":
