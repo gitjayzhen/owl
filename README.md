@@ -105,12 +105,12 @@ result:
 
 ## 对于http，thrift，dubbo，hessian协议的测试
 
-1. http -> requests
+1. http -> requests\httpx
 2. thrift -> thrift
 3. dubbo -> dubbo-client
 4. hessian -> python-hessian (forked mustaine)
 
-## 20190414 备注并init github project
+## 20190414 备注并 init github project
 
 详细的功能模块内容：
 
