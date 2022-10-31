@@ -12,7 +12,7 @@
 """
 
 import subprocess
-from framework.utils.reporter_util.logging_porter import LoggingPorter
+from framework.utils.reporter.logging_porter import LoggingPorter
 
 
 class WindowCmder(object):

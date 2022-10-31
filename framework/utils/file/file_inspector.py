@@ -2,7 +2,7 @@
 # -*- coding:UTF-8 -*-
 
 """
-@version: python2.7
+@version: python3.7
 @author: ‘jayzhen‘
 @contact: jayzhen_testing@163.com
 @site: https://github.com/gitjayzhen
@@ -14,15 +14,16 @@
 """
 
 import datetime
+import operator
 import os
 import time
-from com.framework.utils.reporterUtil.LoggingPorter import LoggingPorter
+from framework.utils.reporter.logging_porter import LoggingPorter
 
 
 class FileInspector(object):
 
     def __init__(self):
-        self.__fileabspath = None    # 不可访问的
+        self.__fileabspath = None  # 不可访问的
         self.log4py = LoggingPorter()
 
     def is_has_file(self, filename):
@@ -45,19 +46,18 @@ class FileInspector(object):
         # 20180626 过滤一些不必要的目录
         try:
             for filep, dirs, filelist in os.walk(path):
-                if os.path.basename(filep) in set([".idea", ".git"]):
+                if os.path.basename(filep) in (".idea", ".git", "__pycache__", '__init__.py'):
                     # self.log4py.debug("跳过这个目录的检索工作：[{}]".format(str(filep)))
                     continue
                 for fl in filelist:
-                    fl = fl.decode("GBK").encode("UTF-8")
-                    # @TUDO 这个字符串的比较存在风险，python3不支持，待修改
-                    if cmp(fl, filename) == 0:
+                    # fl = fl.decode("GBK").encode("UTF-8")  # python str
+                    if operator.eq(fl, filename):
                         self.__fileabspath = os.path.join(filep, fl)
-                        self.log4py.info("当前项目下查找的[%s]配置文件存在." %filename)
+                        self.log4py.info("当前项目下查找的[%s]配置文件存在." % filename)
                         return True
             return False
-        except Exception, e:
-            self.log4py.error("check_has_file()方法出现异常"+ str(e))
+        except Exception as e:
+            self.log4py.error("check_has_file()方法出现异常" + str(e))
 
     def get_file_abspath(self):
         """获取文件的绝对路径之倩需要check文件是否存在"""
@@ -79,8 +79,9 @@ class FileInspector(object):
         l = os.listdir(absolute_path)  # 该目录下的文件list
         # 对key进行升序排列（变量fn是每个文件或者文件夹的全称，如果fn是不是文件夹或者是0，那就获取该文件的创建时间，排序后的最后一个文件就是最新的文件了）
         # 第二句
-        st = l.sort(key=lambda fn: os.path.getmtime(absolute_path+"\\" + fn) if not os.path.isdir(absolute_path+"\\"+fn) else 0)
-        d = datetime.datetime.fromtimestamp(os.path.getmtime(absolute_path+"\\"+l[-1]))
+        st = l.sort(key=lambda fn: os.path.getmtime(absolute_path + "\\" + fn) if not os.path.isdir(
+            absolute_path + "\\" + fn) else 0)
+        d = datetime.datetime.fromtimestamp(os.path.getmtime(absolute_path + "\\" + l[-1]))
         fname = l[-1]
         fpath = os.path.join(absolute_path, fname)
         self.log4py.debug('last file is ::' + fpath)
@@ -88,12 +89,3 @@ class FileInspector(object):
         self.log4py.debug('time_end:%s' % time_end)
         # fpath:html文件的全目录,fname：最新html文件名,relative_path：html文件当前所处文件夹路径
         return fpath, fname, absolute_path
-
-
-
-
-
-
-
-
-

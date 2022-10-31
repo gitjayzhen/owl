@@ -15,7 +15,7 @@ from framework.services.selenium_service import SeleniumWebDriver
 from framework.configs.WebConfigGetter import WebConfingGetter
 from framework.api.browser.selenium_api import SeleniumBaseApi
 from framework.utils.date_util.date_formatter import get_formate_time
-from framework.utils.reporter_util.logging_porter import LoggingPorter
+from framework.utils.reporter.logging_porter import LoggingPorter
 
 
 class WebDriverDoBeforeTest(object):

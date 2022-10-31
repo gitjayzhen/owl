@@ -3,7 +3,7 @@
 import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from framework.utils.reporter_util.logging_porter import LoggingPorter
+from framework.utils.reporter.logging_porter import LoggingPorter
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 

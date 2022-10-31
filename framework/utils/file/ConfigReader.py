@@ -7,8 +7,8 @@
 @file: ConfigPaserUtil.py
 @time: 2017/7/26 16:19
 """
-from com.framework.utils.reporterUtil.LoggingPorter import LoggingPorter
-import ConfigParser
+from framework.utils.reporter.logging_porter import LoggingPorter
+from configparser import ConfigParser
 import os
 
 
@@ -18,7 +18,7 @@ class ConfigReader(object):
         self.log4py = LoggingPorter()
         if not os.path.exists(file_path):
             assert IOError
-        self.ini_reader = ConfigParser.ConfigParser()
+        self.ini_reader = ConfigParser()
         self.ini_reader.read(file_path)
         self.file_path = file_path
 
@@ -35,7 +35,7 @@ class ConfigReader(object):
     def get_sections(self):
         try:
             return self.ini_reader.sections()
-        except Exception, e:
+        except Exception as e:
             self.log4py.error("获取ini文件的所有section时，发生错误：{}".format(str(e)).decode("utf-8"))
 
     def get_section_items(self, section):
@@ -44,7 +44,7 @@ class ConfigReader(object):
         try:
             values = self.ini_reader.items(section)
             return values
-        except Exception, e:
+        except Exception as e:
             self.log4py.error("获取节点的所有key:value(items)时出错:{}".format(str(e)).decode("utf-8"))
 
     def get_value(self, section, key):

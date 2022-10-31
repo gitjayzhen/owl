@@ -11,7 +11,7 @@
 
 * 基于python的web自动化、mobile自动化、接口自动化的整合项目
 * 弱耦合，高内聚，复用性，易用性，可读性，易拓展
-* 核心：selenium、appium、requests
+* 核心：selenium、appium、requests、allure、pytest
 
 ```text
 owl@override the world limit

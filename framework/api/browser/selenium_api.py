@@ -1,10 +1,10 @@
 # -*- coding:UTF-8 -*-
 import os
 import time
-from framework.utils.reporter_util.logging_porter import LoggingPorter
+from framework.utils.reporter.logging_porter import LoggingPorter
 from framework.utils.date_util.date_formatter import get_formate_time
-from framework.utils.fileUtil.ConfigReader import ConfigReader
-from framework.utils.fileUtil.FileInspector import FileInspector
+from framework.utils.file.ConfigReader import ConfigReader
+from framework.utils.file.file_inspector import FileInspector
 from selenium import webdriver
 from selenium.common import exceptions
 from selenium.webdriver.common.action_chains import ActionChains

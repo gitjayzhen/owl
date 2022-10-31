@@ -5,10 +5,10 @@ Created on 2016年4月26日
 """
 
 import os
-from framework.utils.fileUtil.ConfigReader import ConfigReader
-from framework.utils.fileUtil.FileInspector import FileInspector
+from framework.utils.file.ConfigReader import ConfigReader
+from framework.utils.file.file_inspector import FileInspector
 from framework.mobile.domain.AppiumIniDomain import AppiumIniDomain
-from framework.utils.reporter_util.logging_porter import LoggingPorter
+from framework.utils.reporter.logging_porter import LoggingPorter
 
 """
 读取配置文件.conf的内容，返回driver的绝对路径
