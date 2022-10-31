@@ -19,13 +19,11 @@ class TestSeleniumInLocal:
 
     # 方法级开始--类里每个测试方法执行前执行
     def setup(self):
-        self.driver = WebDriverController().get_api_driver()
+        self.driver = WebDriverController().get_driver()
 
     # 方法级结束--类里每个测试方法执行后执行
     def teardown(self):
-        self.driver.stop_web_driver()
+        self.driver.stop_browser()
 
-    @pytest.mark.parametrize("test", "test")
-    def test_local_webdriver_run(self, test):
-        print(test)
+    def test_local_webdriver_run(self):
         self.driver.get("http://baidu.com")

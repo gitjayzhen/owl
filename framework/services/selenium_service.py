@@ -8,7 +8,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from framework.utils.reporter.logging_porter import LoggingPorter
 
 
-class SeleniumWebDriver(object):
+class SeleniumDriverBrowser(object):
     """
         这边是通过驱动实例化selenium webdriver，的服务启动者, 并返回webdriver
     """
@@ -20,23 +20,23 @@ class SeleniumWebDriver(object):
         self.scriptTimeout = properties.scriptTimeout
         self.pageLoadTimeout = properties.pageLoadTimeout
 
-    def run_browser(self):
+    def init_browser(self):
         """
         根据实例对象的参数，来具体启动浏览器，不管启动是否成功或启动异常，都会返回driver
         :return:
         """
         browser_name = self.properties.browser
         if "chrome" == browser_name:
-            self.driver = self.start_chrome_driver()
+            self.driver = self.start_chrome_browser()
         elif "ie" == browser_name:
-            self.driver = self.start_ie_driver()
+            self.driver = self.start_ie_browser()
         elif "firefox" == browser_name:
-            self.driver = self.start_firefox_driver()
+            self.driver = self.start_firefox_browser()
         else:
-            self.driver = self.start_firefox_driver()
+            self.driver = self.start_firefox_browser()
         return self.driver
 
-    def start_firefox_driver(self):
+    def start_firefox_browser(self):
         driver = None
         try:
             # 设置浏览器的配置参数
@@ -70,7 +70,7 @@ class SeleniumWebDriver(object):
             return None
         return driver
 
-    def start_chrome_driver(self):
+    def start_chrome_browser(self):
         driver = None
         try:
             chrome_options = Options()
@@ -117,7 +117,7 @@ class SeleniumWebDriver(object):
             return None
         return driver
 
-    def start_ie_driver(self):
+    def start_ie_browser(self):
         driver = None
         try:
             ie_dc = DesiredCapabilities.INTERNETEXPLORER
@@ -145,15 +145,15 @@ class SeleniumWebDriver(object):
             return None
         return driver
 
-    def stop_web_driver(self):
+    def stop_browser(self):
         try: 
             self.driver.quit()
             self.log4py.debug("stop Driver")
         except Exception as e:
             self.log4py.error("执行stopWebDriver()方法发生异常，异常信息："+ str(e))
 
-    def get(self, driver, url, actionCount):
-        for i in range(actionCount):
+    def get(self, driver, url, action_count=2):
+        for i in range(action_count):
             try:
                 driver.get(url)
                 self.log4py.debug("navigate to url [ " + url + " ]")

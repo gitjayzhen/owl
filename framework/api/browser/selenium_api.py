@@ -24,7 +24,7 @@ import random
 '''
 
 
-class SeleniumBaseApi(object):
+class SeleniumWorkApi(object):
     """
     对 selenium 的原生 api 进行一定的改造和封装
     """
