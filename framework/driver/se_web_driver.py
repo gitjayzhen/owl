@@ -40,7 +40,7 @@ class WebDriverController(object):
         except exceptions.ConnectionError as e:
             self.log4py.error("浏览器实例化driver失败，请检查你的被测试服务是否启动或baseURL是否设置正确: {}".format(self.seProperties.baseURL))
         self.init = SeleniumDriverBrowser(self.seProperties)
-        self.driver = self.init.init_browser()
+        self.driver = self.init.start_browser()
         if self.driver is None:
             self.log4py.error("浏览器实例化driver失败，请重新检查驱动及启动参数")
             return None
