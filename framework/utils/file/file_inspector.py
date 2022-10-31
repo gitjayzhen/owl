@@ -23,7 +23,7 @@ from framework.utils.reporter.logging_porter import LoggingPorter
 class FileInspector(object):
 
     def __init__(self):
-        self.__fileabspath = None  # 不可访问的
+        self.__file_abs_path = None  # 不可访问的
         self.log4py = LoggingPorter()
 
     def is_has_file(self, filename):
@@ -32,9 +32,7 @@ class FileInspector(object):
         :param filename:  文件名
         :return:  True or False
         """
-        propath = self.get_project_path()
-        boolean = self.is_path_has_file(propath, filename)
-        return boolean
+        return self.is_path_has_file(self.get_project_path(), filename)
 
     def is_path_has_file(self, path, filename):
         """指定目录下是否存在指定的文件"""
@@ -43,16 +41,14 @@ class FileInspector(object):
 
     def check_has_file(self, path, filename):
         """   扫描指定目录下的所有文件，找到所要找的文件，return True or False"""
-        # 20180626 过滤一些不必要的目录
         try:
             for filep, dirs, filelist in os.walk(path):
                 if os.path.basename(filep) in (".idea", ".git", "__pycache__", '__init__.py'):
-                    # self.log4py.debug("跳过这个目录的检索工作：[{}]".format(str(filep)))
+                    self.log4py.debug("跳过这个目录的检索工作：[{}]".format(str(filep)))
                     continue
                 for fl in filelist:
-                    # fl = fl.decode("GBK").encode("UTF-8")  # python str
                     if operator.eq(fl, filename):
-                        self.__fileabspath = os.path.join(filep, fl)
+                        self.__file_abs_path = os.path.join(filep, fl)
                         self.log4py.info("当前项目下查找的[%s]配置文件存在." % filename)
                         return True
             return False
@@ -61,13 +57,12 @@ class FileInspector(object):
 
     def get_file_abspath(self):
         """获取文件的绝对路径之倩需要check文件是否存在"""
-        return self.__fileabspath
+        return self.__file_abs_path
 
     def get_project_path(self):
         """ 截取当前项目所有在的路径 """
-        abspath = os.getcwd()
-        project_path = abspath.split("src")[0]  # 当前项目的代码目录节点，通过他来知道项目根目录
-        return project_path
+        project_path = os.getcwd().split("owl")[0]  # 当前项目的代码目录节点，通过他来知道项目根目录
+        return os.path.join(project_path, "owl/")
 
     def get_latest_file(self, absolute_path='./'):
         """

@@ -15,19 +15,19 @@ import datetime
 import logging
 import inspect
 
-abspath = os.getcwd()
-logfilepath = abspath.split("src")[0] + "result\\log\\"
-if not os.path.exists(logfilepath):
-    os.makedirs(logfilepath)
+LOG_FILE_PATH = os.getcwd().split("owl")[0] + "owl/result/log/"
+if not os.path.exists(LOG_FILE_PATH):
+    os.makedirs(LOG_FILE_PATH)
 
 # 将对应文件实例化成一个FileHandler对象，让不用级别的日志共用该Filehandler，这样做到日志打印到一个文件中
-hd = logging.FileHandler(os.path.abspath(os.path.join(logfilepath, "framework.log")))
+hd = logging.FileHandler(os.path.abspath(os.path.join(LOG_FILE_PATH, "framework.log")))
 hds = logging.StreamHandler()
 handlers = {logging.DEBUG: [hd, hds], logging.INFO: [hd, hds], logging.WARNING: [hd, hds], logging.ERROR: [hd, hds]}
 
 
 class LoggingPorter(object):
-    """日志报告
+    """
+    日志报告
 
     Args:
         object (_type_): _description_
@@ -55,12 +55,12 @@ class LoggingPorter(object):
         '''日志格式：[时间] [类型] [记录代码] 信息'''
 
         try:
-            relative_path = filename.split("python-owl")[1]
+            relative_path = filename.split("owl")[1]
             relative_path = relative_path.replace("/", ".")
-            relative_path = relative_path.replace("\\", ".")
+            # relative_path = relative_path.replace("\\", ".")
             relative_path = relative_path.replace(".", "", 1)
         except IndexError as ie:
-            print ("日志获取当前脚本的绝对路径发生了错误{}".format(str(ie)).decode("utf-8"))
+            print("日志获取当前脚本的绝对路径发生了错误{}".format(str(ie)))
             relative_path = filename
         return "%s [%s] %s %s - %s" % (self.time_now_formate(), level, relative_path, lineNo, message)
 
@@ -83,4 +83,3 @@ class LoggingPorter(object):
     def critical(self, message):
         message = self.get_log_message("CRITICAL", message)
         self.__loggers[logging.CRITICAL].critical(message)
-

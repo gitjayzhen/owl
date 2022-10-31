@@ -12,13 +12,13 @@ import requests
 from requests import exceptions
 
 from framework.services.selenium_service import SeleniumWebDriver
-from framework.configs.WebConfigGetter import WebConfingGetter
+from framework.configs.web_config import WebConfingGetter
 from framework.api.browser.selenium_api import SeleniumBaseApi
 from framework.utils.date_util.date_formatter import get_formate_time
 from framework.utils.reporter.logging_porter import LoggingPorter
 
 
-class WebDriverDoBeforeTest(object):
+class WebDriverController(object):
     """
     作为被用例使用的 selenium 操作入口，完成两个工作
     1. 读取参数配置

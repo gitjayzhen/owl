@@ -3,8 +3,9 @@
 import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from framework.utils.reporter.logging_porter import LoggingPorter
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
+from framework.utils.reporter.logging_porter import LoggingPorter
 
 
 class SeleniumWebDriver(object):
@@ -24,12 +25,12 @@ class SeleniumWebDriver(object):
         根据实例对象的参数，来具体启动浏览器，不管启动是否成功或启动异常，都会返回driver
         :return:
         """
-        browsername = self.properties.browser
-        if "chrome" == browsername:
+        browser_name = self.properties.browser
+        if "chrome" == browser_name:
             self.driver = self.start_chrome_driver()
-        elif "ie" == browsername:
+        elif "ie" == browser_name:
             self.driver = self.start_ie_driver()
-        elif "firefox" == browsername:
+        elif "firefox" == browser_name:
             self.driver = self.start_firefox_driver()
         else:
             self.driver = self.start_firefox_driver()

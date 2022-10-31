@@ -10,7 +10,7 @@
 @time: 2022/10/27 18:49
 """
 import pytest
-from framework.driver.se_web_driver import WebDriverDoBeforeTest
+from framework.driver.se_web_driver import WebDriverController
 
 
 class TestSeleniumInLocal:
@@ -19,16 +19,13 @@ class TestSeleniumInLocal:
 
     # 方法级开始--类里每个测试方法执行前执行
     def setup(self):
-        print("-->setup_method1")
+        self.driver = WebDriverController().get_api_driver()
 
     # 方法级结束--类里每个测试方法执行后执行
     def teardown(self):
-        print("-->teardown_method1")
+        self.driver.stop_web_driver()
 
-    @pytest.mark.parametrize("driver", WebDriverDoBeforeTest().get_api_driver())
-    def test_local_webdriver_run(self, driver):
-        driver.get("http://baidu.com")
-
-
-if __name__ == '__main__':
-    TestSeleniumInLocal().test_local_webdriver_run()
+    @pytest.mark.parametrize("test", "test")
+    def test_local_webdriver_run(self, test):
+        print(test)
+        self.driver.get("http://baidu.com")

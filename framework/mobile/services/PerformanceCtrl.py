@@ -45,7 +45,7 @@ class AppPerformanceMonitor():
 
     # 绘制线性图表，具体接口的用法查看ChartDirecto的帮助文档
     def line_chart(self, data):
-        PATH = lambda p: os.path.abspath(p)
+        PATH = lambda p: os.path.ABS_PATH(p)
         cpu_data = []
         mem_data = []
         # 去掉cpu占用率中的百分号，并转换为int型
