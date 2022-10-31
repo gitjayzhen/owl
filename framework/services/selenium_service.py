@@ -16,9 +16,9 @@ class SeleniumDriverBrowser(object):
         self.log4py = LoggingPorter()
         self.driver = None
         self.properties = properties
-        self.waitTimeout = properties.waitTimeout
-        self.scriptTimeout = properties.scriptTimeout
-        self.pageLoadTimeout = properties.pageLoadTimeout
+        # self.waitTimeout = properties.waitTimeout
+        # self.scriptTimeout = properties.scriptTimeout
+        # self.pageLoadTimeout = properties.pageLoadTimeout
 
     def init_browser(self):
         """
@@ -55,15 +55,8 @@ class SeleniumDriverBrowser(object):
                 os.environ["webdriver.firefox.driver"] = self.properties.browserdriver
                 log_path = os.path.join(self.properties.logsPath, "geckodriver.log")
                 driver = webdriver.Firefox(executable_path=self.properties.browserdriver, log_path=log_path)
-            driver.set_page_load_timeout(self.pageLoadTimeout)
-            self.log4py.debug("set pageLoadTimeout : "+self.pageLoadTimeout)
-            driver.implicitly_wait(self.waitTimeout)
-            self.log4py.debug("set waitTimeout : " + self.waitTimeout)
-            driver.set_script_timeout(self.scriptTimeout)
-            self.log4py.error("set scriptTimeout : " + self.scriptTimeout)
+            self.config_browser(driver)
             self.log4py.debug("初始化火狐浏览器成功")
-            driver.maximize_window()
-            self.get(driver, self.properties.baseURL, 3)
         except Exception as e:
             self.log4py.error("getFirefoxDriver()方法发生异常，异常信息：" + str(e))
             driver.quit()
@@ -99,15 +92,8 @@ class SeleniumDriverBrowser(object):
                 # 设置chrome 的二进制可执行文件: 启动不在默认安装路径的firefox浏览器
                 # os.environ["webdriver.chrome.bin"] = "/path/to/chrome/32/chrome.exe"
                 driver = webdriver.Chrome(executable_path=self.properties.browserdriver, desired_capabilities=d)
-            driver.set_page_load_timeout(self.pageLoadTimeout)
-            self.log4py.debug("set pageLoadTimeout : " + self.pageLoadTimeout)
-            driver.implicitly_wait(self.waitTimeout)
-            self.log4py.debug("set waitTimeout : " + self.waitTimeout)
-            driver.set_script_timeout(self.scriptTimeout)
-            self.log4py.debug("set scriptTimeout : " + self.scriptTimeout)
+            self.config_browser(driver)
             self.log4py.debug("初始化谷歌浏览器成功")
-            driver.maximize_window()
-            self.get(driver, self.properties.baseURL, 3)
         except Exception as e:
             self.log4py.error("getChromeDriver()方法出现异常 : " + str(e))
             try:
@@ -128,22 +114,23 @@ class SeleniumDriverBrowser(object):
 
             os.environ["webdriver.ie.driver"] = self.properties.browserdriver
             driver = webdriver.Ie(self.properties.browserdriver, ie_dc)
-
-            driver.set_page_load_timeout(self.pageLoadTimeout)
-            self.log4py.debug("set pageLoadTimeout : " + self.pageLoadTimeout)
-            driver.implicitly_wait(self.waitTimeout)
-            self.log4py.debug("set waitTimeout : " + self.waitTimeout)
-            driver.set_script_timeout(self.scriptTimeout)
-            self.log4py.debug("set scriptTimeout : " + self.scriptTimeout)
-            driver.maximize_window()
-            
+            self.config_browser(driver)
             self.log4py.debug("初始化IE浏览器成功")
-            self.get(driver, self.properties.baseURL, 3)
         except Exception as e:
             self.log4py.error("getInternetExplorerDriver()方法出现异常"+ str(e))
             driver.quit()
             return None
         return driver
+
+    def config_browser(self, driver):
+        driver.set_page_load_timeout(self.properties.pageLoadTimeout)
+        self.log4py.debug("set pageLoadTimeout : " + self.properties.pageLoadTimeout)
+        driver.implicitly_wait(self.properties.waitTimeout)
+        self.log4py.debug("set waitTimeout : " + self.properties.waitTimeout)
+        driver.set_script_timeout(self.properties.scriptTimeout)
+        self.log4py.error("set scriptTimeout : " + self.properties.scriptTimeout)
+        driver.maximize_window()
+        self.get(driver, self.properties.baseURL, 3)
 
     def stop_browser(self):
         try: 

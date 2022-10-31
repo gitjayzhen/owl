@@ -1,22 +1,14 @@
 # -*- coding:UTF-8 -*-
-import os
+
 import time
-from framework.utils.reporter.logging_porter import LoggingPorter
-from framework.utils.date_util.date_formatter import get_formate_time
-from framework.utils.file.ConfigReader import ConfigReader
-from framework.utils.file.file_inspector import FileInspector
-from selenium import webdriver
+import random
 from selenium.common import exceptions
 from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common import alert
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common import utils
-from selenium.webdriver.remote import webelement
-from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.ui import Select
-from selenium.webdriver.support import wait
-import random
+
+from framework.utils.reporter.logging_porter import LoggingPorter
+from framework.utils.date_util.date_formatter import get_formate_time
 '''
  * 封装整体思路：
  * 1、封装常用方法
@@ -310,6 +302,7 @@ class SeleniumWorkApi(object):
             self.log4py.debug("input text [ " + text + " ] to element [ " + str(element) + " ]")
         except exceptions.NoSuchElementException as e:
             self.log4py.error("send_keys func happend NoSuchElementException : {}".format(str(e)))
+
     def is_selected(self, by, value):
         """
         * rewrite the isSelected method, the element to be find  </BR>
