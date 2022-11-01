@@ -34,7 +34,7 @@ class WebDriverController(object):
 
     def get_driver(self):
         try:
-            resp = requests.get(self.se_properties.baseURL)
+            resp = requests.get(self.se_properties.baseURL, timeout=(3.05, 20))
             if resp.status_code != 200:
                 self.log4py.error("浏览器实例化driver失败，请检查你的被测试服务是否启动或baseURL是否设置正确: {}".format(self.se_properties.baseURL))
         except exceptions.ConnectionError as e:
