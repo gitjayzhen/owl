@@ -12,7 +12,11 @@ class SeleniumDriverBrowser(object):
     """
         这边是通过驱动实例化selenium webdriver，的服务启动者, 并返回webdriver
     """
+
     def __init__(self, properties):
+        """
+        初始化参数
+        """
         self.log4py = LoggingPorter()
         self.driver = None
         self.properties = properties
@@ -38,7 +42,7 @@ class SeleniumDriverBrowser(object):
             self.driver.quit()
             self.log4py.debug("stop Driver")
         except Exception as e:
-            self.log4py.error("执行stopWebDriver()方法发生异常，异常信息："+ str(e))
+            self.log4py.error("执行stopWebDriver()方法发生异常，异常信息：" + str(e))
 
     def __start_firefox_browser(self):
         driver = None
@@ -59,7 +63,7 @@ class SeleniumDriverBrowser(object):
                 os.environ["webdriver.firefox.driver"] = self.properties.browserdriver
                 log_path = os.path.join(self.properties.logsPath, "geckodriver.log")
                 driver = webdriver.Firefox(executable_path=self.properties.browserdriver, log_path=log_path)
-            self.config_browser(driver)
+            self.__config_browser(driver)
             self.log4py.debug("初始化火狐浏览器成功")
         except Exception as e:
             self.log4py.error("getFirefoxDriver()方法发生异常，异常信息：" + str(e))
@@ -76,10 +80,13 @@ class SeleniumDriverBrowser(object):
             # chrome_options.add_argument("headless")
             chrome_options.add_argument("--disable-extensions")
             # 忽略掉这个警告提示语
-            chrome_options.add_argument('--disable-infobars')
+            chrome_options.add_argument('disable-infobars')
             chrome_options.add_argument('--log-level=0')
             # chrome_options.add_argument('--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1')
             # chrome_options.add_experimental_option("mobileEmulation", {"deviceName": "iPhone X"})
+            chrome_options.add_experimental_option('useAutomationExtension', False)
+            chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])
+
             d.update(chrome_options.to_capabilities())
 
             # 添加chrome的插件
@@ -96,7 +103,7 @@ class SeleniumDriverBrowser(object):
                 # 设置chrome 的二进制可执行文件: 启动不在默认安装路径的firefox浏览器
                 # os.environ["webdriver.chrome.bin"] = "/path/to/chrome/32/chrome.exe"
                 driver = webdriver.Chrome(executable_path=self.properties.browserdriver, desired_capabilities=d)
-            self.config_browser(driver)
+            self.__config_browser(driver)
             self.log4py.debug("初始化谷歌浏览器成功")
         except Exception as e:
             self.log4py.error("getChromeDriver()方法出现异常 : " + str(e))
@@ -118,10 +125,10 @@ class SeleniumDriverBrowser(object):
 
             os.environ["webdriver.ie.driver"] = self.properties.browserdriver
             driver = webdriver.Ie(self.properties.browserdriver, ie_dc)
-            self.config_browser(driver)
+            self.__config_browser(driver)
             self.log4py.debug("初始化IE浏览器成功")
         except Exception as e:
-            self.log4py.error("getInternetExplorerDriver()方法出现异常"+ str(e))
+            self.log4py.error("getInternetExplorerDriver()方法出现异常" + str(e))
             driver.quit()
             return None
         return driver
@@ -144,6 +151,3 @@ class SeleniumDriverBrowser(object):
                 break
             except Exception as e:
                 self.log4py.error("访问初始化URL报错 ： " + str(e))
-
-
-

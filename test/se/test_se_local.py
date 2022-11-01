@@ -19,11 +19,11 @@ class TestSeleniumInLocal:
 
     # 方法级开始--类里每个测试方法执行前执行
     def setup(self):
-        self.driver = WebDriverController().get_driver()
+        self.driver = WebDriverController(self).get_driver()
 
     # 方法级结束--类里每个测试方法执行后执行
     def teardown(self):
-        self.driver.stop_browser()
+        self.driver.stop_web_driver()
 
     def test_local_webdriver_run(self):
         self.driver.get("http://baidu.com")
