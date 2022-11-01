@@ -16,13 +16,14 @@ from enum import Enum, unique
 from selenium.webdriver.common.by import By
 
 
-@unique
-class FindBy(Enum):
-    ID = By.ID
-    NAME = By.NAME
-    CLASS_NAME = By.CLASS_NAME
-    CSS_SELECTOR = By.CSS_SELECTOR
-    LINK_TEXT = By.LINK_TEXT
-    PARTIAL_LINK_TEXT = By.PARTIAL_LINK_TEXT
-    TAG_NAME = By.TAG_NAME
-    XPATH = By.XPATH
+# @unique
+class FindBy(By):
+    pass
+    # ID = By.ID
+    # NAME = By.NAME
+    # CLASS_NAME = By.CLASS_NAME
+    # CSS_SELECTOR = By.CSS_SELECTOR
+    # LINK_TEXT = By.LINK_TEXT
+    # PARTIAL_LINK_TEXT = By.PARTIAL_LINK_TEXT
+    # TAG_NAME = By.TAG_NAME
+    # XPATH = By.XPATH

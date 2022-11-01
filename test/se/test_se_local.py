@@ -10,6 +10,8 @@
 @time: 2022/10/27 18:49
 """
 import pytest
+
+from framework.domain.selector_type import FindBy
 from framework.driver.se_web_driver import WebDriverController
 
 
@@ -27,3 +29,6 @@ class TestSeleniumInLocal:
 
     def test_local_webdriver_run(self):
         self.driver.get("http://baidu.com")
+        self.driver.send_keys(FindBy.CSS_SELECTOR, "#kw", "jayzhen")
+        self.driver.click(FindBy.CSS_SELECTOR, "#su")
+        self.driver.capture()

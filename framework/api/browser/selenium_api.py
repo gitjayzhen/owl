@@ -5,6 +5,7 @@ import random
 from selenium.common import exceptions
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.relative_locator import locate_with
 from selenium.webdriver.support.ui import Select
 
 from framework.utils.reporter.logging_porter import LoggingPorter
@@ -24,8 +25,8 @@ class SeleniumWorkApi(object):
 
     def __init__(self, driver, properties):
         self.capturePath = properties.capturePath
-        self.pauseTime = properties.pauseTime
-        self.implicitly_wait_time = properties.waitTimeout
+        self.pauseTime = int(properties.pauseTime)
+        self.implicitly_wait_time = int(properties.waitTimeout)
         self.log4py = LoggingPorter()
         self.driver = driver
         self.Find = By
@@ -59,6 +60,11 @@ class SeleniumWorkApi(object):
             self.driver.get_screenshot_as_file(file_path)
         except Exception as e:
             self.log4py.error("保存屏幕截图失败，失败信息：" + str(e))
+
+    def capture(self):
+        date_time = get_formate_time("%Y%m%d-%H%M%S%f")
+        capture_name = self.capturePath + date_time + ".png"
+        self.capture_screenshot(capture_name)
 
     def operation_check(self, method_name, is_succeed):
         """

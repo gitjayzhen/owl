@@ -87,7 +87,7 @@ class SeleniumDriverBrowser(object):
             chrome_options.add_experimental_option('useAutomationExtension', False)
             chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])
 
-            d.update(chrome_options.to_capabilities())
+            # d.update(chrome_options.to_capabilities())
 
             # 添加chrome的插件
             # chrome_options.add_extension("extension: path to the *.crx file")
@@ -95,14 +95,18 @@ class SeleniumDriverBrowser(object):
             if self.properties.type == '0':
                 remote = self.properties.remoteProfile.pop('url')
                 d.update(self.properties.remoteProfile)
-                d.update(chrome_options.to_capabilities())
-                driver = webdriver.Remote(command_executor=remote, desired_capabilities=d)
+                # d.update(chrome_options.to_capabilities())
+                driver = webdriver.Remote(command_executor=remote,
+                                          desired_capabilities=d,
+                                          options=chrome_options)
             elif self.properties.type == '1':
                 # 设置chrome 浏览器的驱动环境变量
                 os.environ["webdriver.chrome.driver"] = self.properties.browserdriver
                 # 设置chrome 的二进制可执行文件: 启动不在默认安装路径的firefox浏览器
                 # os.environ["webdriver.chrome.bin"] = "/path/to/chrome/32/chrome.exe"
-                driver = webdriver.Chrome(executable_path=self.properties.browserdriver, desired_capabilities=d)
+                driver = webdriver.Chrome(executable_path=self.properties.browserdriver,
+                                          desired_capabilities=d,
+                                          chrome_options=chrome_options)
             self.__config_browser(driver)
             self.log4py.debug("初始化谷歌浏览器成功")
         except Exception as e:
@@ -141,13 +145,13 @@ class SeleniumDriverBrowser(object):
         driver.set_script_timeout(self.properties.scriptTimeout)
         self.log4py.error("set scriptTimeout : " + self.properties.scriptTimeout)
         driver.maximize_window()
-        self.__open_url(driver, self.properties.baseURL, 3)
+        self.__open_index_url(driver, self.properties.baseURL)
 
-    def __open_url(self, driver, url, action_count=2):
+    def __open_index_url(self, driver, url, action_count=1):
         for i in range(action_count):
             try:
                 driver.get(url)
                 self.log4py.debug("navigate to url [ " + url + " ]")
                 break
             except Exception as e:
-                self.log4py.error("访问初始化URL报错 ： " + str(e))
+                self.log4py.error("访问初始化 URL 报错 ： " + str(e))
