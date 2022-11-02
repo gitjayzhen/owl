@@ -5,13 +5,13 @@
 @version: v1.0
 @author: jayzhen
 @license: Apache License 
-@email: jayzhen_testing@163.com
+@message: jayzhen_testing@163.com
 @software: PyCharm
 @file: SuperFormatUtil
 @time: 2022/08/12  13:59
 """
 import re
-import urllib
+import urllib.parse
 
 
 def sformat(source, param):
@@ -24,7 +24,7 @@ def sformat(source, param):
     如果是对象，那就dict格式化并进行随后的操作
     如果是dict就直接执行
     如果是单个变量，那就先判断是否等于正则匹配的个数，不等就返回，相等就处理,因为单个匹配就不管是不是占位与参数名相同了
-    :param lstring: 需要进行格式化的原对象字符串
+    :param source: 需要进行格式化的原对象字符串
     :param param:  供格式的数据源
     :return:  格式化后的完整字符串
     """
@@ -57,7 +57,7 @@ def sformat(source, param):
                 result.extend(tmp)
             return '\''.join(result)
         elif length >= 1:
-            print( "你的参数个数少于字符串中占位的变量数")
+            print("你的参数个数少于字符串中占位的变量数")
             return None
 
     if not isinstance(param, dict) and not isinstance(param, str):
@@ -78,7 +78,7 @@ def sformat(source, param):
             result.extend(l)
         return '\''.join(result)
     except KeyError as e:
-        print( "你的参数与原数据中的占位参数对应不上：(str='--{a}--', b=1) 应是 a=a, 不是 a=b")
+        print("你的参数与原数据中的占位参数对应不上：(str='--{a}--', b=1) 应是 a=a, 不是 a=b")
         return None
 
 
@@ -88,10 +88,10 @@ def oct2chr(oct_str):
     s = 0
     bin_data = ""
     while s < len(body):
-        pri = body[s:s+2]
+        pri = body[s:s + 2]
         if pri == r'\x':
             s += 2
-            bins = body[s:s+2]
+            bins = body[s:s + 2]
             b = chr(int(('0x' + bins), 16))
             bin_data += b
             s += 2
@@ -103,14 +103,14 @@ def oct2chr(oct_str):
 
 
 def lines_str_to_dict(strs):
-    '''
+    """
     将一个多行的String内容转化为dict或是json格式，场景是我们对接口中header进行快速修改时需要加各种引号什么的费时
     :param strs: \n 换行的多行字符串内容
     :return: dict 格式的对象
-    '''
+    """
     if strs is None or strs.strip() == "":
         return None
-    
+
     result = {}
     for i in strs.split("\n"):
         i = i.strip()
@@ -122,17 +122,17 @@ def lines_str_to_dict(strs):
             elif length == 2:
                 result[str_list[0]] = str_list[1].strip()
             else:
-                print( "data is data, cant be dict")
+                print("data is data, cant be dict")
                 return None
     return result
 
 
 def string_to_dict(line_str):
-    '''
+    """
     这个主要是处理接口中的post方式的body数据
     :param line_str:
     :return:
-    '''
+    """
     if line_str is None or line_str.strip() == "":
         return None
     tmp = line_str.split('?', 1)
@@ -147,9 +147,8 @@ def string_to_dict(line_str):
             # （url的编码格式采用的是ASCII码，而不是Unicode，这也就是说你不能在Url中包含任何非ASCII字符，
             # 例如中文。否则如果客户端浏览器和服务端浏览器支持的字符集不同的情况下，中文可能会造成问题。）
             try:
-                str_dict[str_list[0]] = urllib.unquote(str_list[1].strip())
+                str_dict[str_list[0]] = urllib.parse.unquote(str_list[1].strip())
             except IndexError as e:
-                print( "Confirm your data")
+                print("Confirm your data")
                 return None
-    print( str_dict)
-
+    print(str_dict)

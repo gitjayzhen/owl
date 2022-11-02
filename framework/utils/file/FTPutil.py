@@ -5,7 +5,7 @@
 @version: v1.0
 @author: jayzhen
 @license: Apache Licence 
-@email: jayzhen_testing@163.com
+@message: jayzhen_testing@163.com
 @software: PyCharm
 @file: csv_las_to_ermas.py
 @time: 2017/12/27 23:05

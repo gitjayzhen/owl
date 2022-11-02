@@ -6,11 +6,11 @@ Created on 2016年4月28日
 @author: jayzhen
 '''
 import time
-from com.framework.config.MobileConfigGetter import MobileConfigGetter
-from com.framework.utils.dateUtil.DateFormator import formated_time
-from com.framework.utils.reporterUtil.LoggingPorter import LoggingPorter
-from com.framework.mobile.api.AppiumBaseApi import AppiumBaseApi
-from com.framework.mobile.services.AppiumService import InitAppiumDriver
+from framework.config.MobileConfigGetter import MobileConfigGetter
+from framework.utils.dateUtil.DateFormator import formated_time
+from framework.utils.reporterUtil.LoggingPorter import LoggingPorter
+from framework.mobile.api.AppiumBaseApi import AppiumBaseApi
+from framework.mobile.services.AppiumService import InitAppiumDriver
 
 
 class MobileDriverBeforeTest(object):
@@ -47,22 +47,22 @@ class MobileDriverBeforeTest(object):
         ends = formated_time("%Y-%m-%d %H:%M:%S:%f")
         self.__afterSuiteStops = time.time()
         self.log4py.info("======" + ends + "：测试集结束======")
-        self.log4py.info("======本次测试集运行消耗时间 " + str(self.__afterSuiteStops - self.__beforeSuiteStarts) + " 秒！======");
+        self.log4py.info("======本次测试集运行消耗时间 " + str(self.__afterSuiteStops - self.__beforeSuiteStarts) + " 秒！======")
 
     def before_class(self):
         begins = formated_time("%Y-%m-%d %H:%M:%S:%f")
         self.__beforeClassStarts = time.time()
-        self.log4py.info("======" + str(begins) + "：测试【" + str(self.className) + "】开始======");
+        self.log4py.info("======" + str(begins) + "：测试【" + str(self.className) + "】开始======")
 
     def after_class(self):
         # 如果执行了case，必然已经启动了webdriver，在这里做一次关闭操作
         try:
             self.driver.quit()
-        except Exception, e:
+        except Exception as e:
             self.log4py.error("after class with stoping web driver happend error")
         ends = formated_time("%Y-%m-%d %H:%M:%S:%f")
         self.__afterClassStops = time.time()
-        self.log4py.info("======" + str(ends) + "：测试【" + str(self.className) + "】结束======");
+        self.log4py.info("======" + str(ends) + "：测试【" + str(self.className) + "】结束======")
         self.log4py.info("======本次测试运行消耗时间 " + str(self.__afterClassStops - self.__beforeClassStarts) + " 秒！======")
 
     def befor_test(self, methodName):
@@ -82,8 +82,8 @@ class MobileDriverBeforeTest(object):
             self.log4py.error("案例 【" + str(self.className) + "." + methodName+ "】 运行失败，请查看截图快照：" + captureName)
         self.log4py.info("======" + ends + "：案例【" + str(self.className) + "." + methodName+ "】结束======")
         afterTestStops = time.time()
-        self.log4py.info("======本次案例运行消耗时间 " + str(afterTestStops - self.__beforeTestStarts) + " 秒！======");
-        return captureName;
+        self.log4py.info("======本次案例运行消耗时间 " + str(afterTestStops - self.__beforeTestStarts) + " 秒！======")
+        return captureName
 
     def capture(self, name):
         '''
@@ -107,7 +107,7 @@ class MobileDriverBeforeTest(object):
         """
         try:
             self.driver.get_screenshot_as_file(filepath)
-        except Exception, e:
+        except Exception as e:
             self.log4py.error("保存屏幕截图失败，失败信息："+str(e))
 
     def operation_check(self, methodName, isSucceed):
@@ -116,7 +116,7 @@ class MobileDriverBeforeTest(object):
          * @param isSucceed:if your operation success
          * @throws RuntimeException
         """
-        if (isSucceed):
-            self.log4py.info("method 【" + methodName + "】 运行通过！");
+        if isSucceed:
+            self.log4py.info("method 【" + methodName + "】 运行通过！")
         else:
-            self.log4py.error("method 【" + methodName + "】 运行失败！");
+            self.log4py.error("method 【" + methodName + "】 运行失败！")

@@ -5,7 +5,7 @@
 @version: v1.0
 @author: jayzhen
 @license: Apache Licence 
-@email: jayzhen_testing@163.com
+@message: jayzhen_testing@163.com
 @software: PyCharm
 @file: __init__.py
 @time: 2018/4/2  13:48

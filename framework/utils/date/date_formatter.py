@@ -65,7 +65,7 @@ def get_formate_time(format_scheme):
     return datetime.datetime.now().strftime(format_scheme)
 
 
-def add_days_by_formatter(adddays,dateFormat):
+def add_days_by_formatter(adddays, dateFormat):
     """
      * get specified time string in specified date format.
      * @param days
@@ -73,8 +73,8 @@ def add_days_by_formatter(adddays,dateFormat):
      * @param dateFormat
      *            the formatter of date, such as:yyyy-MM-dd HH:mm:ss:SSS.
      """
-    afteraddtime = datetime.datetime.now() + datetime.timedelta(days=adddays)     
-    return time.strftime(afteraddtime,dateFormat)
+    afteraddtime = datetime.datetime.now() + datetime.timedelta(days=adddays)
+    return time.strftime(afteraddtime, dateFormat)
 
 
 def add_months_by_formatter(months, date_format):
@@ -88,18 +88,18 @@ def add_months_by_formatter(months, date_format):
     year = d.year
     month = d.month
     today = d.day
-    if month+months > 12:
+    if month + months > 12:
         month = months
         year += 1
-    else :
+    else:
         month += months
-    days = calendar.monthrange(year, month)[1]  
-    
+    days = calendar.monthrange(year, month)[1]
+
     if today > days:
         afteraddday = days
     else:
         afteraddday = today
-    return datetime.datetime(year,month,afteraddday).strftime(date_format)
+    return datetime.datetime(year, month, afteraddday).strftime(date_format)
 
 
 def add_years_by_formatter(years, dateFormat):
@@ -113,14 +113,14 @@ def add_years_by_formatter(years, dateFormat):
     year = d.year + years
     month = d.month
     today = d.day
-    
-    days = calendar.monthrange(year, month)[1]  
-    
+
+    days = calendar.monthrange(year, month)[1]
+
     if today > days:
         afterday = days
     else:
         afterday = today
-    return datetime.datetime(year,month,afterday).strftime(dateFormat)
+    return datetime.datetime(year, month, afterday).strftime(dateFormat)
 
 
 def first_day_of_next_month(dateFormat):
@@ -131,16 +131,16 @@ def first_day_of_next_month(dateFormat):
     d = datetime.datetime.now()
     year = d.year
     month = d.month
-    if month+1 > 12 :
+    if month + 1 > 12:
         month = 1
         year += 1
-    else :
+    else:
         month += 1
-    
-    return datetime.datetime(year,month,1).strftime(dateFormat)
+
+    return datetime.datetime(year, month, 1).strftime(dateFormat)
 
 
-def first_day_of_month(year, month, dateFormat):
+def first_day_of_month(year, month, date_format):
     """
      * get first day of specified month and specified year in specified date
      * format.
@@ -148,7 +148,7 @@ def first_day_of_month(year, month, dateFormat):
      * @param month:the month of the date.
      * @param dateFormat:the formatter of date, such as:yyyy-MM-dd HH:mm:ss:SSS.
     """
-    return datetime.datetime(year, month, 1).strftime(dateFormat)
+    return datetime.datetime(year, month, 1).strftime(date_format)
 
 
 def first_day_of_month_this_year(month, dateFormat):
@@ -167,5 +167,3 @@ def getMilSecNow():
     get the system current milliseconds.
     """
     return time.time()
-
-

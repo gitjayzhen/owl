@@ -1,4 +1,4 @@
-# coding=gbk
+# -*- coding:utf-8 -*-
 
 import hashlib
 import os
@@ -6,56 +6,56 @@ import datetime
 import sys
 import struct
 import binascii
-# python ¼ì²âÎÄ¼şMD5Öµ
-# python version 2.6
+
+# python æ£€æµ‹æ–‡ä»¶MD5å€¼
+
 """
-1.bin(Êı×Ö)Ê®½øÖÆ-¡·¶ş½øÖÆ£¬ÓĞ0b£¬ÓÃreplace('0b','')
-2.int(¸¡µãĞÍÊı×Ö) float-¡·int
-3.chr(Êı×Öa)aÔÚ0~255Ö®¼ä¡£int-¡·asciiÂë£¨¼´Ö»ÓĞ8Î»£©
-4.ard(×Ö·ûa)asciiÂë-¡·int¡£3µÄ·´Ïò
-5.hex(Êı×Öa)Ê®½øÖÆ-¡·Ê®Áù½øÖÆ
-6.binascii.b2a_hex(×Ö·û´®)×Ö·û´®-¡·Ê®Áù½øÖÆ
-7.binascii.a2b_hex(Ê®Áù½øÖÆÊı)Ê®Áù½øÖÆ-¡·×Ö·û´®¡£6µÄ·´Ïò
+1.bin(æ•°å­—)åè¿›åˆ¶-ã€‹äºŒè¿›åˆ¶ï¼Œæœ‰0bï¼Œç”¨replace('0b','')
+2.int(æµ®ç‚¹å‹æ•°å­—) float-ã€‹int
+3.chr(æ•°å­—a)aåœ¨0~255ä¹‹é—´ã€‚int-ã€‹asciiç ï¼ˆå³åªæœ‰8ä½ï¼‰
+4.ard(å­—ç¬¦a)asciiç -ã€‹intã€‚3çš„åå‘
+5.hex(æ•°å­—a)åè¿›åˆ¶-ã€‹åå…­è¿›åˆ¶
+6.binascii.b2a_hex(å­—ç¬¦ä¸²)å­—ç¬¦ä¸²-ã€‹åå…­è¿›åˆ¶
+7.binascii.a2b_hex(åå…­è¿›åˆ¶æ•°)åå…­è¿›åˆ¶-ã€‹å­—ç¬¦ä¸²ã€‚6çš„åå‘
 """
 
 
 def get_str_md5(src):
     """
-    ¼òµ¥µÄ²âÊÔÒ»¸ö×Ö·û´®µÄMD5Öµ
+    ç®€å•çš„æµ‹è¯•ä¸€ä¸ªå­—ç¬¦ä¸²çš„MD5å€¼
     :param src:
     :return:
     """
     m0 = hashlib.md5()
     m0.update(src.encode("utf8"))
-    print m0.digest()
-    print m0.digest_size
+    print(m0.digest())
+    print(m0.digest_size)
     a = ""
     for i in m0.digest():
         # print hex(bytes(i).decode('ascii') & 0xFF)
-        print struct.unpack('<h', bytes("\xFF"+i))
+        print(struct.unpack('<h', bytes("\xFF" + i)))
         # a += binascii.b2a_hex(i.decode(encoding='utf-8', errors='strict'))
         b = binascii.b2a_hex(i)
         # print int(b) & 0xFF
         if len(b) == 1:
-            print "1111111111"
             a += "0"
         a += b
-    print a
-    print m0.hexdigest()
-    print m0.hexdigest().upper()
-    print type(m0.hexdigest())
+    print(a)
+    print(m0.hexdigest())
+    print(m0.hexdigest().upper())
+    print(type(m0.hexdigest()))
 
 
 def get_file_md5(filename):
     """
-    ´óÎÄ¼şµÄMD5Öµ
+    å¤§æ–‡ä»¶çš„MD5å€¼
     :param filename:
     :return:
     """
     if not os.path.isfile(filename):
         return
     myhash = hashlib.md5()
-    f = file(filename, 'rb')
+    f = open(filename, 'rb')
     while True:
         b = f.read(8096)
         if not b:
@@ -83,14 +83,13 @@ def calc_md5(filepath):
         return hash
 
 
-# filepath = raw_input('ÇëÊäÈëÎÄ¼şÂ·¾¶£º')
+# filepath = raw_input('è¯·è¾“å…¥æ–‡ä»¶è·¯å¾„ï¼š')
 #
-# # Êä³öÎÄ¼şµÄmd5ÖµÒÔ¼°¼ÇÂ¼ÔËĞĞÊ±¼ä
+# # è¾“å‡ºæ–‡ä»¶çš„md5å€¼ä»¥åŠè®°å½•è¿è¡Œæ—¶é—´
 # starttime = datetime.datetime.now()
 # print GetFileMd5(filepath)
 # endtime = datetime.datetime.now()
-# print 'ÔËĞĞÊ±¼ä£º%ds'%((endtime-starttime).seconds)
-
+# print 'è¿è¡Œæ—¶é—´ï¼š%ds'%((endtime-starttime).seconds)
 
 
 if __name__ == "__main__":
@@ -109,4 +108,3 @@ if __name__ == "__main__":
     #     print("no filename")
 
     get_str_md5("7455302211407071221")
-

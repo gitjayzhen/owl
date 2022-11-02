@@ -5,7 +5,7 @@
 @version: v1.0
 @author: jayzhen
 @license: Apache Licence 
-@email: jayzhen_testing@163.com
+@message: jayzhen_testing@163.com
 @file: demo_wencai_client.py
 """
 import chardet
