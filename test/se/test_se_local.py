@@ -28,7 +28,7 @@ class TestSeleniumInLocal:
         self.driver.stop_web_driver()
 
     def test_local_webdriver_run(self):
-        self.driver.get("http://baidu.com")
+        self.driver.get("https://baidu.com")
         self.driver.send_keys(FindBy.CSS_SELECTOR, "#kw", "jayzhen")
         self.driver.click(FindBy.CSS_SELECTOR, "#su")
         self.driver.capture()

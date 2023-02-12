@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
 """
@@ -10,18 +9,16 @@
 @time: 2017/3/28  23:32
 """
 import os
+import random
 import re
 import time
-import random
 
 from appium.webdriver.common.mobileby import MobileBy as By
 from appium.webdriver.common.touch_action import TouchAction
 
 from framework.core.adb.adb import AndroidDebugBridge
-from framework.lib.reporter.logging_porter import LoggingPorter
 from framework.lib.date.date_formatter import get_formate_time
-
-
+from framework.lib.reporter.logging_porter import LoggingPorter
 
 PATH = lambda a: os.path.abspath(a)
 

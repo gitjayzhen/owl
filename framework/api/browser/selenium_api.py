@@ -1,15 +1,15 @@
 # -*- coding:UTF-8 -*-
 
-import time
 import random
+import time
+
 from selenium.common import exceptions
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.relative_locator import locate_with
 from selenium.webdriver.support.ui import Select
 
-from framework.lib.reporter.logging_porter import LoggingPorter
 from framework.lib.date.date_formatter import get_formate_time
+from framework.lib.reporter.logging_porter import LoggingPorter
 
 '''
  * 封装整体思路：
