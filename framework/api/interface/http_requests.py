@@ -3,7 +3,7 @@
 import os
 import json
 from requests import Session, Request
-from framework.utils.reporter_util.logging_porter import LoggingPorter
+from framework.lib.reporter_util.logging_porter import LoggingPorter
 
 """
 作为核心的请求发送model，需要处理请求的header和body及发送

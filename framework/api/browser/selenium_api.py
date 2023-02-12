@@ -8,8 +8,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.relative_locator import locate_with
 from selenium.webdriver.support.ui import Select
 
-from framework.utils.reporter.logging_porter import LoggingPorter
-from framework.utils.date.date_formatter import get_formate_time
+from framework.lib.reporter.logging_porter import LoggingPorter
+from framework.lib.date.date_formatter import get_formate_time
 
 '''
  * 封装整体思路：

@@ -18,8 +18,8 @@ from appium.webdriver.common.mobileby import MobileBy as By
 from appium.webdriver.common.touch_action import TouchAction
 
 from framework.core.adb.adb import AndroidDebugBridge
-from framework.utils.reporter.logging_porter import LoggingPorter
-from framework.utils.date.date_formatter import get_formate_time
+from framework.lib.reporter.logging_porter import LoggingPorter
+from framework.lib.date.date_formatter import get_formate_time
 
 
 

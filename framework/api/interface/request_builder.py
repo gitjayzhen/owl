@@ -12,7 +12,7 @@
 import re
 import pandas as pd
 
-from framework.utils.fileUtil.FileInspector import FileInspector
+from framework.lib.fileUtil.FileInspector import FileInspector
 from framework.domain.request_struct import DataStruct
 from framework.api.interface.http_requests import Requester
 from styleframe import Styler, utils, StyleFrame

@@ -7,9 +7,9 @@ Created on 2016年4月26日
 import os
 
 from framework.domain.se_config_domain import SeIniDomain
-from framework.utils.file.ConfigReader import ConfigReader
-from framework.utils.file.file_inspector import FileInspector
-from framework.utils.reporter.logging_porter import LoggingPorter
+from framework.lib.file.ConfigReader import ConfigReader
+from framework.lib.file.file_inspector import FileInspector
+from framework.lib.reporter.logging_porter import LoggingPorter
 
 """
 读取配置文件.conf的内容，返回driver的绝对路径

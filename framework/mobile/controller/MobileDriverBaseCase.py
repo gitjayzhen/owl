@@ -7,8 +7,8 @@ Created on 2016年4月28日
 '''
 import time
 from framework.config.MobileConfigGetter import MobileConfigGetter
-from framework.utils.dateUtil.DateFormator import formated_time
-from framework.utils.reporterUtil.LoggingPorter import LoggingPorter
+from framework.lib.dateUtil.DateFormator import formated_time
+from framework.lib.reporterUtil.LoggingPorter import LoggingPorter
 from framework.mobile.api.AppiumBaseApi import AppiumBaseApi
 from framework.mobile.services.AppiumService import InitAppiumDriver
 

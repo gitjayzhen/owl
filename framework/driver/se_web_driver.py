@@ -7,8 +7,8 @@ from requests import exceptions
 from framework.services.browser_service import SeleniumDriverBrowser
 from framework.configs.web_config import WebConfingGetter
 from framework.api.browser.selenium_api import SeleniumWorkApi
-from framework.utils.date.date_formatter import get_formate_time
-from framework.utils.reporter.logging_porter import LoggingPorter
+from framework.lib.date.date_formatter import get_formate_time
+from framework.lib.reporter.logging_porter import LoggingPorter
 
 
 class WebDriverController(object):
