@@ -5,10 +5,10 @@ Created on 2016年4月26日
 """
 
 import os
-from framework.lib.file.ConfigReader import ConfigReader
-from framework.lib.file.file_inspector import FileInspector
-from framework.mobile.domain.AppiumIniDomain import AppiumIniDomain
-from framework.lib.reporter.logging_porter import LoggingPorter
+from owl.lib.file.ConfigReader import ConfigReader
+from owl.lib.file.file_inspector import FileInspector
+from owl.mobile.domain.AppiumIniDomain import AppiumIniDomain
+from owl.lib.reporter.logging_porter import LoggingPorter
 
 """
 读取配置文件.conf的内容，返回driver的绝对路径

@@ -114,6 +114,6 @@ result:
 
 详细的功能模块内容：
 
-* [mobile](framework/mobile/README.md)
-* [web](framework/web/readme.md)
-* [interface](framework/api/interface/readme.md)
+* [mobile](owl/mobile/README.md)
+* [web](owl/web/readme.md)
+* [interface](owl/api/interface/readme.md)

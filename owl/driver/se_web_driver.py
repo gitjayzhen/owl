@@ -4,11 +4,11 @@ import time
 import requests
 from requests import exceptions
 
-from framework.services.browser_service import SeleniumDriverBrowser
-from framework.configs.web_config import WebConfingGetter
-from framework.api.browser.selenium_api import SeleniumWorkApi
-from framework.lib.date.date_formatter import get_formate_time
-from framework.lib.reporter.logging_porter import LoggingPorter
+from owl.services.browser_service import SeleniumDriverBrowser
+from owl.configs.web_config import WebConfingGetter
+from owl.api.browser.selenium_api import SeleniumWorkApi
+from owl.lib.date.date_formatter import get_formate_time
+from owl.lib.reporter.logging_porter import LoggingPorter
 
 
 class WebDriverController(object):

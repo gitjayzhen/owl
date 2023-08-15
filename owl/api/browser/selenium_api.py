@@ -8,8 +8,8 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 
-from framework.lib.date.date_formatter import get_formate_time
-from framework.lib.reporter.logging_porter import LoggingPorter
+from owl.lib.date.date_formatter import get_formate_time
+from owl.lib.reporter.logging_porter import LoggingPorter
 
 '''
  * 封装整体思路：
@@ -24,10 +24,12 @@ class SeleniumWorkApi(object):
     """
 
     def __init__(self, driver, properties):
+        self.log4py = LoggingPorter()
+
         self.capturePath = properties.capturePath
         self.pauseTime = int(properties.pauseTime)
         self.implicitly_wait_time = int(properties.waitTimeout)
-        self.log4py = LoggingPorter()
+
         self.driver = driver
         self.Find = By
 

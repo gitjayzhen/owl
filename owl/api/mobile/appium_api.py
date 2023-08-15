@@ -16,9 +16,9 @@ import time
 from appium.webdriver.common.mobileby import MobileBy as By
 from appium.webdriver.common.touch_action import TouchAction
 
-from framework.core.adb.adb import AndroidDebugBridge
-from framework.lib.date.date_formatter import get_formate_time
-from framework.lib.reporter.logging_porter import LoggingPorter
+from owl.core.adb.adb import AndroidDebugBridge
+from owl.lib.date.date_formatter import get_formate_time
+from owl.lib.reporter.logging_porter import LoggingPorter
 
 PATH = lambda a: os.path.abspath(a)
 
@@ -748,7 +748,7 @@ class AppiumBaseApi(object):
         pass
 
     def start_activity(self, app_package, app_activity, **opts):
-        """Opens an arbitrary activity during a test. If the activity belongs to
+        """Opens an arbitrary activity during a tests. If the activity belongs to
         another application, that application is started and the activity is opened.
         This is an Android-only method.
         :Args:
@@ -865,7 +865,7 @@ class AppiumBaseApi(object):
         For more on settings, see: https://github.com/appium/appium/blob/master/docs/en/advanced-concepts/settings.md
 
         :Args:
-         - settings - dictionary of settings to apply to the current test session
+         - settings - dictionary of settings to apply to the current tests session
         """
         pass
 

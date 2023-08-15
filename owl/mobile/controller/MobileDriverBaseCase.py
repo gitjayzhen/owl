@@ -6,11 +6,11 @@ Created on 2016年4月28日
 @author: jayzhen
 '''
 import time
-from framework.config.MobileConfigGetter import MobileConfigGetter
-from framework.lib.dateUtil.DateFormator import formated_time
-from framework.lib.reporterUtil.LoggingPorter import LoggingPorter
-from framework.mobile.api.AppiumBaseApi import AppiumBaseApi
-from framework.mobile.services.AppiumService import InitAppiumDriver
+from owl.config.MobileConfigGetter import MobileConfigGetter
+from owl.lib.dateUtil.DateFormator import formated_time
+from owl.lib.reporterUtil.LoggingPorter import LoggingPorter
+from owl.mobile.api.AppiumBaseApi import AppiumBaseApi
+from owl.mobile.services.AppiumService import InitAppiumDriver
 
 
 class MobileDriverBeforeTest(object):

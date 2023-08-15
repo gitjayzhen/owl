@@ -11,8 +11,8 @@
 """
 import pytest
 
-from framework.domain.selector_type import FindBy
-from framework.driver.se_web_driver import WebDriverController
+from owl.domain.selector_type import FindBy
+from owl.driver.se_web_driver import WebDriverController
 
 
 class TestSeleniumInLocal:

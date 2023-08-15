@@ -113,7 +113,7 @@ class Database(object):
 
   '''
   if __name__ == '__main__':
-    db = Database('test', 'test', 'my_host', '1000', 'my_db', 0)
+    db = Database('tests', 'tests', 'my_host', '1000', 'my_db', 0)
     columns = db.query('select * from my-table')
     print columns
   '''
