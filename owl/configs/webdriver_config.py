@@ -2,7 +2,7 @@
 
 import os
 
-from owl.domain.se_config_domain import SeleniumIniDomain
+from owl.domain.se_config_do import SeleniumIniDomain
 from owl.lib.file.ConfigReader import ConfigReader
 from owl.lib.file.file_inspector import FileInspector
 from owl.lib.reporter.logging_porter import LoggingPorter

@@ -1,16 +1,17 @@
 # -*- coding:utf8 -*-
 
-import os
 import json
-from requests import Session, Request
-from owl.lib.reporter_util.logging_porter import LoggingPorter
+import os
 
-"""
-作为核心的请求发送model，需要处理请求的header和body及发送
-"""
+from requests import Session, Request
+
+from owl.lib.reporter.logging_porter import LoggingPorter
 
 
 class Requester(object):
+    """
+    作为核心的请求发送model，需要处理请求的header和body及发送
+    """
 
     def __init__(self):
         self.log4py = LoggingPorter()

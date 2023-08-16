@@ -1,4 +1,3 @@
-#!usr/bin/env python  
 # -*- coding:utf-8 -*-
 
 """ 
@@ -13,7 +12,7 @@ import re
 import pandas as pd
 
 from owl.lib.fileUtil.FileInspector import FileInspector
-from owl.domain.request_struct import DataStruct
+from owl.domain.request_struct_do import DataStruct
 from owl.api.interface.http_requests import Requester
 from styleframe import Styler, utils, StyleFrame
 

@@ -23,6 +23,7 @@ import json
 a(1,2,3,4,4,Z=8,k=2) ： *接受k=v之前的内容，**接受k=v 
 """
 
+
 class AndroidDebugBridge(object):
     """adb 相关操作命令封装
 
@@ -30,19 +31,19 @@ class AndroidDebugBridge(object):
         object (_type_): _description_
     """
 
-    def __init__(self, **serialno_num):
+    def __init__(self, **serial_num):
         self.system = None
         self.find_type = None
         self.command = "adb"
-        self.__serialno_num = ""
-        if "sno" in serialno_num:
-            self.__serialno_num = serialno_num.get("sno")
+        self.__serial_num = ""
+        if "sno" in serial_num:
+            self.__serial_num = serial_num.get("sno")
 
-    def get_serialno_num(self):
-        return self.__serialno_num
+    def get_serial_num(self):
+        return self.__serial_num
 
-    def set_serialno_num(self, sno):
-        self.__serialno_num = sno
+    def set_serial_num(self, sno):
+        self.__serial_num = sno
 
     def judgment_system_type(self):
         # 判断系统类型，windows使用findstr，linux使用grep
@@ -66,17 +67,17 @@ class AndroidDebugBridge(object):
             # adb命令
 
     def adb(self, args):
-        if self.__serialno_num == "" or self.__serialno_num is None:
+        if self.__serial_num == "" or self.__serial_num is None:
             cmd = "%s %s" % (self.command, str(args))
         else:
-            cmd = "%s -s %s %s" % (self.command, self.__serialno_num, str(args))
+            cmd = "%s -s %s %s" % (self.command, self.__serial_num, str(args))
         return subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     def shell(self, args):
-        if self.__serialno_num == "" or self.__serialno_num is None:
+        if self.__serial_num == "" or self.__serial_num is None:
             cmd = "%s shell %s" % (self.command, str(args))
         else:
-            cmd = "%s -s %s shell %s" % (self.command, self.__serialno_num, str(args))
+            cmd = "%s -s %s shell %s" % (self.command, self.__serial_num, str(args))
         return subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     def get_device_state(self):
@@ -93,7 +94,8 @@ class AndroidDebugBridge(object):
 
     def get_device_list(self):
         devices = []
-        result = subprocess.Popen("adb devices", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout.readlines()
+        result = subprocess.Popen("adb devices", shell=True, stdout=subprocess.PIPE,
+                                  stderr=subprocess.PIPE).stdout.readlines()
         result.reverse()  # 将readlines结果反向排序
         for line in result[1:]:
             if "attached" not in line.strip() and "daemon" not in line.strip():
@@ -139,7 +141,7 @@ class AndroidDebugBridge(object):
         result = pidinfo.split(" ")
         result.remove(result[0])
 
-        return  pattern.findall(" ".join(result))[0]
+        return pattern.findall(" ".join(result))[0]
 
     def get_focused_package_and_activity_2(self):
         pattern = re.compile(r"[a-zA-Z0-9\.]+/.[a-zA-Z0-9\.]+")
@@ -168,7 +170,7 @@ class AndroidDebugBridge(object):
         """
         获取电池电量
         """
-        level = self.shell("dumpsys battery | %s level" %self.find_type).stdout.read().split(": ")[-1]
+        level = self.shell("dumpsys battery | %s level" % self.find_type).stdout.read().split(": ")[-1]
         return int(level)
 
     def get_battery_status(self):
@@ -180,12 +182,12 @@ class AndroidDebugBridge(object):
         BATTERY_STATUS_NOT_CHARGING：未充电
         BATTERY_STATUS_FULL: 充电已满
         """
-        statusDict = {1 : "BATTERY_STATUS_UNKNOWN",
-                      2 : "BATTERY_STATUS_CHARGING",
-                      3 : "BATTERY_STATUS_DISCHARGING",
-                      4 : "BATTERY_STATUS_NOT_CHARGING",
-                      5 : "BATTERY_STATUS_FULL"}
-        status = self.shell("dumpsys battery | %s status" %self.find_type).stdout.read().split(": ")[-1]
+        statusDict = {1: "BATTERY_STATUS_UNKNOWN",
+                      2: "BATTERY_STATUS_CHARGING",
+                      3: "BATTERY_STATUS_DISCHARGING",
+                      4: "BATTERY_STATUS_NOT_CHARGING",
+                      5: "BATTERY_STATUS_FULL"}
+        status = self.shell("dumpsys battery | %s status" % self.find_type).stdout.read().split(": ")[-1]
 
         return statusDict[int(status)]
 
@@ -345,12 +347,12 @@ class AndroidDebugBridge(object):
         触摸事件
         usage: touch(e), touch(x=0.5,y=0.5)
         """
-        if(e != None):
+        if (e != None):
             x = e[0]
             y = e[1]
-        if(0 < x < 1):
+        if 0 < x < 1:
             x = x * self.width
-        if(0 < y < 1):
+        if 0 < y < 1:
             y = y * self.high
 
         self.shell("input tap %s %s" % (str(x), str(y)))
@@ -372,7 +374,8 @@ class AndroidDebugBridge(object):
         - ratioHigh -: high占比, 0<ratioHigh<1
         usage: touchByRatio(0.5, 0.5) 点击屏幕中心位置
         """
-        self.shell("input tap %s %s" % (str(ratioWidth * self.getScreenResolution()[0]), str(ratioHigh * self.getScreenResolution()[1])))
+        self.shell("input tap %s %s" % (
+        str(ratioWidth * self.getScreenResolution()[0]), str(ratioHigh * self.getScreenResolution()[1])))
         time.sleep(0.5)
 
     def do_swipe_by_coord(self, start_x, start_y, end_x, end_y, duration=" "):
@@ -390,19 +393,19 @@ class AndroidDebugBridge(object):
                swipe(e1, end_x=200, end_y=500)
                swipe(start_x=0.5, start_y=0.5, e2)
         """
-        if(e1 != None):
+        if (e1 != None):
             start_x = e1[0]
             start_y = e1[1]
-        if(e2 != None):
+        if (e2 != None):
             end_x = e2[0]
             end_y = e2[1]
-        if(0 < start_x < 1):
+        if (0 < start_x < 1):
             start_x = start_x * self.width
-        if(0 < start_y < 1):
+        if (0 < start_y < 1):
             start_y = start_y * self.high
-        if(0 < end_x < 1):
+        if (0 < end_x < 1):
             end_x = end_x * self.width
-        if(0 < end_y < 1):
+        if (0 < end_y < 1):
             end_y = end_y * self.high
 
         self.shell("input swipe %s %s %s %s %s" % (str(start_x), str(start_y), str(end_x), str(end_y), str(duration)))
@@ -413,8 +416,10 @@ class AndroidDebugBridge(object):
         通过比例发送滑动事件，Android 4.4以上可选duration(ms)
         usage: swipeByRatio(0.9, 0.5, 0.1, 0.5) 左滑
         """
-        self.shell("input swipe %s %s %s %s %s" % (str(start_ratioWidth * self.getScreenResolution()[0]), str(start_ratioHigh * self.getScreenResolution()[1]), \
-                                             str(end_ratioWidth * self.getScreenResolution()[0]), str(end_ratioHigh * self.getScreenResolution()[1]), str(duration)))
+        self.shell("input swipe %s %s %s %s %s" % (
+        str(start_ratioWidth * self.getScreenResolution()[0]), str(start_ratioHigh * self.getScreenResolution()[1]), \
+        str(end_ratioWidth * self.getScreenResolution()[0]), str(end_ratioHigh * self.getScreenResolution()[1]),
+        str(duration)))
         time.sleep(0.5)
 
     def do_swipe_to_left(self):
@@ -474,7 +479,7 @@ class AndroidDebugBridge(object):
             if i != "":
                 out.append(i)
         length = len(out)
-        for i in xrange(length):
+        for i in range(length):
             self.shell("input text %s" % out[i])
             if i != length - 1:
                 self.sendKeyEvent(EventKeys.SPACE)
@@ -522,8 +527,9 @@ class AndroidDebugBridge(object):
         # ========================= ======== ================ =========== ============
         # adb.exe                      10200 Console                    1      6,152 K
 
-        process_name = os.popen('tasklist /FI "PID eq %s"' %pid).read().split()[-6]
-        process_path = os.popen('wmic process where name="%s" get executablepath' %process_name).read().split("\r\n")[1]
+        process_name = os.popen('tasklist /FI "PID eq %s"' % pid).read().split()[-6]
+        process_path = os.popen('wmic process where name="%s" get executablepath' % process_name).read().split("\r\n")[
+            1]
 
         # #分割路径，得到进程所在文件夹名
         # name_list = process_path.split("\\")
@@ -532,49 +538,49 @@ class AndroidDebugBridge(object):
         # #打开进程所在文件夹
         # os.system("explorer.exe %s" %directory)
         # 杀死该进程
-        os.system("taskkill /F /PID %s" %pid)
+        os.system("taskkill /F /PID %s" % pid)
         os.system("adb start-server")
 
-    def do_input_text(self,text):
+    def do_input_text(self, text):
         text_list = list(text)
-        specific_symbol = set(['&','@','#','$','^','*'])
+        specific_symbol = set(['&', '@', '#', '$', '^', '*'])
         for i in range(len(text_list)):
             if text_list[i] in specific_symbol:
-                if i-1 < 0:
+                if i - 1 < 0:
                     text_list.append(text_list[i])
                     text_list[0] = "\\"
                 else:
-                    text_list[i-1] = text_list[i-1] + "\\"
+                    text_list[i - 1] = text_list[i - 1] + "\\"
         seed = ''.join(text_list)
-        self.shell('input text "%s"'%seed)
+        self.shell('input text "%s"' % seed)
 
     def do_capture_window(self):
         self.shell("rm /sdcard/screenshot.png").wait()
         self.shell("/system/bin/screencap -p /sdcard/screenshot.png").wait()
-        print ">>>截取屏幕成功，在桌面查看文件。"
+        print(">>>截取屏幕成功，在桌面查看文件。")
         c_time = time.strftime("%Y_%m_%d_%H-%M-%S")
-        self.adb('pull /sdcard/screenshot.png T:\\%s.png"'%c_time).wait()
+        self.adb('pull /sdcard/screenshot.png T:\\%s.png"' % c_time).wait()
 
-    def get_srceenrecord(self,times, path):
+    def get_srceenrecord(self, times, path):
         PATH = lambda p: os.path.abspath(p)
         sdk = string.atoi(self.shell("getprop ro.build.version.sdk").stdout.read())
         try:
             times = string.atoi(times)
-        except ValueError, e:
-            print ">>>Value error because you enter value is not int type, use default 'times=20s'"
+        except ValueError as e:
+            print(">>>Value error because you enter value is not int type, use default 'times=20s'")
             times = int(20)
         if sdk >= 19:
-                self.shell("screenrecord --time-limit %d /data/local/tmp/screenrecord.mp4" % times).wait()
-                print ">>>Get Video file..."
-                time.sleep(1.5)
-                path = PATH(path)
-                if not os.path.isdir(path):
-                    os.makedirs(path)
-                self.adb("pull /data/local/tmp/screenrecord.mp4 %s" % PATH("%s/%s.mp4" % (path, self.timestamp()))).wait()
-                self.shell("rm /data/local/tmp/screenrecord.mp4")
-                print ">>>ok"
+            self.shell("screenrecord --time-limit %d /data/local/tmp/screenrecord.mp4" % times).wait()
+            print(">>>Get Video file...")
+            time.sleep(1.5)
+            path = PATH(path)
+            if not os.path.isdir(path):
+                os.makedirs(path)
+            self.adb("pull /data/local/tmp/screenrecord.mp4 %s" % PATH("%s/%s.mp4" % (path, self.timestamp()))).wait()
+            self.shell("rm /data/local/tmp/screenrecord.mp4")
+            print(">>>ok")
         else:
-            print "sdk version is %d, less than 19!" % sdk
+            print("sdk version is %d, less than 19!" % sdk)
             sys.exit(0)
 
     def get_crash_log(self):
@@ -583,13 +589,13 @@ class AndroidDebugBridge(object):
         result_list = self.shell("dumpsys dropbox | findstr data_app_crash").stdout.readlines()
         for time in result_list:
             temp_list = time.split(" ")
-            temp_time= []
+            temp_time = []
             temp_time.append(temp_list[0])
             temp_time.append(temp_list[1])
             time_list.append(" ".join(temp_time))
 
         if time_list is None or len(time_list) <= 0:
-            print ">>>No crash log to get"
+            print(">>>No crash log to get")
             return None
         log_file = "T://Exception_log_%s.txt" % self.timestamp()
         f = open(log_file, "wb")
@@ -597,20 +603,20 @@ class AndroidDebugBridge(object):
             cash_log = self.shell(timel).stdout.read()
             f.write(cash_log)
         f.close()
-        print ">>>check local file"
+        print(">>>check local file")
 
     def get_permission_list(self, package_name):
         PATH = lambda p: os.path.abspath(p)
         permission_list = []
-        result_list = self.shell("dumpsys package %s | findstr android.permission" %package_name).stdout.readlines()
+        result_list = self.shell("dumpsys package %s | findstr android.permission" % package_name).stdout.readlines()
         for permission in result_list:
             permission_list.append(permission.strip())
-        pwd = os.path.join(os.getcwd(),"gui_controller\\scriptUtils")
-        permission_json_file = file("%s\\permission.json"%pwd)
+        pwd = os.path.join(os.getcwd(), "gui_controller\\scriptUtils")
+        permission_json_file = open("%s\\permission.json" % pwd)
         file_content = json.load(permission_json_file)["PermissList"]
         name = "_".join(package_name.split("."))
-        f = open(PATH("%s\\%s_permission.txt" %(pwd,name)), "w")
-        f.write("package: %s\n\n" %package_name)
+        f = open(PATH("%s\\%s_permission.txt" % (pwd, name)), "w")
+        f.write("package: %s\n\n" % package_name)
         for permission in permission_list:
             for permission_dict in file_content:
                 if permission == permission_dict["Key"]:
@@ -624,7 +630,6 @@ class AndroidDebugBridge(object):
         """
         获取当前Activity的控件树
         """
-        print xml_path
         PATH = lambda a: os.path.abspath(a)
         if int(self.get_sdk_version()) >= 19:
             self.shell("uiautomator dump --compressed /data/local/tmp/uidump.xml").wait()

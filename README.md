@@ -114,10 +114,11 @@ result:
 
 详细的功能模块内容：
 
-* [mobile](owl/mobile/README.md)
+* [mobile](owl/api/mobile/README.md)
 * [web](owl/web/readme.md)
 * [interface](owl/api/interface/readme.md)
 
-## 20230816 升级到 selenium4
+## 20230816 升级到 selenium4、appium2
 
 - https://www.selenium.dev/zh-cn/documentation/webdriver/getting_started/upgrade_to_selenium_4/
+- https://appium.io/docs/en/2.0/quickstart/test-py/

@@ -7,7 +7,7 @@ Created on 2016年4月26日
 import os
 from owl.lib.file.ConfigReader import ConfigReader
 from owl.lib.file.file_inspector import FileInspector
-from owl.mobile.domain.AppiumIniDomain import AppiumIniDomain
+from owl.domain.appium_config_do import AppiumIniDomain
 from owl.lib.reporter.logging_porter import LoggingPorter
 
 """

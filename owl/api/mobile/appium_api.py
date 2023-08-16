@@ -83,11 +83,11 @@ class AppiumBaseApi(object):
         return isSucceed
 
     def is_alert_exists(self,timeout):
-        '''
+        """
          * judge if the alert is present in specified seconds</BR>
          * 在指定的时间内判断弹出的对话框（Dialog）是否存在。
          * @param timeout:timeout in seconds
-             '''
+             """
         isSucceed = False
         timeBegins = time.time()
         while time.time() - timeBegins <= timeout * 1000:
