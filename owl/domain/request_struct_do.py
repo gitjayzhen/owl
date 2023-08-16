@@ -10,7 +10,7 @@ class DataStruct(object):
 
     """
       于接收读取的测试数据,记录要写入测试报告的数据
-      数据驱动，作为数据的标准输入，不管数据是通过excel、txt、config、sql等方式表现，到了这里，都将是接口所需的标准类型json|xml等
+      数据驱动，作为数据的标准输入，不管数据是通过excel、txt、configs、sql等方式表现，到了这里，都将是接口所需的标准类型json|xml等
     """
 
     def __init__(self):
