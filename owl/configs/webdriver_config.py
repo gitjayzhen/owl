@@ -1,22 +1,18 @@
 # -*- coding:UTF-8 -*-
-"""
-Created on 2016年4月26日
-@author: jayzhen
-"""
 
 import os
 
-from owl.domain.se_config_domain import SeIniDomain
+from owl.domain.se_config_domain import SeleniumIniDomain
 from owl.lib.file.ConfigReader import ConfigReader
 from owl.lib.file.file_inspector import FileInspector
 from owl.lib.reporter.logging_porter import LoggingPorter
 
-"""
-读取配置文件.conf的内容，返回driver的绝对路径
-"""
 
+class WebdriverConfiger(object):
+    """
+    读取配置文件.conf的内容，返回driver的绝对路径
+    """
 
-class WebConfingGetter(object):
     def __init__(self):
         self.__file_abs_path = None
         self.__project_path = None
@@ -34,7 +30,7 @@ class WebConfingGetter(object):
         获取配置文件中的内容并返回对应的对象
         :return:
         """
-        wp = SeIniDomain()
+        wp = SeleniumIniDomain()
         try:
             wp.pageLoadTimeout = self.conf.get_value("TimeSet", "pageLoadTimeout")
             wp.waitTimeout = self.conf.get_value("TimeSet", "waitTimeout")
@@ -54,13 +50,14 @@ class WebConfingGetter(object):
             wp.browser = self.conf.get_value("run", "browser")
             wp.type = self.conf.get_value("run", "type")
             wp.browserdriver = os.path.join(self.__project_path, self.conf.get_value("driver", wp.browser))
+            wp.isHeadless = self.conf.get_value("driver", "isHeadless")
             print(wp.browserdriver)
             if wp.type == "0":
                 d = {'url': self.conf.get_value('remoteProfile', 'url'),
                      'browserName': self.conf.get_value('remoteProfile', 'browserName'),
-                     'version': self.conf.get_value('remoteProfile', 'version'),
-                     'maxinstance': self.conf.get_value('remoteProfile', 'maxinstance'),
-                     'platform': self.conf.get_value('remoteProfile', 'platform')}
+                     'browserVersion': self.conf.get_value('remoteProfile', 'browserVersion'),
+                     'maxinstance': self.conf.get_value('remoteProfile', 'maxInstance'),
+                     'platformName': self.conf.get_value('remoteProfile', 'platformName')}
                 wp.remoteProfile = d
         except Exception as e:
             self.log4py.error("实例化selenium配置文件对象时，出现异常 ：" + str(e))

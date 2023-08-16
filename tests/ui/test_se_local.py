@@ -9,10 +9,9 @@
 @file: test_se_local.py
 @time: 2022/10/27 18:49
 """
-import pytest
 
+from owl.api.browser.selenium_driver import BrowserDriver
 from owl.domain.selector_type import FindBy
-from owl.driver.se_web_driver import WebDriverController
 
 
 class TestSeleniumInLocal:
@@ -21,7 +20,7 @@ class TestSeleniumInLocal:
 
     # 方法级开始--类里每个测试方法执行前执行
     def setup(self):
-        self.driver = WebDriverController(self).get_driver()
+        self.driver = BrowserDriver(self).get_driver()
 
     # 方法级结束--类里每个测试方法执行后执行
     def teardown(self):

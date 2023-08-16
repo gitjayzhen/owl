@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """
@@ -8,11 +7,11 @@
 @message: jayzhen_testing@163.com
 @software: PyCharm
 @file: se_config_domain.py
-@time: 2018/4/3 12:49
+@time: 2023/8/16 12:49
 """
 
 
-class SeIniDomain(object):
+class SeleniumIniDomain(object):
 
     def __init__(self):
         # 页面加载等待时间，单位：秒
@@ -38,6 +37,8 @@ class SeIniDomain(object):
         self.type = None
         # 远程访问浏览器的配置:{}
         self.remoteProfile = None
+        # 是否使用无头模式
+        self.isHeadless = False
 
     def __str__(self):
         return "页面加载等待时间，单位：秒 :" + str(self.pageLoadTimeout) + \

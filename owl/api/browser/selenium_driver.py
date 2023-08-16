@@ -1,17 +1,18 @@
 # -*- coding:UTF-8 -*-
 
 import time
+
 import requests
 from requests import exceptions
 
-from owl.services.browser_service import SeleniumDriverBrowser
-from owl.configs.web_config import WebConfingGetter
 from owl.api.browser.selenium_api import SeleniumWorkApi
+from owl.api.browser.selenium_browser import WebBrowser
+from owl.configs.webdriver_config import WebdriverConfiger
 from owl.lib.date.date_formatter import get_formate_time
 from owl.lib.reporter.logging_porter import LoggingPorter
 
 
-class WebDriverController(object):
+class BrowserDriver(object):
     """这里是测试脚本的一些前置内容
     作为被用例使用的 selenium 操作入口，完成两个工作
     1. 读取参数配置
@@ -22,24 +23,24 @@ class WebDriverController(object):
         """
         :param clazz: 获取脚本的文件名和class名
         """
+        self.log4py = LoggingPorter()
+        self.className = clazz.__class__.__module__ + "." + clazz.__class__.__name__
+        self.se_properties = None
         self.driver_instance = None
         self.se_api = None
-        self.className = clazz.__class__.__module__ + "." + clazz.__class__.__name__
-        # self.className = "Testing"
-        self.se_properties = WebConfingGetter().properties
-        self.log4py = LoggingPorter()
         self.__beforeSuiteStart = 0
         self.__beforeClassStart = 0
         self.__beforeTestStart = 0
 
     def get_driver(self):
+        self.se_properties = WebdriverConfiger().properties
         try:
             resp = requests.get(self.se_properties.baseURL, timeout=(3.05, 20))
             if resp.status_code != 200:
                 self.log4py.error("浏览器实例化driver失败，请检查你的被测试服务是否启动或baseURL是否设置正确: {}".format(self.se_properties.baseURL))
         except exceptions.ConnectionError as e:
             self.log4py.error("浏览器实例化driver失败，请检查你的被测试服务是否启动或baseURL是否设置正确: {}".format(self.se_properties.baseURL))
-        self.driver_instance = SeleniumDriverBrowser(self.se_properties).start_browser()
+        self.driver_instance = WebBrowser(self.se_properties).start_browser()
         if self.driver_instance is None:
             self.log4py.error("浏览器实例化driver失败，请重新检查驱动及启动参数")
             return None

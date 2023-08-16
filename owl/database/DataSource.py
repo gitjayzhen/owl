@@ -33,7 +33,7 @@ class Database(object):
       self.connection.client_identifier = 'my_app'
       self.cursor = self.connection.cursor()
       self.idVar = self.cursor.var(cx_Oracle.NUMBER)
-    except cx_Oracle.DatabaseError, exc:
+    except cx_Oracle.DatabaseError as exc:
       error, = exc
       self.logger.exception(
         'Exception occured while trying to create database object : %s',
@@ -44,7 +44,7 @@ class Database(object):
     try:
       self.cursor.execute(q)
       return self.cursor.fetchall()
-    except cx_Oracle.DatabaseError, exc:
+    except cx_Oracle.DatabaseError as exc:
       error, = exc
       self.logger.info(
         "Error occured while trying to run query: %s, error : %s", q,

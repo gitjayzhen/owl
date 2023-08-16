@@ -117,3 +117,7 @@ result:
 * [mobile](owl/mobile/README.md)
 * [web](owl/web/readme.md)
 * [interface](owl/api/interface/readme.md)
+
+## 20230816 升级到 selenium4
+
+- https://www.selenium.dev/zh-cn/documentation/webdriver/getting_started/upgrade_to_selenium_4/

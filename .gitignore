@@ -96,3 +96,5 @@ ENV/
 .ropeproject
 .vscode
 .pytest_cache
+.DS_Store
+chromedriver

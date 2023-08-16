@@ -6,7 +6,6 @@ Created on 2017年11月21日
 pip install pymongo
 '''
 
-# encoding:utf=8
 import pymongo as pm
 import json
 from bson.objectid import ObjectId
