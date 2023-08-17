@@ -16,6 +16,7 @@ import time
 from multiprocessing import Process
 
 from owl.api.mobile.services.CreateConfigFile import CreateConfigFile
+from owl.core.adb.adb import AndroidDebugBridge
 from owl.lib.reporter.logging_porter import LoggingPorter
 
 
@@ -43,6 +44,7 @@ class ServicePort(object):
         self.appium_port_list = []
         self.bootstrap_port_list = []
         self.device_list = []
+        self.android = AndroidDebugBridge()
 
         self.tmp = {}
 
@@ -53,12 +55,12 @@ class ServicePort(object):
         """
         flag = False
         try:
-            port_res = subprocess.Popen('netstat -ano | findstr %s | findstr LISTENING' % port_num, shell=True, stdout=subprocess.PIPE,
+            port_res = subprocess.Popen('netstat -ano | grep %s | grep LISTENING' % port_num, shell=True, stdout=subprocess.PIPE,
                                         stderr=subprocess.PIPE).stdout.readlines()
             reg = re.compile(str(port_num))
             for i in range(len(port_res)):
                 ip_port = port_res[i].strip().split("   ")
-                if re.search(reg, ip_port[1]):
+                if re.search(reg, str(ip_port[1])):
                     flag = True
                     self.log4py.info(str(port_num) + " 端口已经在使用,对应的进程是：" + str(ip_port[-1]))
                     self.tmp[port_num] = ip_port[-1]
@@ -75,40 +77,17 @@ class ServicePort(object):
         """
         return self.is_port_used(port)
 
-    def __generat_port_list(self, port_start, num):
+    def __generate_port_list(self, port_start, num):
         """
         根据链接电脑的设备来创建num个端口号（整形） 电脑有0-65535个端口
         """
         new_port_list = []
         while len(new_port_list) != num:
-            if port_start >= 0 and port_start <= 65535:
+            if 0 <= port_start <= 65535:
                 if not self.is_port_used(port_start):
                     new_port_list.append(port_start)
                 port_start = port_start + 1
         return new_port_list
-
-    def __get_devices(self):
-        """
-        获取链接电脑的设备数
-        """
-        self.device_list = []
-        try:
-            result = subprocess.Popen("adb devices", shell=True, stdout=subprocess.PIPE,
-                                      stderr=subprocess.PIPE).stdout.readlines()
-            result.reverse()  # 将readlines结果反向排序
-            for line in result[1:]:
-                """
-                List of devices attached
-                * daemon not running. starting it now at tcp:5037 *
-                * daemon started successfully *
-                """
-                if "attached" not in line.strip() and "daemon" not in line.strip():
-                    self.device_list.append(line.split()[0])
-                else:
-                    break
-        except Exception as e:
-            self.log4py.error("启动appium前查询连接的设备情况，发生错误：{}".format(str(e)))
-        return self.device_list
 
     def __get_port_list(self, start):
         """
@@ -117,13 +96,13 @@ class ServicePort(object):
         if self.device_list is not None:
             device_num = self.device_list
         else:
-            device_num = self.__get_devices()
-        port_list = self.__generat_port_list(start, len(device_num))
+            device_num = self.android.get_device_list()
+        port_list = self.__generate_port_list(start, len(device_num))
         return port_list
 
     def __generate_service_command(self):
         """
-        generat_port_list (service_port, conn_port, udid)->command
+        generate_port_list (service_port, conn_port, udid)->command
         :return 是一个以端口号为key的dict
         """
         self.appium_port_list = self.__get_port_list(4490)
@@ -134,7 +113,11 @@ class ServicePort(object):
             # 20170802 命令中如果带有路径尽量使用斜杠，不使用反斜杠（win环境中是单个），如使用记得变成双斜杠
             # appium_path = 'start /b node D:/Android/Appium/node_modules/appium/lib/server/main.js -p '
             # 这两个方式都可以在后台启动一个appium的服务
-            cmd = "start /b appium -p " + str(self.appium_port_list[i]) + " -a 127.0.0.1" + " -bp " + str(self.bootstrap_port_list[i]) + " -U " + str(self.device_list[i]) + " >" + str(self.appium_log_path) + str(self.device_list[i]) + ".txt"
+            # cmd = "start /b appium -p " + str(self.appium_port_list[i]) + " -a 127.0.0.1" + " -bp " + str(self.bootstrap_port_list[i]) + " -U " + str(self.device_list[i]) + " >" + str(self.appium_log_path) + str(self.device_list[i]) + ".txt"
+            cmd = "nohup appium -p " + str(self.appium_port_list[i]) + " -a 127.0.0.1" + " -bp " + str(
+                self.bootstrap_port_list[i]) + " -U " + str(self.device_list[i]) + " >" + str(
+                self.appium_log_path) + str(self.device_list[i]) + ".txt"
+
             service_cmd[str(self.appium_port_list[i])] = cmd
         return service_cmd
 
@@ -184,7 +167,7 @@ class ServicePort(object):
         如果启动了：写入配置的内容如何定义？后续有设备连接上了，如果刷新配置文件中的内容？
         最终还是没有设备就不启动了（或者给个开关也行）
         """
-        self.device_list = self.__get_devices()
+        self.device_list = self.android.get_device_list()
         if self.device_list is None or len(self.device_list) <= 0:
             self.log4py.debug("当前没有设备连接到pc，无法进行appium服务端口的映射，无法启动对应的服务")
             return None

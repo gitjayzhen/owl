@@ -44,7 +44,7 @@ class FileInspector(object):
         try:
             for filep, dirs, filelist in os.walk(path):
                 if os.path.basename(filep) in (".idea", ".git", "__pycache__", '__init__.py'):
-                    self.log4py.debug("跳过这个目录的检索工作：[{}]".format(str(filep)))
+                    # self.log4py.debug("跳过这个目录的检索工作：[{}]".format(str(filep)))
                     continue
                 for fl in filelist:
                     if operator.eq(fl, filename):

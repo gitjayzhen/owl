@@ -94,17 +94,28 @@ class AndroidDebugBridge(object):
         return self.adb("get-serialno").stdout.read().strip()
 
     def get_device_list(self):
-        devices = []
-        result = subprocess.Popen("adb devices", shell=True, stdout=subprocess.PIPE,
-                                  stderr=subprocess.PIPE).stdout.readlines()
-        result.reverse()  # 将readlines结果反向排序
-        for line in result[1:]:
-            line = line.decode().strip()
-            if "attached" not in line and "daemon" not in line:
-                devices.append(line.split()[0])
-            else:
-                break
-        return devices
+        """
+        获取链接电脑的设备数
+        """
+        device_list = []
+        try:
+            result = subprocess.Popen("adb devices", shell=True, stdout=subprocess.PIPE,
+                                      stderr=subprocess.PIPE).stdout.readlines()
+            result.reverse()  # 将readlines结果反向排序
+            for line in result[1:]:
+                """
+                List of devices attached
+                * daemon not running. starting it now at tcp:5037 *
+                * daemon started successfully *
+                """
+                line = line.decode()
+                if "attached" not in line.strip() and "daemon" not in line.strip():
+                    device_list.append(line.split()[0])
+                else:
+                    break
+        except Exception as e:
+            print("启动appium前查询连接的设备情况，发生错误：{}".format(str(e)))
+        return device_list
 
     def get_android_os_version(self):
         """

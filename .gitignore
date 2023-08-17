@@ -97,3 +97,4 @@ ENV/
 .pytest_cache
 .DS_Store
 chromedriver
+*.apk
