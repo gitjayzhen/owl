@@ -5,7 +5,7 @@
 @author: jayzhen
 @license: Apache Licence
 @contact: jayzhen_testing@163.com
-@site: http://blog.csdn.net/u013948858
+@site: https://blog.csdn.net/u013948858
 @software: PyCharm
 """
 import os
@@ -15,8 +15,9 @@ import subprocess
 import sys
 import time
 import string
-import EventKeys
 import json
+
+from owl.core.adb import EventKeys
 
 """
 利用可变参数来初始化*（tuple），**（dict）:约定参数中的key只能是sno
@@ -48,7 +49,7 @@ class AndroidDebugBridge(object):
     def judgment_system_type(self):
         # 判断系统类型，windows使用findstr，linux使用grep
         self.system = platform.system()
-        if self.system is "Windows":
+        if self.system == "Windows":
             self.find_type = "findstr"
         else:
             self.find_type = "grep"
@@ -98,7 +99,8 @@ class AndroidDebugBridge(object):
                                   stderr=subprocess.PIPE).stdout.readlines()
         result.reverse()  # 将readlines结果反向排序
         for line in result[1:]:
-            if "attached" not in line.strip() and "daemon" not in line.strip():
+            line = line.decode().strip()
+            if "attached" not in line and "daemon" not in line:
                 devices.append(line.split()[0])
             else:
                 break
@@ -129,7 +131,7 @@ class AndroidDebugBridge(object):
         - packageName -: 应用包名
         usage: getPid("com.android.settings")
         """
-        if self.system is "Windows":
+        if self.system == "Windows":
             pidinfo = self.shell("ps | findstr %s$" % packageName).stdout.read()
         else:
             pidinfo = self.shell("ps | grep -w %s" % packageName).stdout.read()

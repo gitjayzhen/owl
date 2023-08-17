@@ -36,6 +36,7 @@ class InitAppiumDriver(object):
             result = subprocess.Popen("adb -s %s shell getprop" % sno, shell=True, stdout=subprocess.PIPE,
                                       stderr=subprocess.PIPE).stdout.readlines()
             for res in result:
+                res = res.decode()
                 if re.search(r"ro\.build\.version\.release", res):
                     device_info["platformVersion"] = (res.split(': ')[-1].strip())[1:-1]
                 elif re.search(r"ro\.product\.model", res):
