@@ -237,8 +237,7 @@ class AndroidDebugBridge(object):
         """
         thirdApp = []
         for packages in self.shell("pm list packages -3").stdout.readlines():
-            thirdApp.append(packages.split(":")[-1].splitlines()[0])
-
+            thirdApp.append(packages.decode().split(":")[-1].splitlines()[0])
         return thirdApp
 
     def get_matching_app_list(self, keyword):
@@ -260,17 +259,19 @@ class AndroidDebugBridge(object):
             .stdout.read().split(": ")[-1]
         return int(time)
 
-    def do_install_app(self, appFile, pkg_name):
+    def do_install_app(self, app_file, pkg_name):
         """
         安装app，app名字不能含中文字符
         args:- appFile -: app路径
         usage: install("d:\\apps\\Weico.apk")
         """
-        self.adb("install %s" % appFile)
-        if not self.is_install_app(pkg_name):
-            return True
-        else:
-            return False
+        # 等待子进程完成
+
+        process = self.adb("install %s" % app_file)
+        process.wait()
+        # stdout = process.communicate()
+        # print(stdout)
+        return self.is_install_app(pkg_name)
 
     def do_uninstall_app(self, pkg_name):
         """
@@ -290,7 +291,7 @@ class AndroidDebugBridge(object):
         flag = False
         result = self.get_third_app_list()
         if result is None or len(result) < 0:
-            return None
+            return flag
         for i in result:
             if re.search(packageName, i.strip()):
                 flag = True
@@ -341,7 +342,7 @@ class AndroidDebugBridge(object):
         发送一个按键事件
         args:
         - event_keys -:
-        http://developer.android.com/reference/android/view/KeyEvent.html
+        https://developer.android.com/reference/android/view/KeyEvent.html
         usage: sendKeyEvent(event_keys.HOME)
         """
         self.shell("input keyevent %s" % str(event_keys))
@@ -360,7 +361,7 @@ class AndroidDebugBridge(object):
         触摸事件
         usage: touch(e), touch(x=0.5,y=0.5)
         """
-        if (e != None):
+        if e is not None:
             x = e[0]
             y = e[1]
         if 0 < x < 1:

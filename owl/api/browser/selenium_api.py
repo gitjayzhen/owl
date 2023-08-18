@@ -26,7 +26,7 @@ class SeleniumWorkApi(object):
     def __init__(self, driver, properties):
         self.log4py = LoggingPorter()
 
-        self.capturePath = properties.capturePath
+        self.capturePath = properties.capture_path
         self.pauseTime = int(properties.pauseTime)
         self.implicitly_wait_time = int(properties.waitTimeout)
 

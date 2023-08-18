@@ -83,7 +83,7 @@ class BrowserDriver(object):
             self.log4py.info("案例 【" + str(self.className) + "." + method_name + "】 运行通过！")
         else:
             date_time = get_formate_time("-%Y%m%d-%H%M%S%f")
-            capture_name = self.se_properties.capturePath + str(self.className) + "." + method_name + str(date_time) + ".png"
+            capture_name = self.se_properties.capture_path + str(self.className) + "." + method_name + str(date_time) + ".png"
             self.capture_screenshot(capture_name)
             self.log4py.error("案例 【" + str(self.className) + "." + method_name + "】 运行失败，请查看截图快照：" + capture_name)
         self.log4py.info("======" + ends + "：案例【" + str(self.className) + "." + method_name + "】结束======")
@@ -98,7 +98,7 @@ class BrowserDriver(object):
          """
         time.sleep(3)
         date_time = get_formate_time("-%Y%m%d-%H%M%S-%f")
-        capture_name = self.se_properties.capturePath + name + date_time + ".png"
+        capture_name = self.se_properties.capture_path + name + date_time + ".png"
         self.capture_screenshot(capture_name)
         self.log4py.debug("请查看截图快照：" + capture_name)
 

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding:UTF-8 -*-
 
 """
@@ -22,8 +21,9 @@ from owl.lib.reporter.logging_porter import LoggingPorter
 
 class FileInspector(object):
 
-    def __init__(self):
+    def __init__(self, filename=None):
         self.__file_abs_path = None  # 不可访问的
+        self.__filename = filename
         self.log4py = LoggingPorter()
 
     def is_has_file(self, filename):
@@ -32,6 +32,8 @@ class FileInspector(object):
         :param filename:  文件名
         :return:  True or False
         """
+        if filename is None and self.__filename is not None:
+            filename = self.__filename
         return self.is_path_has_file(self.get_project_path(), filename)
 
     def is_path_has_file(self, path, filename):

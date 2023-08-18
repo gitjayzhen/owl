@@ -6,27 +6,27 @@
 @contact: jayzhen_testing@163.com
 @site: https://blog.csdn.net/u013948858
 @software: PyCharm
-@time: 2017/8/3  17:22 当前只能是一个设备
+@time: 2023/8/3  17:22 当前只能是一个设备
 @TODO 多线程并发执行脚本时，需要将端口、手机设备的关联做好;多个设备时desired_capabilities属性只能是一个设备
 """
-import os
 import re
 import subprocess
 from urllib.error import URLError
 
 from appium import webdriver
 
+from owl.api.mobile.appium_api import AppiumBaseApi
 from owl.core.adb.adb import AndroidDebugBridge
+from owl.exception.server_type import AppiumServiceNotRunningException
 from owl.lib.file.ConfigReader import ConfigReader
 from owl.lib.reporter.logging_porter import LoggingPorter
-from owl.configs.mobile_config import MobileConfigGetter
 
 
 class InitAppiumDriver(object):
 
-    def __init__(self, properties):
+    def __init__(self, props_obj):
         self.log4py = LoggingPorter()
-        self.run_cfg = properties
+        self.run_cfg = props_obj
         self.android = AndroidDebugBridge()
         self.run_data = None
 
@@ -100,18 +100,19 @@ class InitAppiumDriver(object):
             if self.android.is_install_app(self.run_data["pkg_name"]):
                 self.android.do_uninstall_app(self.run_data["pkg_name"])
                 self.log4py.info("对测试设备进行卸载应用操作：{}".format(self.run_data["pkg_name"]))
-            if self.android.do_install_app(self.run_data["apk_file_path"], self.run_data["pkg_name"]):
-                self.log4py.info("重新安装应用成功")
+            res = self.android.do_install_app(self.run_data["apk_file_path"], self.run_data["pkg_name"])
+            self.log4py.info("重新安装应用{} : {} : {}".format(self.run_data["apk_file_path"], self.run_data["pkg_name"], res))
         elif int(self.run_data["is_first"]) == 1:
             self.log4py.info("非首次执行，可以直接进行正常用例操作")
 
-    def get_android_driver(self, sno):
+    def get_appium_driver(self, sno):
         desired_caps = self.__get_desired_capabilities(sno)
         self.__before_create_driver(desired_caps['udid'])
         port = self.__get_appium_port(desired_caps["udid"])
         if not self.is_port_used(port):
-            self.log4py.debug("设备号[{}]对应的appium服务没有启动".format(desired_caps['udid']))
-            return None
+            info = "设备号[{}]对应的appium服务没有启动".format(desired_caps['udid'])
+            self.log4py.debug(info)
+            raise AppiumServiceNotRunningException("设备号[{}]对应的appium服务没有启动".format(desired_caps['udid']))
         url = 'http://127.0.0.1:%s/wd/hub' % (port.strip())
         num = 0
         driver = None
@@ -128,4 +129,5 @@ class InitAppiumDriver(object):
                 driver.implicitly_wait(10)
             self.log4py.info("webdriver连接信息：{}：{}".format(url, str(desired_caps)))
             return driver
-        return driver
+        api = AppiumBaseApi(driver, self.run_cfg.properties)
+        return api

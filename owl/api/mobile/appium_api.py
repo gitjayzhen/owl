@@ -24,20 +24,18 @@ PATH = lambda a: os.path.abspath(a)
 
 
 class AppiumBaseApi(object):
-    """对 appium 的 api 进行封装
-
-    Args:
-        object (_type_): _description_
+    """
+    对 appium 的 api 进行封装
     """
 
-    def __init__(self, driver, properties):
-        self.android = AndroidDebugBridge()
+    def __init__(self, driver, props):
         self.log4py = LoggingPorter()
+        self.android = AndroidDebugBridge()
         self.driver = driver
         self.actions = []
         self.taction = TouchAction(self.driver)
-        self.xml_file_path = properties.dumpxmlPath
-        self.capturePath = properties.capturePath
+        self.xml_file_path = props.dumpxmlPath
+        self.capture_path = props.capturePath
         self.pattern = re.compile(r"\d+")
 
     def end(self):
@@ -56,11 +54,11 @@ class AppiumBaseApi(object):
         return is_displayed
 
     def is_enabled(self, by, value):
-        '''
+        """
          * rewrite the isEnabled method, the element to be find  </BR>
          * 与工具原生API作用完全一致，只是增加了操作结果检查和日志记录。
          * @param ：the locator you want to find the element
-         * @return the bool value of whether is the WebElement enabled    '''
+         * @return the bool value of whether is the WebElement enabled    """
         isEnabled = self.driver.find_element(by, value).is_enabled()
         self.log4py.debug("element [ " + str(by) + " ] enabled? "
                 + (isEnabled))
@@ -543,7 +541,7 @@ class AppiumBaseApi(object):
             self.log4py.info("method 【" + method_name + "】 运行通过！")
         else:
             date_time = get_formate_time("-%Y%m%d-%H%M%S%f")
-            capture_name = self.capturePath+method_name+date_time+".png"
+            capture_name = self.capture_path + method_name + date_time + ".png"
             self.capture_screenshot(capture_name)
             self.log4py.error("method 【" + method_name + "】 运行失败，请查看截图快照："+ capture_name)
 

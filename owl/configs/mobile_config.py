@@ -17,15 +17,17 @@ from owl.lib.reporter.logging_porter import LoggingPorter
 
 class MobileConfigGetter(object):
     def __init__(self):
-        self.__fileabspath = None
-        self.__projectpath = None
+        self.__config_path = None
+        self.__project_path = None
         self.log4py = LoggingPorter()
         fc = FileInspector()
         boolean = fc.is_has_file("owl-appium.ini")
         if boolean: 
-            self.__fileabspath = fc.get_file_abspath()
-            self.__projectpath = fc.get_project_path()
-        self.cf = ConfigReader(self.__fileabspath)
+            self.__config_path = fc.get_file_abspath()
+            self.__project_path = fc.get_project_path()
+        else:
+            raise FileNotFoundError("owl-appium.ini is not found")
+        self.cf = ConfigReader(self.__config_path)
 
     @property
     def properties(self):
@@ -40,22 +42,22 @@ class MobileConfigGetter(object):
             ap.scriptTimeout = self.cf.get_value("TimeSet", "scriptTimeout")
             ap.pauseTime = self.cf.get_value("TimeSet", "pauseTime")
 
-            ap.capturePath = os.path.join(self.__projectpath, self.cf.get_value("ResultPath", "capturePath"))
+            ap.capturePath = os.path.join(self.__project_path, self.cf.get_value("ResultPath", "capturePath"))
             if not os.path.exists(ap.capturePath):
                 os.makedirs(ap.capturePath)
-            ap.htmlreportPath = os.path.join(self.__projectpath, self.cf.get_value("ResultPath", "htmlreportPath"))
+            ap.htmlreportPath = os.path.join(self.__project_path, self.cf.get_value("ResultPath", "htmlreportPath"))
             if not os.path.exists(ap.htmlreportPath):
                 os.makedirs(ap.htmlreportPath)
-            ap.dumpxmlPath = os.path.join(self.__projectpath, self.cf.get_value("ResultPath", "dumpxmlPath"))
+            ap.dumpxmlPath = os.path.join(self.__project_path, self.cf.get_value("ResultPath", "dumpxmlPath"))
             if not os.path.exists(ap.dumpxmlPath):
                 os.makedirs(ap.dumpxmlPath)
-            ap.appiumlogPath = os.path.join(self.__projectpath, self.cf.get_value("ResultPath", "appiumlogPath"))
+            ap.appiumlogPath = os.path.join(self.__project_path, self.cf.get_value("ResultPath", "appiumlogPath"))
             if not os.path.exists(ap.appiumlogPath):
                 os.makedirs(ap.appiumlogPath)
-            ap.permissionPath = os.path.join(self.__projectpath, self.cf.get_value("ResultPath", "permissionPath"))
+            ap.permissionPath = os.path.join(self.__project_path, self.cf.get_value("ResultPath", "permissionPath"))
             if not os.path.exists(ap.permissionPath):
                 os.makedirs(ap.permissionPath)
-            ap.appiumService = os.path.join(self.__projectpath, self.cf.get_value("ResultPath", "appiumService"))
+            ap.appiumService = os.path.join(self.__project_path, self.cf.get_value("ResultPath", "appiumService"))
 
         except Exception as e:
             self.log4py.error("实例化appium配置文件对象时，出现异常 ：" + str(e))
@@ -63,19 +65,20 @@ class MobileConfigGetter(object):
 
     def get_run_conf(self):
         section = "run"
-        try:
-            # 是否是第一次跑，或者是重新跑，为0时会重新安装指定apk，并执行任务；为1时直接启动安装的app进行任务操作
-            is_first = self.cf.get_value(section, "isFirst")
-            # app的包名
-            pkg_name = self.cf.get_value(section, "pkgName")
-            # 启动app的main activity
-            launch_activity = self.cf.get_value(section, "launchActivity")
-            # 自动化启动app时，需要这个等待来做缓冲，避免启动页面挡住操作
-            wait_activity = self.cf.get_value(section, "waitActivity")
-            # 到isFirst为0时，就进行安装操作
-            apk_file_path = self.cf.get_value(section, "apkFilePath")
-        except Exception as e:
-            return None
+        # 是否是第一次跑，或者是重新跑，为0时会重新安装指定apk，并执行任务；为1时直接启动安装的app进行任务操作
+        is_first = self.cf.get_value(section, "isFirst")
+        # app的包名
+        pkg_name = self.cf.get_value(section, "pkgName")
+        # 启动app的main activity
+        launch_activity = self.cf.get_value(section, "launchActivity")
+        # 自动化启动app时，需要这个等待来做缓冲，避免启动页面挡住操作
+        wait_activity = self.cf.get_value(section, "waitActivity")
+        # 到isFirst为0时，就进行安装操作
+        apk_file_path = self.cf.get_value(section, "apkFilePath")
+        if not os.path.isabs(apk_file_path):
+            base = os.getcwd()
+            base = os.path.join((base.split('owl'))[0], 'owl')
+            apk_file_path = os.path.join(base, apk_file_path)
         return {"is_first": is_first, "pkg_name": pkg_name, "launch_activity": launch_activity, "wait_activity": wait_activity, "apk_file_path": apk_file_path}
 
     def set_run_conf(self, is_first, pkg_name, launch_activity, wait_activity, apk_file_path):

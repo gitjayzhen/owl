@@ -33,7 +33,7 @@ class MobileDriverBeforeTest(object):
         :return:
         """
         self.init = InitAppiumDriver(self.mcg)
-        self.driver = self.init.get_android_driver(sno)
+        self.driver = self.init.get_appium_driver(sno)
         if self.driver is None:
             self.log4py.error("appium实例化driver失败，请重新检查驱动及启动参数")
             return None
@@ -78,7 +78,7 @@ class MobileDriverBeforeTest(object):
             self.log4py.info("案例 【" + str(self.className) + "." + methodName + "】 运行通过！")
         else:
             dateTime = formated_time("-%Y%m%d-%H%M%S%f")
-            captureName = self.seProperties.capturePath + str(self.className)+"."+methodName+str(dateTime)+".png"
+            captureName = self.seProperties.capture_path + str(self.className) + "." + methodName + str(dateTime) + ".png"
             self.capture_screenshot(captureName)
             self.log4py.error("案例 【" + str(self.className) + "." + methodName+ "】 运行失败，请查看截图快照：" + captureName)
         self.log4py.info("======" + ends + "：案例【" + str(self.className) + "." + methodName+ "】结束======")
@@ -94,7 +94,7 @@ class MobileDriverBeforeTest(object):
          '''
         time.sleep(3)
         dateTime = formated_time("-%Y%m%d-%H%M%S-%f")
-        captureName = self.seProperties.capturePath + name + dateTime+".png"
+        captureName = self.seProperties.capture_path + name + dateTime + ".png"
         self.capture_screenshot(captureName)
         self.log4py.debug("请查看截图快照：" + captureName)
 

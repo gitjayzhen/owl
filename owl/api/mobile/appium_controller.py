@@ -28,16 +28,14 @@ class PostRunController(object):
 
     def get_device_map_appium(self):
         props = MobileConfigGetter()
-        impl = InitAppiumDriver(props.properties)
+        impl = InitAppiumDriver(props)
         device_list = [self.sno]
         if self.sno is None:
             device_list = impl.android.get_device_list()
         api_list = {}
         if len(device_list) > 0:
             for d in device_list:
-                driver = impl.get_android_driver(d)
-                api = AppiumBaseApi(driver)
-                api_list[d] = api
+                api_list[d] = impl.get_appium_driver(d)
         return api_list
 
     def __str__(self):
