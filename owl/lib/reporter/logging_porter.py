@@ -36,8 +36,6 @@ def time_now_formate():
 class LoggingPorter(object):
     """
     日志报告
-    Args:
-        object (_type_): _description_
     """
 
     def __init__(self, level=logging.NOTSET):

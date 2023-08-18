@@ -9,6 +9,7 @@
 @time: 2023/8/3  17:22 当前只能是一个设备
 @TODO 多线程并发执行脚本时，需要将端口、手机设备的关联做好;多个设备时desired_capabilities属性只能是一个设备
 """
+import platform
 import re
 import subprocess
 from urllib.error import URLError
@@ -18,7 +19,8 @@ from appium import webdriver
 from owl.api.mobile.appium_api import AppiumBaseApi
 from owl.core.adb.adb import AndroidDebugBridge
 from owl.exception.server_type import AppiumServiceNotRunningException
-from owl.lib.file.ConfigReader import ConfigReader
+from owl.lib.common import Utils
+from owl.lib.file.config_resolver import ConfigControl
 from owl.lib.reporter.logging_porter import LoggingPorter
 
 
@@ -30,7 +32,7 @@ class InitAppiumDriver(object):
         self.android = AndroidDebugBridge()
         self.run_data = None
 
-    def __get_desired_capabilities(self, sno):
+    def __get_device_capabilities(self, sno):
         device_info = {"udid": sno}
         try:
             result = subprocess.Popen("adb -s %s shell getprop" % sno, shell=True, stdout=subprocess.PIPE,
@@ -47,48 +49,23 @@ class InitAppiumDriver(object):
             self.log4py.error("获取手机信息时出错 :" + str(e))
             return None
         desired_caps_conf = self.run_cfg.get_desired_caps_conf()
-        desired_caps = device_info.copy()
-        desired_caps.update(desired_caps_conf)
-        return desired_caps
+        device_info.update(desired_caps_conf)
+        return device_info
 
-    def __get_appium_port(self, sno):
+    def __get_appium_server_port(self, sno):
         """
         这里读取启动服务时生成的那个ini配置文件，读取其中sno对应的状态及服务的port
-        :param sno:
-        :return:
         """
-        ff = ConfigReader(self.run_cfg.properties.appiumService)
-        try:
-            port = ff.get_value(sno, sno)
-            if port:
-                self.log4py.info("获取到{}设备对应的appium服务端口{}".format(sno, port))
-            return port
-        except Exception as e:
-            self.log4py.debug("{}设备对应的appium未启动".format(sno))
-            return None
+        server_mark = ConfigControl(self.run_cfg.properties.appiumService)
+        port = server_mark.get_value(sno, sno)
+        self.log4py.info("获取到 {} 设备对应的appium服务端口 {}".format(sno, port))
+        if not Utils.is_port_used(port):
+            info = "设备号 {} 对应的 appium 服务没有启动".format(sno)
+            self.log4py.debug(info)
+            raise AppiumServiceNotRunningException(info)
+        return port
 
-    def is_port_used(self, port_num):
-        """
-        检查端口是否被占用
-        netstat -aon | findstr port 能够获得到内容证明端口被占用
-        """
-        flag = False
-        try:
-            port_res = subprocess.Popen('netstat -ano | findstr %s | findstr LISTENING' % port_num, shell=True, stdout=subprocess.PIPE,
-                                        stderr=subprocess.PIPE).stdout.readlines()
-            reg = re.compile(str(port_num))
-            for i in range(len(port_res)):
-                ip_port = port_res[i].strip().split("   ")
-                if re.search(reg, ip_port[1]):
-                    flag = True
-                    self.log4py.info(str(port_num) + " 端口的服务已经启动." )
-            if not flag:
-                self.log4py.info(str(port_num) + " 端口的服务未启动.")
-        except Exception as e:
-            self.log4py.error(str(port_num) + " port get occupied status failure: " + str(e))
-        return flag
-
-    def __before_create_driver(self, sno):
+    def __require_install_apk(self, sno):
         """
         在实例appium driver前，进行设备的操作：安装、卸载
         :param sno:
@@ -101,18 +78,15 @@ class InitAppiumDriver(object):
                 self.android.do_uninstall_app(self.run_data["pkg_name"])
                 self.log4py.info("对测试设备进行卸载应用操作：{}".format(self.run_data["pkg_name"]))
             res = self.android.do_install_app(self.run_data["apk_file_path"], self.run_data["pkg_name"])
-            self.log4py.info("重新安装应用{} : {} : {}".format(self.run_data["apk_file_path"], self.run_data["pkg_name"], res))
+            self.log4py.info(
+                "重新安装应用{} : {} : {}".format(self.run_data["apk_file_path"], self.run_data["pkg_name"], res))
         elif int(self.run_data["is_first"]) == 1:
             self.log4py.info("非首次执行，可以直接进行正常用例操作")
 
     def get_appium_driver(self, sno):
-        desired_caps = self.__get_desired_capabilities(sno)
-        self.__before_create_driver(desired_caps['udid'])
-        port = self.__get_appium_port(desired_caps["udid"])
-        if not self.is_port_used(port):
-            info = "设备号[{}]对应的appium服务没有启动".format(desired_caps['udid'])
-            self.log4py.debug(info)
-            raise AppiumServiceNotRunningException("设备号[{}]对应的appium服务没有启动".format(desired_caps['udid']))
+        desired_caps = self.__get_device_capabilities(sno)
+        self.__require_install_apk(desired_caps['udid'])
+        port = self.__get_appium_server_port(desired_caps["udid"])
         url = 'http://127.0.0.1:%s/wd/hub' % (port.strip())
         num = 0
         driver = None

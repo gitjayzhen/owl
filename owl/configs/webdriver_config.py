@@ -3,7 +3,7 @@
 import os
 
 from owl.domain.se_config_do import SeleniumIniDomain
-from owl.lib.file.ConfigReader import ConfigReader
+from owl.lib.file.config_resolver import ConfigControl
 from owl.lib.file.file_inspector import FileInspector
 from owl.lib.reporter.logging_porter import LoggingPorter
 
@@ -22,7 +22,7 @@ class WebdriverConfiger(object):
         if boolean: 
             self.__file_abs_path = fc.get_file_abspath()
             self.__project_path = fc.get_project_path()
-        self.conf = ConfigReader(self.__file_abs_path)
+        self.conf = ConfigControl(self.__file_abs_path)
 
     @property
     def properties(self):

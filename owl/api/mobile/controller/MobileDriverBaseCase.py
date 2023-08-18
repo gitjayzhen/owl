@@ -9,7 +9,7 @@ import time
 
 from owl.api.mobile.appium_api import AppiumBaseApi
 from owl.api.mobile.appium_driver import InitAppiumDriver
-from owl.configs.mobile_config import MobileConfigGetter
+from owl.configs.appium_config import AppiumConfiger
 from owl.lib.date.date_formatter import formated_time
 from owl.lib.reporter.logging_porter import LoggingPorter
 
@@ -19,7 +19,7 @@ class MobileDriverBeforeTest(object):
     def __init__(self):
         self.driver = None
         self.className = None
-        self.mcg = MobileConfigGetter()
+        self.mcg = AppiumConfiger()
         self.log4py = LoggingPorter()
         self.__beforeSuiteStarts = 0
         self.__beforeClassStarts = 0

@@ -20,14 +20,14 @@ from appium.webdriver.common.mobileby import MobileBy
 from owl.api.mobile.appium_controller import PostRunController
 from owl.api.mobile.appium_driver import InitAppiumDriver
 from owl.api.mobile.appium_api import AppiumBaseApi
-from owl.configs.mobile_config import MobileConfigGetter
+from owl.configs.appium_config import AppiumConfiger
 
 
 class TestAppiumBaseApi(unittest.TestCase):
 
     def setUp(self):
         devices = PostRunController().get_device_map_appium()
-        print(devices)
+        assert len(devices.keys()) > 0, "No device connection"
         self.driver: AppiumBaseApi = devices.get(random.choice(list(devices.keys())))
 
     def tearDown(self):

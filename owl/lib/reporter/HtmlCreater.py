@@ -10,7 +10,7 @@
 import os
 from owl.lib.reporter.logging_porter import LoggingPorter
 from owl.lib.file.file_inspector import FileInspector
-from owl.lib.file.ConfigReader import ConfigReader
+from owl.lib.file.config_resolver import ConfigControl
 from owl.lib.date.date_formatter import formated_time
 '''
 创建一个html文件，并返回文件的对象
@@ -24,7 +24,7 @@ def html_reporter():
     boolean = fc.is_has_file("owl-owl.ini")
     if boolean:
         inipath = fc.get_file_abspath()
-        cf = ConfigReader(inipath)
+        cf = ConfigControl(inipath)
     htmlrp_path = cf.get_value("ResultPath", "htmlreportPath")
     htmreportl_abs_path = os.path.join(pro_path, htmlrp_path)
     timecurrent = formated_time("%Y-%m-%d-%H-%M-%S")

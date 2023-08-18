@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 
 """
@@ -7,17 +6,18 @@
 @file: ConfigPaserUtil.py
 @time: 2017/7/26 16:19
 """
-from owl.lib.reporter.logging_porter import LoggingPorter
-from configparser import ConfigParser
 import os
+from configparser import ConfigParser
+
+from owl.lib.reporter.logging_porter import LoggingPorter
 
 
-class ConfigReader(object):
+class ConfigControl(object):
 
     def __init__(self, file_path):
         self.log4py = LoggingPorter()
         if not os.path.exists(file_path):
-            assert IOError
+            assert FileNotFoundError("{} 文件不存在".format(file_path))
         self.ini_reader = ConfigParser()
         self.ini_reader.read(file_path)
         self.file_path = file_path
@@ -56,7 +56,7 @@ class ConfigReader(object):
             value = self.ini_reader.get(section, key)
             return value
         except Exception as e:
-            self.log4py.error("获取配置文件的key的value发生错误: {}".format(str(e)).decode("utf-8"))
+            self.log4py.error("获取配置文件的 key 的 value 发生错误: {}".format(e))
             return None
 
     def set_value(self, section, key, value):
@@ -67,7 +67,7 @@ class ConfigReader(object):
             return flag
         try:
             self.ini_reader.set(section, key, value)
-            self.ini_reader.write(self.file_path, 'w')
+            self.ini_reader.write(self.file_path)
             flag = True
         except Exception as e:
             self.log4py.error("设置已有的key的value发生错误: {}".format(str(e)).decode("utf-8"))

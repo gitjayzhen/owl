@@ -11,7 +11,7 @@
 """
 from owl.api.mobile.appium_api import AppiumBaseApi
 from owl.api.mobile.appium_driver import InitAppiumDriver
-from owl.configs.mobile_config import MobileConfigGetter
+from owl.configs.appium_config import AppiumConfiger
 
 
 class PostRunController(object):
@@ -27,7 +27,7 @@ class PostRunController(object):
         self.sno = sno
 
     def get_device_map_appium(self):
-        props = MobileConfigGetter()
+        props = AppiumConfiger()
         impl = InitAppiumDriver(props)
         device_list = [self.sno]
         if self.sno is None:

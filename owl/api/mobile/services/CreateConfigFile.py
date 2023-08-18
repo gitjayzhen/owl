@@ -11,7 +11,7 @@ c.循环遍历这个list并写入文件中
 """
 import os
 
-from owl.lib.file.ConfigReader import ConfigReader
+from owl.lib.file.config_resolver import ConfigControl
 from owl.lib.file.file_inspector import FileInspector
 from owl.lib.reporter.logging_porter import LoggingPorter
 
@@ -21,38 +21,37 @@ PATH = lambda a: os.path.abspath(a)
 class CreateConfigFile(object):
 
     def __init__(self):
-        self.fkctl = FileInspector()
-
-        if self.fkctl.is_has_file("owl-appium.ini"):
-            fp = self.fkctl.get_file_abspath()
-            self.cfg = ConfigReader(fp)
+        self.fi = FileInspector()
+        if self.fi.is_has_file("owl-appium.ini"):
+            fp = self.fi.get_file_abspath()
+            self.cfg = ConfigControl(fp)
         self.log4py = LoggingPorter()
         self.log4py.info("-----配置文件操作开始-----")
-        self.f_path = os.path.join(self.fkctl.get_project_path(), self.cfg.get_value("ResultPath", "appiumService"))
+        self.f_path = os.path.join(self.fi.get_project_path(), self.cfg.get_value("ResultPath", "appiumService"))
 
     def __del__(self):
         self.log4py.info("-----配置文件操作结束-----")
 
-    def set_appium_uuids_ports(self, device_list, port_list):
+    def set_appium_uuids_ports(self, devices, ports):
         """
         遍历list,按照下表进行对应映射
-        :param device_lsit: 手机uuid
-        :param port_list: pc启动的appium服务端口
+        :param devices: 手机uuid
+        :param ports: pc启动的appium服务端口
         """
         bol = self.create_config_file(self.f_path)
         if bol:
             self.log4py.info("创建appiumService.ini文件成功：{}".format(self.f_path))
-            ap = ConfigReader(self.f_path)
-            if len(device_list) > 0 and len(port_list) > 0:
-                for i in range(len(device_list)):
-                    filed = device_list[i]
+            ap = ConfigControl(self.f_path)
+            if len(devices) > 0 and len(ports) > 0:
+                for i in range(len(devices)):
+                    filed = devices[i]
                     key = filed
-                    value = port_list[i]
+                    value = ports[i]
                     # 因为是覆盖写入，没有section，需要先添加再设置, 初始化的服务都加一个run的标识
                     ap.add_section_key_value(filed, key, value)
                     ap.set_value(filed, "run", "0")
+                    self.log4py.debug("设备sno与appium服务端口映射已写入appiumService.ini配置文件:{}--{}".format(key, value))
                 ap.flush()
-                self.log4py.debug("设备sno与appium服务端口映射已写入appiumService.ini配置文件:{}--{}".format(key, value))
 
     def set_appium_uuid_port(self, device, port, bp):
         """
@@ -64,7 +63,7 @@ class CreateConfigFile(object):
         bol = self.create_config_file(self.f_path)
         if bol:
             if device is not None and port is not None:
-                ap = ConfigReader(self.f_path)
+                ap = ConfigControl(self.f_path)
                 sec = device
                 key = device
                 value = port
@@ -100,7 +99,7 @@ class CreateConfigFile(object):
 
         port_list = []
         if os.path.exists(self.f_path):
-            ap = ConfigReader(self.f_path)
+            ap = ConfigControl(self.f_path)
             section_list = ap.get_sections()
             for sl in section_list:
                 port_list.append(ap.get_value(sl, sl))
@@ -108,7 +107,7 @@ class CreateConfigFile(object):
         return port_list
 
     def get_appium_logs_path(self):
-        path = os.path.join(self.fkctl.get_project_path(), self.cfg.get_value("ResultPath", "appiumlogPath"))
+        path = os.path.join(self.fi.get_project_path(), self.cfg.get_value("ResultPath", "appiumlogPath"))
         if PATH(path):
             if not os.path.exists(path):
                 os.makedirs(path)

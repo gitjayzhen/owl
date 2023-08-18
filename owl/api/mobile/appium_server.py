@@ -8,8 +8,6 @@
 @software: PyCharm
 @time: 2017/5/13  
 """
-import os
-import re
 import subprocess
 import threading
 import time
@@ -17,6 +15,8 @@ from multiprocessing import Process
 
 from owl.api.mobile.services.CreateConfigFile import CreateConfigFile
 from owl.core.adb.adb import AndroidDebugBridge
+from owl.exception.device_type import NoDeviceConnectionException
+from owl.lib.common import Utils
 from owl.lib.reporter.logging_porter import LoggingPorter
 
 
@@ -37,6 +37,7 @@ class RunServer(threading.Thread):
 
 
 class ServicePort(object):
+
     def __init__(self):
         self.log4py = LoggingPorter()
         self.cfg = CreateConfigFile()
@@ -48,47 +49,6 @@ class ServicePort(object):
 
         self.tmp = {}
 
-    def is_port_used(self, port_num):
-        """
-        检查端口是否被占用
-        netstat -aon | findstr port 能够获得到内容证明端口被占用
-        """
-        flag = False
-        try:
-            port_res = subprocess.Popen('netstat -ano | grep %s | grep LISTENING' % port_num, shell=True, stdout=subprocess.PIPE,
-                                        stderr=subprocess.PIPE).stdout.readlines()
-            reg = re.compile(str(port_num))
-            for i in range(len(port_res)):
-                ip_port = port_res[i].strip().split("   ")
-                if re.search(reg, str(ip_port[1])):
-                    flag = True
-                    self.log4py.info(str(port_num) + " 端口已经在使用,对应的进程是：" + str(ip_port[-1]))
-                    self.tmp[port_num] = ip_port[-1]
-            if not flag:
-                self.log4py.info(str(port_num) + " 端口没有对应监听的服务.")
-        except Exception as e:
-            self.log4py.error(str(port_num) + " port get occupied status failure: " + str(e))
-        return flag
-
-    def is_live_service(self, port):
-        """
-        检查这个端口是否存在一个活动的service，就返回这个端口service的pid
-        :param port: 这个port来自appiumservice.ini文件
-        """
-        return self.is_port_used(port)
-
-    def __generate_port_list(self, port_start, num):
-        """
-        根据链接电脑的设备来创建num个端口号（整形） 电脑有0-65535个端口
-        """
-        new_port_list = []
-        while len(new_port_list) != num:
-            if 0 <= port_start <= 65535:
-                if not self.is_port_used(port_start):
-                    new_port_list.append(port_start)
-                port_start = port_start + 1
-        return new_port_list
-
     def __get_port_list(self, start):
         """
         只用传送一个开始值，就行了
@@ -97,7 +57,7 @@ class ServicePort(object):
             device_num = self.device_list
         else:
             device_num = self.android.get_device_list()
-        port_list = self.__generate_port_list(start, len(device_num))
+        port_list = Utils.generate_port_list(start, len(device_num))
         return port_list
 
     def __generate_service_command(self):
@@ -110,21 +70,23 @@ class ServicePort(object):
         # 20170804 将service_cmd list类型换成dict --> {port:cmd,port1:cmd2} ,port留作执行cmd后的端口校验
         service_cmd = {}
         for i in range(len(self.device_list)):
-            # 20170802 命令中如果带有路径尽量使用斜杠，不使用反斜杠（win环境中是单个），如使用记得变成双斜杠
-            # appium_path = 'start /b node D:/Android/Appium/node_modules/appium/lib/server/main.js -p '
-            # 这两个方式都可以在后台启动一个appium的服务
-            # cmd = "start /b appium -p " + str(self.appium_port_list[i]) + " -a 127.0.0.1" + " -bp " + str(self.bootstrap_port_list[i]) + " -U " + str(self.device_list[i]) + " >" + str(self.appium_log_path) + str(self.device_list[i]) + ".txt"
-            cmd = "nohup appium -p " + str(self.appium_port_list[i]) + " -a 127.0.0.1" + " -bp " + str(
-                self.bootstrap_port_list[i]) + " -U " + str(self.device_list[i]) + " >" + str(
-                self.appium_log_path) + str(self.device_list[i]) + ".txt"
-
+            # 20170802 命令中如果带有路径尽量使用斜杠，不使用反斜杠（win环境中是单个），如使用记得变成双斜杠 appium_path = 'start /b node
+            # D:/Android/Appium/node_modules/appium/lib/server/main.js -p ' 这两个方式都可以在后台启动一个appium的服务 cmd = "start /b
+            # appium -p " + str(self.appium_port_list[i]) + " -a 127.0.0.1" + " -bp " + str(self.bootstrap_port_list[
+            # i]) + " -U " + str(self.device_list[i]) + " >" + str(self.appium_log_path) + str(self.device_list[i]) +
+            # ".txt"
+            # cmd = "nohup appium -p " + str(self.appium_port_list[i]) + " -a 127.0.0.1" + " -bp " + str(
+            #     self.bootstrap_port_list[i]) + " -U " + str(self.device_list[i]) + " >" + str(
+            #     self.appium_log_path) + str(self.device_list[i]) + ".txt"
+            # nohup appium -p {} -a 127.0.0.1 -bp {} -U {} > {}.txt 2>&1 &
+            cmd = "nohup appium -p {} -a 127.0.0.1 > {}.txt 2>&1 &".format(
+                str(self.appium_port_list[i]),
+                # str(self.bootstrap_port_list[i]),
+                # str(self.device_list[i]),
+                str(self.appium_log_path) + str(self.device_list[i])
+            )
             service_cmd[str(self.appium_port_list[i])] = cmd
         return service_cmd
-
-    def kill_service_on_pid(self, pid):
-        if pid is not None:
-            os.system("taskkill -F -PID %s" % pid)
-            self.log4py.info("进程PID：%s 关闭端口服务成功" % pid)
 
     def stop_all_appium_server(self):
         """
@@ -137,11 +99,10 @@ class ServicePort(object):
         if len(server_list) <= 0:
             self.log4py.debug("请你确认是否有appium服务启动")
             return None
-
-        for i in range(len(server_list)):
-            self.log4py.info("准备关闭端口 %s 的服务" % server_list[i])
-            if self.is_live_service(server_list[i]):
-                self.kill_service_on_pid(self.tmp[server_list[i]])
+        for p in server_list:
+            self.log4py.info("准备关闭端口 %s 的服务" % p)
+            if Utils.is_live_service(p):
+                Utils.kill_service_by_pid(self.tmp[p])
 
     def check_service(self, times=5):
         # 检查服务是否已经启动
@@ -150,7 +111,7 @@ class ServicePort(object):
         for i in range(len(self.appium_port_list)):
             p = self.appium_port_list[i]
             while time.time() - begin <= times:
-                flag = self.is_live_service(p)
+                flag = Utils.is_live_service(p)
                 if flag:
                     self.log4py.info("appium server 端口为{}的服务已经启动,bootstrap监听的端口也已设置好".format(p))
                     # 服务启动正常，就写入配置文件
@@ -170,15 +131,20 @@ class ServicePort(object):
         self.device_list = self.android.get_device_list()
         if self.device_list is None or len(self.device_list) <= 0:
             self.log4py.debug("当前没有设备连接到pc，无法进行appium服务端口的映射，无法启动对应的服务")
-            return None
+            assert NoDeviceConnectionException()
 
         service_list = self.__generate_service_command()
         # 启动服务
-        if len(service_list) > 0:
-            for i in service_list:
-                self.log4py.info("通过线程启动服务的命令：{}".format(service_list[i]))
-                t1 = RunServer(service_list[i])
-                p = Process(target=t1.start())
-                p.start()
-                # 20171221 等待5秒钟，等待一下进程
-                time.sleep(5)
+        if len(service_list.keys()) > 0:
+            for port, cmd in service_list.items():
+                self.log4py.info("通过线程启动服务的命令：{}".format(cmd))
+                # t1 = RunServer(cmd)
+                # p = Process(target=t1.start())
+                # p.start()
+                # time.sleep(5)
+        self.check_service()
+
+
+if __name__ == '__main__':
+    # 注意不要重复执行
+    ServicePort().start_services()

@@ -16,7 +16,7 @@ from email.header import Header
 from email.mime.multipart import MIMEMultipart
 
 from owl.lib.file.file_inspector import FileInspector
-from owl.lib.file.ConfigReader import ConfigReader
+from owl.lib.file.config_resolver import ConfigControl
 from owl.lib.reporter.logging_porter import LoggingPorter
 
 
@@ -27,7 +27,7 @@ class EmailController(object):
         bools = self.fc.is_has_file("owl-owl.ini")
         if bools:
             fp = self.fc.get_file_abspath()
-            conf = ConfigReader(fp)
+            conf = ConfigControl(fp)
             self.smtp_host = conf.get_value("message", "smtp_host")
             self.pop3_host = conf.get_value("message", "pop3_host")
             self.receiver = conf.get_value("message", "receiver").split(",")
