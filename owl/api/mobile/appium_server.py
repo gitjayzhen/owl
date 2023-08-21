@@ -79,7 +79,7 @@ class ServicePort(object):
             #     self.bootstrap_port_list[i]) + " -U " + str(self.device_list[i]) + " >" + str(
             #     self.appium_log_path) + str(self.device_list[i]) + ".txt"
             # nohup appium -p {} -a 127.0.0.1 -bp {} -U {} > {}.txt 2>&1 &
-            cmd = "nohup appium -p {} -a 127.0.0.1 > {}.txt 2>&1 &".format(
+            cmd = "nohup appium -p {} -a 127.0.0.1 --base-path=/wd/hub > {}.txt 2>&1 &".format(
                 str(self.appium_port_list[i]),
                 # str(self.bootstrap_port_list[i]),
                 # str(self.device_list[i]),

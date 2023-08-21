@@ -110,9 +110,9 @@ class AppiumConfiger(object):
             "platformName": self.cfg.get_value(section, "platformName"),
             "appPackage": self.cfg.get_value(section, "appPackage"),
             "appActivity": self.cfg.get_value(section, "appActivity"),
-            "noSign": self.cfg.get_value(section, "noSign"),
-            "unicodeKeyboard": self.cfg.get_value(section, "unicodeKeyboard"),
-            "resetKeyboard": self.cfg.get_value(section, "resetKeyboard")
+            "noSign": self.cfg.ini_reader.getboolean(section, "noSign"),
+            "unicodeKeyboard": self.cfg.ini_reader.getboolean(section, "unicodeKeyboard"),
+            "resetKeyboard": self.cfg.ini_reader.getboolean(section, "resetKeyboard"),
         }
         # dc["app"] = self.cf.get(section, "app")
         return dc

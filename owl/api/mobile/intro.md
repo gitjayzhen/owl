@@ -67,3 +67,16 @@
    请根据实际情况修改 `appPackage` 和 `appActivity` 的值，以匹配你要测试的应用程序。
 
 以上是基本的步骤和示例代码，用于在 macOS 上使用 Appium 进行 Android 测试。你可以根据具体的测试需求和应用程序的特点，进一步深入学习和探索 Appium 的功能和用法。
+
+- https://appium.io/docs/en/2.0/guides/migrating-1-to-2/
+```text
+在安装过程中安装驱动程序
+当您安装 Appium 1.x 时，所有可用的驱动程序将与主 Appium 服务器同时安装。这已不再是这种情况。只需安装 Appium 2.0（例如，通过npm install --location=global appium），将仅安装 Appium 服务器，但不安装驱动程序。要安装驱动程序，您必须使用新的Appium 扩展 CLI。例如，要安装最新版本的 XCUITest 和 UiAutomator2 驱动程序，在安装 Appium 后，您将运行以下命令：
+
+appium driver install uiautomator2     # installs the latest driver version
+appium driver install xcuitest@4.12.2  # installs a specific driver version
+至此，您的驱动程序已安装并准备就绪。您可以使用此 CLI 执行更多操作，因此请务必查看其文档。如果您在 CI 环境中运行或想要一步安装 Appium 以及一些驱动程序，您可以在安装过程中使用一些特殊标志来完成此操作，例如：
+npm install --location=global appium --drivers=xcuitest,uiautomator2
+
+
+```

@@ -102,6 +102,6 @@ class InitAppiumDriver(object):
             else:
                 driver.implicitly_wait(10)
             self.log4py.info("webdriver连接信息：{}：{}".format(url, str(desired_caps)))
-            return driver
+            break
         api = AppiumBaseApi(driver, self.run_cfg.properties)
         return api
