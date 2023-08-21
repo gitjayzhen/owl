@@ -9,6 +9,9 @@
 @file: test_http_one.py
 @time: 2023/8/16 12:43
 """
+import json
+
+import requests
 
 
 class TestHttpInterface:
@@ -17,3 +20,4 @@ class TestHttpInterface:
         """
         3A 原则
         """
+        pass

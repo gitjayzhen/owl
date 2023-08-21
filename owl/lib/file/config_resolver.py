@@ -23,8 +23,8 @@ class ConfigControl(object):
         self.file_path = file_path
 
     def flush(self):
-        self.ini_reader.write(open(self.file_path, 'wb'))
-        self.log4py.info("已将内容写入了{}配置文件中".format(str(os.path.basename(self.file_path))))
+        self.ini_reader.write(open(self.file_path, 'w+'))
+        self.log4py.info("已将内容写入了 {} 配置文件中".format(str(os.path.basename(self.file_path))))
 
     def had_section(self, section):
         return self.ini_reader.has_section(section)
@@ -66,11 +66,11 @@ class ConfigControl(object):
         if key is None or key == " ":
             return flag
         try:
-            self.ini_reader.set(section, key, value)
-            self.ini_reader.write(self.file_path)
+            self.ini_reader.set(str(section), str(key), str(value))
+            # self.ini_reader.write(self.file_path)
             flag = True
         except Exception as e:
-            self.log4py.error("设置已有的key的value发生错误: {}".format(str(e)).decode("utf-8"))
+            self.log4py.error("设置已有的 key 的 value 发生错误: {}".format(str(e)))
         return flag
 
     def add_section_key_value(self, section, key, value):
@@ -85,5 +85,5 @@ class ConfigControl(object):
             self.ini_reader.add_section(section)
             flag = self.set_value(section, key, value)
         except Exception as e:
-            self.log4py.error("设置已有的key的value发生错误: {}".format(str(e)).decode("utf-8"))
+            self.log4py.error("设置已有的key的value发生错误: {}".format(str(e)))
         return flag

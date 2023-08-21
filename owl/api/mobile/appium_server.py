@@ -13,7 +13,7 @@ import threading
 import time
 from multiprocessing import Process
 
-from owl.api.mobile.services.CreateConfigFile import CreateConfigFile
+from owl.configs.appium_config import AppiumServerConfigFile
 from owl.core.adb.adb import AndroidDebugBridge
 from owl.exception.device_type import NoDeviceConnectionException
 from owl.lib.common import Utils
@@ -40,7 +40,7 @@ class ServicePort(object):
 
     def __init__(self):
         self.log4py = LoggingPorter()
-        self.cfg = CreateConfigFile()
+        self.cfg = AppiumServerConfigFile()
         self.appium_log_path = self.cfg.get_appium_logs_path()
         self.appium_port_list = []
         self.bootstrap_port_list = []
@@ -94,7 +94,7 @@ class ServicePort(object):
         @auther jayzhen
         @pm 将service_port中启动的service进行关闭
         """
-        c = CreateConfigFile()
+        c = AppiumServerConfigFile()
         server_list = c.get_all_appium_server_port()
         if len(server_list) <= 0:
             self.log4py.debug("请你确认是否有appium服务启动")
@@ -104,7 +104,7 @@ class ServicePort(object):
             if Utils.is_live_service(p):
                 Utils.kill_service_by_pid(self.tmp[p])
 
-    def check_service(self, times=5):
+    def check_service(self, times=10):
         # 检查服务是否已经启动
         begin = time.time()
         flag = False
@@ -118,7 +118,7 @@ class ServicePort(object):
                     self.cfg.set_appium_uuid_port(self.device_list[i], self.appium_port_list[i], self.bootstrap_port_list[i])
                     break
             if not flag:
-                self.log4py.info("appium server 端口为{}的服务未启动".format(p))
+                self.log4py.info("appium server 端口为 {} 的服务未启动".format(p))
 
     def start_services(self):
         """
@@ -138,10 +138,10 @@ class ServicePort(object):
         if len(service_list.keys()) > 0:
             for port, cmd in service_list.items():
                 self.log4py.info("通过线程启动服务的命令：{}".format(cmd))
-                # t1 = RunServer(cmd)
-                # p = Process(target=t1.start())
-                # p.start()
-                # time.sleep(5)
+                t1 = RunServer(cmd)
+                p = Process(target=t1.start())
+                p.start()
+                time.sleep(5)
         self.check_service()
 
 

@@ -35,7 +35,6 @@ class Utils(object):
             reg = re.compile(str(port_num))
             for i in port_res:
                 i = i.decode()
-                print(i)
                 if re.search(reg, i):
                     flag = True
         except Exception as e:
