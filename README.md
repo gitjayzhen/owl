@@ -8,7 +8,7 @@
 
 ![](doc/image/owl.jpg "owl")
 
-## 项目管理
+## 项目内容
 
 ### 规范
 
@@ -80,31 +80,7 @@
 2. virtualenv：简单型虚拟环境控制工具，但是没有自己的管理仓库，需要手动添加
 3. Pipenv 是一个python的依赖管理器，可以用pip管理依赖，但pip不能提供运行时环境，pipenv会帮你把包和environment的问题一起解决，及pip+virtualenv。
 
-版本控制：GitHub
-
-## python库（截至20190414）
-
-1. python 2.7 (64位）
-2. selenium 3.5
-3. [HTMLTestRunner](http://tungwaiyip.info/software/HTMLTestRunner.html) 0.8.2
-4. beautifulsoup4                4.6.0
-5. Appium-Python-Client          0.24
-6. beautifulsoup4                4.6.0
-7. chardet                       3.0.4
-8. cx-Oracle                     6.0.3
-9. imageio                       2.1.2
-10. numpy                         1.13.3
-11. pandas                        0.22.0
-12. Pillow                        4.2.1
-13. PyMySQL                       0.7.11
-14. requests                      2.18.4
-15. selenium                      3.5.0
-16. xlrd                          1.0.0
-17. XlsxWriter                    1.0.2
-18. xlutils                       2.0.0
-19. xlwt                          1.3.0
-
-## 工具类utils（20180331）
+## 工具类 utils（20180331）
 
 * 日志: 格式化日志的输入内容，文件和控制台形式打印日志。
 * 文件检索：在项目目录下，检索是否存在给定文件名的文件。
@@ -112,7 +88,6 @@
 * 日期格式化： 对date和time的输出进行格式化。
 * 加密处理：zip等文件的解压操作，md5操作。
 * 配置文件操作：对配置文件进行读写。
-* ...
 
 ## web自动化的基础架构已初步完成（20180408）
 
