@@ -1,4 +1,7 @@
-# owl@override the world limit
+# OWL
+
+>The owl(override the world limit) project is a tidy implementation for testing purposes
+
 
 这个工程是为了什么而建立？因为想把 ui自动化(client、browser)、接口自动化、网络爬虫都融合在同一个工具里，使用 python 来实现。
 因为当前都是脚本曾层面的实现，希望后面有精力结合 flask/tornado 把 web 展示端也实现了。
@@ -14,44 +17,61 @@
 * 核心：selenium、appium、requests、allure、pytest
 
 ```text
-owl@override the world limit
+.
+├── LICENSE
+├── README.md
+├── configs # 测试配置文件
+│   ├── Youku_11.0.40_19babfbcea8e1838.apk
+│   ├── appium-service.ini
+│   ├── chromedriver
+│   ├── owl-appium.ini
+│   ├── owl-framework.ini
+│   ├── owl-selenium.ini
+│   └── permission.json
+├── doc
+│   ├── UsersLogin.xls
+│   ├── districtcode.txt
+│   ├── image
+│   └── 接口测试用例集.xlsx
+├── naming-convention.md
+├── owl
+│   ├── __init__.py
+│   ├── __pycache__
+│   ├── api # 手机ui自动化及appium的一系列操作, 接口测试使用及requests的一系列操作, webui自动化及selenium的一系列操作
+│   ├── common
+│   ├── configs
+│   ├── core    # 封装的adb底层命令,封装的window命令 
+│   ├── database
+│   ├── domain
+│   ├── exception
+│   └── lib # 将普通的输入格式化为标准输入
+├── requirements.txt
+├── setup.py
+├── shell   # 一些bat和sh脚本
+│   ├── local-se.bat
+│   ├── remote-se.bat
+│   ├── start-appium.bat
+│   └── stop-appium.bat
+└── tests   # 这里构建一些框架测试的脚本
+    ├── __init__.py
+    ├── test_appium_case.py
+    ├── test_http_one.py
+    └── test_ui_se_local.py
+ 
+ 被修改之前的内容：
+    result:
+        log: 公共log日志
+        mobile：手机特殊的日志目录
+        web： web特殊的日志目录
+    utils ：
+        dataUtil: 处理数据
+        dateUtil: 处理日期
+        encryptUtil： 处理实体加密
+        fileUtil： 文件类
+        reporterUtil：报告模块
+        stringUtil: 字符串处理
+    database ：数据模型对象，处理各种数据驱动；数据库操作对象（mysql、redis、mongodb、rabbitmq）
 
-2018年3月28日
-23:51
-
-Src
-    com/framework:
-        utils ：将普通的输入格式化为标准输入
-            dataUtil: 处理数据
-            dateUtil: 处理日期
-            encryptUtil： 处理实体加密
-            fileUtil： 文件类
-            reporterUtil：报告模块
-            stringUtil: 字符串处理
-            Conifg
-        Core:
-            adb: 封装的adb底层命令
-            dos: 封装的window命令
-        Services ：独立的完整服务，有特有的逻辑处理能力，并能给出结果：服务的供给
-            HttpClient
-            Report
-            Monitor
-        database ：数据模型对象，处理各种数据驱动；数据库操作对象（mysql、redis、mongodb、rabbitmq）
-        mobile ：手机ui自动化及appium的一系列操作
-        interface : 接口测试使用及requests的一系列操作
-        web ：webui自动化及selenium的一系列操作
-    test: 这里构建一些框架测试的脚本
-resources : 测试配置文件
-    config ：框架使用的所有配合文件都在这里
-    doc: 一些框架设计相关的文档
-    driver: webdriver驱动
-    excel: 测试使用的数据
-    image：图片
-    shell： 一些bat和sh脚本
-result:
-    log: 公共log日志
-    mobile：手机特殊的日志目录
-    web： web特殊的日志目录
 ```
 
 ## 环境管理（开始选择了 virtualenv, 升级3后用的 conda）
@@ -110,13 +130,13 @@ result:
 3. dubbo -> dubbo-client
 4. hessian -> python-hessian (forked mustaine)
 
-## 20190414 备注并 init github project
+## 20190414 备注并 init project
 
 详细的功能模块内容：
 
 * [mobile](owl/api/mobile/README.md)
-* [web](owl/web/readme.md)
-* [interface](owl/api/interface/readme.md)
+* [web](owl/api/browser/README.md)
+* [interface](owl/api/interface/README.md)
 
 ## 20230816 升级到 selenium4、appium2
 
