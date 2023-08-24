@@ -8,12 +8,12 @@
 @message: jayzhen_testing@163.com
 @file: demo_wencai_client.py
 """
-import chardet
 import time
-from thrift.transport import TTransport
-from thrift.transport import TSocket
-from thrift.protocol import TBinaryProtocol,TCompactProtocol
 from unittest import TestCase
+
+from thrift.protocol import TBinaryProtocol
+from thrift.transport import TSocket
+from thrift.transport import TTransport
 
 
 class TestWencai(TestCase):

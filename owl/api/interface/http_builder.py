@@ -9,12 +9,13 @@
 @time: 2018/06/26 19:13 
 """
 import re
-import pandas as pd
 
-from owl.lib.fileUtil.FileInspector import FileInspector
-from owl.domain.request_struct_do import DataStruct
-from owl.api.interface.http_requests import Requester
+import pandas as pd
 from styleframe import Styler, utils, StyleFrame
+
+from owl.api.interface.http_requests import Requester
+from owl.domain.request_struct_do import DataStruct
+from owl.lib.file.file_inspector import FileInspector
 
 
 class RequestBuilder(object):
@@ -23,7 +24,7 @@ class RequestBuilder(object):
         fc = FileInspector()
         self.filepath = None
         self.propath = None
-        boolean = fc.is_has_file("接口测试用例集.xlsx")
+        boolean = fc.is_has_file("interface-test-case.xlsx")
         if boolean:
             self.filepath = fc.get_file_abspath()
             self.propath = fc.get_project_path()

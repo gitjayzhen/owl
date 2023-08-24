@@ -1,5 +1,6 @@
+import logging
+
 import cx_Oracle
-import logging, time
 
 
 class Database(object):

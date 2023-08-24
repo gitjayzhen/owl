@@ -11,8 +11,8 @@
 """
 
 import time
+
 from dubbo_client import ApplicationConfig, ZookeeperRegistry, DubboClient
-from dubbo_client import DubboClientError
 
 config = ApplicationConfig('test_rpclib')
 service_interface = "com.auto.Interface.*"

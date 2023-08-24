@@ -9,9 +9,9 @@
 @file: HesssianClient.py 
 @time: 2018/09/14 12:27 
 """
-from pyhessian.client import HessianProxy
 # 从pyhessian导入HessianProxy，用它来发请求
 from pyhessian import protocol
+from pyhessian.client import HessianProxy
 
 
 # 这个是用来进行把咱们python的数据类型序列化成二进制的

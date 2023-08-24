@@ -10,7 +10,7 @@ from owl.lib.reporter.logging_porter import LoggingPorter
 
 class Requester(object):
     """
-    作为核心的请求发送model，需要处理请求的header和body及发送
+    作为核心的请求发送 model，需要处理请求的header和body及发送
     """
 
     def __init__(self):
@@ -32,7 +32,7 @@ class Requester(object):
             self.log4py.debug("post 请求的data为空")
         return flag
 
-    def POST_FORM(self, url, headers, form_data):
+    def post_form(self, url, headers, form_data):
         """
         url必须入参、headers可选入参、form_data可选入参
         这个方法处理的是将表单中的数据提交数据库，就是‘x-www-form-urlencoded’的内容
@@ -42,7 +42,7 @@ class Requester(object):
             return result
         return None
 
-    def POST_JSON(self, url, headers, json_data):
+    def post_json(self, url, headers, json_data):
         """
         url必须入参、headers可选入参、json可选入参(data和json看后台接口需要识别什么形式的)
         接口如果使用json传输数据 ，那就使用这个也就是‘Content-Type: Application/json’
@@ -52,7 +52,7 @@ class Requester(object):
             return post_response
         return None
 
-    def POST(self, url, headers, form_data, json_data):
+    def post(self, url, headers, form_data, json_data):
         """
         如果一个接口又是json又有form，就是用这个方法，但是我没有见过，姑且写上
         """

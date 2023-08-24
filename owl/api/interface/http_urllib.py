@@ -1,8 +1,8 @@
 # -*- coding:utf-8 -*-
 
-import urllib.request
-import urllib.parse
 import json
+import urllib.parse
+import urllib.request
 from configparser import ConfigParser
 from http.cookiejar import CookieJar
 
@@ -44,7 +44,7 @@ class Requester(object):
     def get(self, url, params):
         if not params and params != "":
             params = urllib.parse.urlencode(eval(params))  # 将参数转为url编码字符串
-        url = 'http://' + self.host + ':' + str(self.port) + url + params
+        url = 'https://' + self.host + ':' + str(self.port) + url + params
         request = urllib.request.Request(url, headers=self.headers)
 
         try:
@@ -62,7 +62,7 @@ class Requester(object):
     def post(self, url, data):
         data = json.dumps(eval(data))
         data = data.encode('utf-8')
-        url = 'http://' + self.host + ':' + str(self.port) + url
+        url = 'https://' + self.host + ':' + str(self.port) + url
         try:
             request = urllib.request.Request(url, headers=self.headers)
             response = urllib.request.urlopen(request, data)
