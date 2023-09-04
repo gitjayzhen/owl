@@ -2,20 +2,14 @@
 # -*- encoding: utf-8  -*-
 
 """ 
-@version: v1.0 
-@author: jayzhen 
-@license: Apache Licence  
-@contact: jayzhen_testing@163.com 
-@site: http://blog.csdn.net/u013948858 
-@software: PyCharm 
-@time: 2017/7/27 23:29 
+@author: jayzhen
 """
 
+import getopt
 import os
-import time
 import re
 import sys
-import getopt
+
 
 #返回函数式方法
 def file_end_with(*endstring):

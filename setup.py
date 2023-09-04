@@ -9,18 +9,26 @@
 @file: setup.py
 @time: 2023/8/15 17:07
 """
+import io
 
 from setuptools import setup, find_packages
+
+
+def long_description():
+    with io.open('README.md', 'r', encoding='utf-8') as f:
+        readme = f.read()
+    return readme
+
 
 setup(
     name='owl',  # 打包后的包文件名
     version='1.0.0',  # 版本号
     keywords=["owl", "testing", "ui", "interface"],  # 关键字
     description='over the world limit',  # 说明
-    long_description="## over the world limit",  # 详细说明 readme
+    long_description=long_description(),  # 详细说明 readme
     long_description_content_type="text/markdown",
     license="Apache License",  # 许可
-    url='',  # 一般是GitHub项目路径
+    url='git@github.com:gitjayzhen/owl.git',  # 一般是GitHub项目路径
     author='gitjayzhen',
     author_email='jayzhen_testing@163.com',
     include_package_data=True,

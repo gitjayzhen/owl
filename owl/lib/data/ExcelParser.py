@@ -17,11 +17,9 @@ python实现读取Excel文件中的内容
 """
 
 import xlrd
-from xlutils.copy import copy
-import os
-from com.framework.utils.reporterUtil.LoggingPorter import LoggingPorter
 from com.framework.utils.fileUtil.FileInspector import FileInspector
-import datetime
+from com.framework.utils.reporterUtil.LoggingPorter import LoggingPorter
+from xlutils.copy import copy
 
 
 class ExcelParser(object):
