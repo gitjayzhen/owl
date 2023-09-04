@@ -1,12 +1,7 @@
 #!/usr/bin/env python
 # -*-coding=utf8 -*-
 """
-@version: v1.0
 @author: jayzhen
-@license: Apache Licence
-@contact: jayzhen_testing@163.com
-@site: http://blog.csdn.net/u013948858
-@software: PyCharm
 """
 # 需要安装pychartdir模块
 import string

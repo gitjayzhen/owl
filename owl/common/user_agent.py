@@ -3,9 +3,6 @@
 
 """ 
 @author: jayzhen
-@message: jayzhen_testing@163.com
-@site: https://github.com/gitjayzhen
-@software: PyCharm & Python 2.7
 @file: user_agent.py
 @time: 2018/06/22 13:07 
 """

@@ -3,8 +3,6 @@
 """
 @version: python2.7
 @author: ‘jayzhen‘
-@contact: jayzhen_testing@163.com
-@site: https://github.com/gitjayzhen
 @software: PyCharm Community Edition
 @time: 2017/3/29  13:12
 该日志类可以把不同级别的日志输出到不同的日志文件中

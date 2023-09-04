@@ -2,7 +2,6 @@
 
 """ 
 @author: jayzhen
-@message: jayzhen_testing@163.com
 @site: https://github.com/gitjayzhen
 @software: PyCharm & Python 2.7
 @file: gzip_encrypt.py

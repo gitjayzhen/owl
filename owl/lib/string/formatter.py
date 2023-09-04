@@ -2,10 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """
-@version: v1.0
 @author: jayzhen
 @license: Apache License 
-@message: jayzhen_testing@163.com
 @software: PyCharm
 @file: SuperFormatUtil
 @time: 2022/08/12  13:59

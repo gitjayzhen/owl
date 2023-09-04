@@ -2,8 +2,6 @@
 """
 @version: python2.7
 @author: ‘jayzhen‘
-@contact: jayzhen_testing@163.com
-@site: https://github.com/gitjayzhen
 @software: PyCharm Community Edition
 @time: 2017/3/29  13:12
 """

@@ -5,7 +5,6 @@
 @version: v1.0
 @author: jayzhen
 @license: Apache Licence 
-@message: jayzhen_testing@163.com
 @software: PyCharm
 @file: requester_do.py
 @time: 2017/9/4 23:25

@@ -4,7 +4,6 @@
 @version: v1.0
 @author: jayzhen
 @license: Apache Licence 
-@message: jayzhen_testing@163.com
 @software: PyCharm
 @file: FinderType
 @time: 2018/5/8  11:22

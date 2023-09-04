@@ -3,7 +3,6 @@
 
 """
 @author: jay.zhen
-@contact: jayzhen_testing@163.com
 @version: 1.0.0
 @license: Apache Licence
 @file: test_ui_se_local.py

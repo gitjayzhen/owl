@@ -2,10 +2,6 @@
 
 """
 @author: jayzhen 
-@license: Apache Licence
-@version: v1.0 
-@contact: jayzhen_testing@163.com 
-@site: https://blog.csdn.net/u013948858
 @file: appium_controller.py
 @time: 2017/12/26 23:08
 """

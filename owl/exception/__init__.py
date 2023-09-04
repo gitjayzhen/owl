@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-@author: jayzhen <jayzhen_testing@163.com>
+@author: jayzhen
 @site: https://github.com/gitjayzhen
 @version: 1.0.0
 @license:  Apache Licence

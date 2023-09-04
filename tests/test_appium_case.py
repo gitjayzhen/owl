@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-@author: jayzhen <jayzhen_testing@163.com>
-@site: https://github.com/gitjayzhen
-@version: 1.0.0
+@author: jayzhen
 @license:  Apache Licence
 @software: PyCharm & Python 3.7+
 @file: test_appium_case.py

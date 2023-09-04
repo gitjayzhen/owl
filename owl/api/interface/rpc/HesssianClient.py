@@ -3,8 +3,6 @@
 
 """ 
 @author: jayzhen
-@message: jayzhen_testing@163.com
-@site: https://github.com/gitjayzhen
 @software: PyCharm & Python 2.7
 @file: HesssianClient.py 
 @time: 2018/09/14 12:27 

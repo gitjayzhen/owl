@@ -4,7 +4,6 @@
 @version: v1.0
 @author: jayzhen
 @license: Apache Licence 
-@message: jayzhen_testing@163.com
 @software: PyCharm
 @file: se_config_do.py
 @time: 2023/8/16 12:49

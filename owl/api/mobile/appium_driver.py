@@ -2,10 +2,6 @@
 """
 @version: v1.0
 @author: jayzhen
-@license: Apache Licence
-@contact: jayzhen_testing@163.com
-@site: https://blog.csdn.net/u013948858
-@software: PyCharm
 @time: 2023/8/3  17:22 当前只能是一个设备
 @TODO 多线程并发执行脚本时，需要将端口、手机设备的关联做好;多个设备时desired_capabilities属性只能是一个设备
 """

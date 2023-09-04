@@ -2,8 +2,6 @@
 
 """ 
 @author: jayzhen
-@message: jayzhen_testing@163.com
-@site: https://github.com/gitjayzhen
 @software: PyCharm & Python 2.7
 @file: http_builder.py
 @time: 2018/06/26 19:13 
