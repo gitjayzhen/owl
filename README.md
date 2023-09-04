@@ -12,9 +12,9 @@
 
 ### 项目设计
 
-* 基于python的web自动化、mobile自动化、接口自动化的整合项目
-* 弱耦合，高内聚，复用性，易用性，可读性，易拓展
-* 核心：selenium、appium、requests、allure、pytest
+* 基于 python 去做 Web UI 自动化、Mobile 自动化、接口自动化相关的事情；
+* 应用一些经验上的需要：弱耦合，高内聚，复用性，易用性，可读性，易拓展；
+* 引用的核心：selenium、appium、requests、allure、pytest；
 
 ```text
 .

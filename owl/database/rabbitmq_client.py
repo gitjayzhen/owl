@@ -1,14 +1,11 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """
-@version: v1.0
 @author: jayzhen
 @license: Apache Licence 
-@software: PyCharm
-@file: rabbitMQUtils
-@time: 2018/3/1  11:12
-
+@version: Python 3.8+
+@file: rabbitmq_client.py
+@time: 2023/9/4 19:25
 pip install pika
 """
 

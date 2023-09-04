@@ -2,10 +2,7 @@
 
 """
 @author: jayzhen
-@site: https://github.com/gitjayzhen
-@version: 1.0.0
 @license:  Apache Licence
-@software: PyCharm & Python 3.7+
 @file: common.py
 @time: 2023/8/18 16:10
 """
