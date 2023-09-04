@@ -1,12 +1,13 @@
-#!usr/bin/env python  
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 
-""" 
-@author: jayzhen
-@software: PyCharm & Python 2.7
-@file: HesssianClient.py 
-@time: 2018/09/14 12:27 
 """
+@author: jayzhen
+@license: Apache Licence 
+@version: Python 3.8+
+@file: hessian_client.py
+@time: 2023/9/4 16:46
+"""
+
 # 从pyhessian导入HessianProxy，用它来发请求
 from pyhessian import protocol
 from pyhessian.client import HessianProxy

@@ -1,10 +1,13 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """
 @author: jayzhen
-@file: demo_wencai_client.py
+@license: Apache Licence 
+@version: Python 3.8+
+@file: thrift_client.py
+@time: 2023/9/4 16:47
 """
+
 import time
 from unittest import TestCase
 
@@ -104,7 +107,7 @@ class TestWencai(TestCase):
         dta.RecommendTime = int(time.time())
 
         result = self.client.wc_update_article(dta)
-        print result
+        print(result)
 
     def test_wc_op_chang_state(self):
         """更改内容的状态"""
@@ -114,7 +117,7 @@ class TestWencai(TestCase):
         dat.State = 2
 
         result = self.client.wc_op_chang_state(dat)
-        print result
+        print(result)
 
     def test_wc_op_collect(self):
         """收藏/取消收藏操作"""
@@ -125,4 +128,4 @@ class TestWencai(TestCase):
         dat.Timestamp = int(time.time())
 
         res = self.client.wc_op_collect(dat)
-        print res
+        print(res)
