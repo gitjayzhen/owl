@@ -1,13 +1,19 @@
-# -*- coding:UTF-8 -*-
+# -*- coding: utf-8 -*-
+
 """
-Created on 2016年4月26日
 @author: jayzhen
+@license: Apache Licence 
+@version: Python 3.8+
+@file: appium_cfg.py
+@time: 2023/9/5 10:40
 """
 
+
 import os
+
+from owl.domain.appium_config_do import AppiumIniDomain
 from owl.lib.file.config_resolver import ConfigControl
 from owl.lib.file.file_inspector import FileInspector
-from owl.domain.appium_config_do import AppiumIniDomain
 from owl.lib.reporter.logging_porter import LoggingPorter
 
 
@@ -80,12 +86,12 @@ class AppiumConfiger(object):
             base = os.path.join((base.split('owl'))[0], 'owl')
             apk_file_path = os.path.join(base, apk_file_path)
         result = {
-                "is_first": is_first,
-                "pkg_name": pkg_name,
-                "launch_activity": launch_activity,
-                "wait_activity": wait_activity,
-                "apk_file_path": apk_file_path
-            }
+            "is_first": is_first,
+            "pkg_name": pkg_name,
+            "launch_activity": launch_activity,
+            "wait_activity": wait_activity,
+            "apk_file_path": apk_file_path
+        }
         return result
 
     def set_run_conf(self, is_first, pkg_name, launch_activity, wait_activity, apk_file_path):
@@ -159,7 +165,8 @@ class AppiumServerConfigFile(object):
                     # 因为是覆盖写入，没有section，需要先添加再设置, 初始化的服务都加一个run的标识
                     ap.add_section_key_value(filed, key, value)
                     ap.set_value(filed, "run", "0")
-                    self.log4py.debug("设备sno与appium服务端口映射已写入appiumService.ini配置文件:{}--{}".format(key, value))
+                    self.log4py.debug(
+                        "设备sno与appium服务端口映射已写入appiumService.ini配置文件:{}--{}".format(key, value))
                 ap.flush()
 
     def set_appium_uuid_port(self, device, port, bp):
@@ -185,7 +192,8 @@ class AppiumServerConfigFile(object):
                     ap.set_value(sec, "bp", bp)
                     ap.set_value(sec, "run", "0")
                 ap.flush()
-                self.log4py.debug("设备sno与appium服务端口映射已写入appiumService.ini配置文件:{}--{}".format(key, value))
+                self.log4py.debug(
+                    "设备sno与appium服务端口映射已写入appiumService.ini配置文件:{}--{}".format(key, value))
 
     def create_config_file(self, path):
         """

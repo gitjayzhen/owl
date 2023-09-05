@@ -1,11 +1,9 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """
 @version: v1.0
 @author: jayzhen
 @file: __init__.py.py
-@time: 2018/4/3 12:44
 """
 
 from owl.exception.owl_type import SingletonInstantiationException
@@ -40,5 +38,14 @@ class ConfigReader:
             'port': self.conf.ini_reader.getint('db.redis', 'port'),
             'db': self.conf.ini_reader.getint('db.redis', 'db'),
             'passwd': self.conf.ini_reader.get('db.redis', 'passwd')
+        }
 
+    def get_mysql_config(self):
+        # 获取数据库连接信息
+        return {
+            'host': self.conf.ini_reader.get('db.mysql', 'host'),
+            'port': self.conf.ini_reader.getint('db.mysql', 'port'),
+            'database': self.conf.ini_reader.get('db.mysql', 'database'),
+            'user': self.conf.ini_reader.get('db.mysql', 'user'),
+            'password': self.conf.ini_reader.get('db.mysql', 'password')
         }

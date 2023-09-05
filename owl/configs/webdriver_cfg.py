@@ -1,4 +1,13 @@
-# -*- coding:UTF-8 -*-
+# -*- coding: utf-8 -*-
+
+"""
+@author: jayzhen
+@license: Apache Licence 
+@version: Python 3.8+
+@file: webdriver_cfg.py
+@time: 2023/9/5 10:39
+"""
+
 
 import os
 
@@ -19,7 +28,7 @@ class WebdriverConfiger(object):
         self.log4py = LoggingPorter()
         fc = FileInspector()
         boolean = fc.is_has_file("owl-selenium.ini")
-        if boolean: 
+        if boolean:
             self.__file_abs_path = fc.get_file_abspath()
             self.__project_path = fc.get_project_path()
         self.conf = ConfigControl(self.__file_abs_path)

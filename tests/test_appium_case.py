@@ -18,7 +18,7 @@ from appium.webdriver.common.mobileby import MobileBy
 from owl.api.mobile.appium_controller import PostRunController
 from owl.api.mobile.appium_driver import InitAppiumDriver
 from owl.api.mobile.appium_api import AppiumBaseApi
-from owl.configs.appium_config import AppiumConfiger
+from owl.configs.appium_cfg import AppiumConfiger
 
 
 class TestAppiumBaseApi(unittest.TestCase):

@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding:utf8 -*-
+# -*- coding: utf8 -*-
 
 """
 这里主要管理接口固定的header，如果需要token、session、cookie等需要在进行添加

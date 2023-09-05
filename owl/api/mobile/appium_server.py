@@ -8,7 +8,7 @@ import threading
 import time
 from multiprocessing import Process
 
-from owl.configs.appium_config import AppiumServerConfigFile
+from owl.configs.appium_cfg import AppiumServerConfigFile
 from owl.core.adb.adb import AndroidDebugBridge
 from owl.exception.device_type import NoDeviceConnectionException
 from owl.lib.common import Utils

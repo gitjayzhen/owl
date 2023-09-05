@@ -14,6 +14,8 @@ from owl.lib.reporter.logging_porter import LoggingPorter
 
 class ConfigControl(object):
 
+    __instances = {}
+
     def __init__(self, file_path):
         self.log4py = LoggingPorter()
         if not os.path.exists(file_path):

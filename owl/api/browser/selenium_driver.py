@@ -7,7 +7,7 @@ from requests import exceptions
 
 from owl.api.browser.selenium_api import SeleniumWorkApi
 from owl.api.browser.selenium_browser import WebBrowser
-from owl.configs.webdriver_config import WebdriverConfiger
+from owl.configs.webdriver_cfg import WebdriverConfiger
 from owl.lib.date.date_formatter import get_formate_time
 from owl.lib.reporter.logging_porter import LoggingPorter
 

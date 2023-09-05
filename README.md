@@ -38,7 +38,6 @@
 │   ├── __init__.py
 │   ├── __pycache__
 │   ├── api # 手机ui自动化及appium的一系列操作, 接口测试使用及requests的一系列操作, webui自动化及selenium的一系列操作
-│   ├── common
 │   ├── configs
 │   ├── core    # 封装的adb底层命令,封装的window命令 
 │   ├── database    # 数据模型对象，处理各种数据驱动；数据库操作对象（mysql、redis、mongodb、rabbitmq）

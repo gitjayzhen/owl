@@ -7,7 +7,7 @@
 """
 from owl.api.mobile.appium_api import AppiumBaseApi
 from owl.api.mobile.appium_driver import InitAppiumDriver
-from owl.configs.appium_config import AppiumConfiger
+from owl.configs.appium_cfg import AppiumConfiger
 
 
 class PostRunController(object):

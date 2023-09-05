@@ -13,7 +13,7 @@ from owl.database.mysql_client import MySQLConnection
 from owl.database.redis_client import RedisSingleton
 
 
-class TestRedisClient:
+class TestDBClient:
 
     def setup_class(cls):
         # 在类级别执行的设置操作
@@ -44,11 +44,10 @@ class TestRedisClient:
 
     def test_mysql_client(self):
         mysql_conn = MySQLConnection()
-        mysql_conn.connect()
 
-        result = mysql_conn.execute_query('SELECT * FROM your_table')
+        result = mysql_conn.execute_query('select * from qadev.work_log limit 0,10;')
         print(result)
 
-        result_async = mysql_conn.execute_query_async('SELECT * FROM your_table')
+        result_async = mysql_conn.execute_queries(['select * from qadev.work_log limit 10,15;', 'select * from qadev.work_log limit 15,20;'])
         print(result_async)
 
