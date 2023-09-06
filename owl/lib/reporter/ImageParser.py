@@ -7,7 +7,7 @@
 @time: 2017/3/29  13:12
 """
 
-#图片处理，需要PIL库
+# 图片处理，需要PIL库
 
 import tempfile
 import os

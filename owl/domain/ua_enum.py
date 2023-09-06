@@ -1,13 +1,19 @@
 # -*- coding: utf-8 -*-
 
-""" 
-@author: jayzhen
-@file: user_agent.py
-@time: 2018/06/22 13:07 
 """
+@author: jayzhen
+@license: Apache Licence 
+@version: Python 3.8+
+@file: ua_enum.py
+@time: 2023/9/6 15:53
+"""
+from enum import Enum, unique
+
+from owl.exception import EnumDirectValueMeta
 
 
-class Proxy(object):
+@unique
+class UserAgent(Enum, metaclass=EnumDirectValueMeta):
 
     chrome_browser = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) " \
                      "Chrome/67.0.3396.87 Safari/537.36 "

@@ -10,7 +10,7 @@
 """
 
 from owl.api.browser.selenium_driver import BrowserDriver
-from owl.domain.selector_type import FindBy
+from owl.domain.selector_enum import FindBy
 
 
 class TestSeleniumInLocal:

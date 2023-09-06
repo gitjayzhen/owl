@@ -6,7 +6,10 @@ import logging
 import logging.config
 import os
 
+from owl.lib.decorator import singleton
 
+
+@singleton
 class LoggingController(object):
 
     def __init__(self):
@@ -19,28 +22,28 @@ class LoggingController(object):
         self.W = logging.getLogger("warning")
         self.E = logging.getLogger("error")
 
-    def getLogMessage(self, message):
+    def get_message(self, message):
         frame, filename, lineNo, functionName, code, unknowField = inspect.stack()[2]
         '''日志格式：[时间] [类型] [记录代码] 信息'''
         return "[%s- %s -%s] %s" % (filename, lineNo, functionName, message)
 
     def debug(self, mag):
-        mag = self.getLogMessage(mag)
+        mag = self.get_message(mag)
         print(self.D.handlers)
         self.D.debug(mag)
 
     def info(self, mag):
-        mag = self.getLogMessage(mag)
+        mag = self.get_message(mag)
         print(self.I.handlers)
         self.I.info(mag)
 
     def warn(self, mag):
-        mag = self.getLogMessage(mag)
+        mag = self.get_message(mag)
         print(self.W.handlers)
         self.W.warning(mag)
 
     def error(self, mag):
-        mag = self.getLogMessage(mag)
+        mag = self.get_message(mag)
         print(self.E.handlers)
         self.E.error(mag)
 

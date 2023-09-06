@@ -7,6 +7,8 @@
 @file: decorator.py
 @time: 2023/9/4 18:56
 """
+import time
+from functools import wraps
 
 
 # 装饰器实现的单例
@@ -21,6 +23,19 @@ def singleton(cls):
 
     return wrapper
 
+
+def record_transaction_time(func):
+
+    @wraps(func)
+    def record(*args, **kwargs):
+        begin = time.time()
+        result = func(*args, **kwargs)
+        # time.sleep(random.randint(2, 5))
+        # result = int(time.time())
+        print(func.__name__, "cost:", int(time.time() - begin), "s")
+        return result
+
+    return record
 
 # 共享状态的单例
 class SingletonClass:

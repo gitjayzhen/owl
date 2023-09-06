@@ -10,6 +10,7 @@ import os
 import platform
 import re
 import subprocess
+from enum import EnumMeta
 
 
 class Utils(object):
@@ -67,3 +68,16 @@ class Utils(object):
             else:
                 os.system("taskkill -F -PID" + str(pid))
             print("进程PID：%s 关闭端口服务成功" % pid)
+
+
+class EnumDirectValueMeta(EnumMeta):
+    """
+    可以解决调用枚举属性时，由类型 enum 变成 string
+    需要枚举类继承: Enum, metaclass=EnumDirectValueMeta
+    """
+
+    def __getattribute__(cls, name):
+        value = super().__getattribute__(name)
+        if isinstance(value, cls):
+            value = value.value
+        return value
