@@ -27,12 +27,12 @@ class AppiumConfiger(object):
         self.project_root_path = None
         self.log4py = LoggingPorter()
         fc = FileInspector()
-        boolean = fc.is_has_file("owl-appium.ini")
+        boolean = fc.is_has_file("owl.ini")
         if boolean:
             self.config_path = fc.get_file_abspath()
             self.project_root_path = fc.get_project_path()
         else:
-            raise FileNotFoundError("owl-appium.ini is not found")
+            raise FileNotFoundError("owl.ini is not found")
         self.cfg = ConfigControl(self.config_path)
 
     @property
@@ -43,34 +43,34 @@ class AppiumConfiger(object):
         """
         ap = AppiumIniDomain()
         try:
-            ap.pageLoadTimeout = self.cfg.get_value("TimeSet", "pageLoadTimeout")
-            ap.waitTimeout = self.cfg.get_value("TimeSet", "waitTimeout")
-            ap.scriptTimeout = self.cfg.get_value("TimeSet", "scriptTimeout")
-            ap.pauseTime = self.cfg.get_value("TimeSet", "pauseTime")
+            ap.pageLoadTimeout = self.cfg.get_value("appium.TimeSet", "pageLoadTimeout")
+            ap.waitTimeout = self.cfg.get_value("appium.TimeSet", "waitTimeout")
+            ap.scriptTimeout = self.cfg.get_value("appium.TimeSet", "scriptTimeout")
+            ap.pauseTime = self.cfg.get_value("appium.TimeSet", "pauseTime")
 
-            ap.capturePath = os.path.join(self.project_root_path, self.cfg.get_value("ResultPath", "capturePath"))
+            ap.capturePath = os.path.join(self.project_root_path, self.cfg.get_value("appium.ResultPath", "capturePath"))
             if not os.path.exists(ap.capturePath):
                 os.makedirs(ap.capturePath)
-            ap.htmlreportPath = os.path.join(self.project_root_path, self.cfg.get_value("ResultPath", "htmlreportPath"))
+            ap.htmlreportPath = os.path.join(self.project_root_path, self.cfg.get_value("appium.ResultPath", "htmlreportPath"))
             if not os.path.exists(ap.htmlreportPath):
                 os.makedirs(ap.htmlreportPath)
-            ap.dumpxmlPath = os.path.join(self.project_root_path, self.cfg.get_value("ResultPath", "dumpxmlPath"))
+            ap.dumpxmlPath = os.path.join(self.project_root_path, self.cfg.get_value("appium.ResultPath", "dumpxmlPath"))
             if not os.path.exists(ap.dumpxmlPath):
                 os.makedirs(ap.dumpxmlPath)
-            ap.appiumlogPath = os.path.join(self.project_root_path, self.cfg.get_value("ResultPath", "appiumlogPath"))
+            ap.appiumlogPath = os.path.join(self.project_root_path, self.cfg.get_value("appium.ResultPath", "appiumlogPath"))
             if not os.path.exists(ap.appiumlogPath):
                 os.makedirs(ap.appiumlogPath)
-            ap.permissionPath = os.path.join(self.project_root_path, self.cfg.get_value("ResultPath", "permissionPath"))
+            ap.permissionPath = os.path.join(self.project_root_path, self.cfg.get_value("appium.ResultPath", "permissionPath"))
             if not os.path.exists(ap.permissionPath):
                 os.makedirs(ap.permissionPath)
-            ap.appiumService = os.path.join(self.project_root_path, self.cfg.get_value("ResultPath", "appiumService"))
+            ap.appiumService = os.path.join(self.project_root_path, self.cfg.get_value("appium.ResultPath", "appiumService"))
 
         except Exception as e:
             self.log4py.error("实例化appium配置文件对象时，出现异常 ：" + str(e))
         return ap
 
     def get_run_conf(self):
-        section = "run"
+        section = "appium.run"
         # 是否是第一次跑，或者是重新跑，为0时会重新安装指定apk，并执行任务；为1时直接启动安装的app进行任务操作
         is_first = self.cfg.get_value(section, "isFirst")
         # app的包名
@@ -96,7 +96,7 @@ class AppiumConfiger(object):
 
     def set_run_conf(self, is_first, pkg_name, launch_activity, wait_activity, apk_file_path):
         flag = False
-        section = "run"
+        section = "appium.run"
         try:
             self.cfg.set_value(section, "isFirst", is_first)
             self.cfg.set_value(section, "pkgName", pkg_name)
@@ -109,7 +109,7 @@ class AppiumConfiger(object):
         return flag
 
     def get_desired_caps_conf(self):
-        section = "desired_caps"
+        section = "appium.desired_caps"
         # 这些参数都是启动app时需要的，但是在代码读取参数的时候，不一定都读取，因为有些参数不是固定的
         dc = {
             "automationName": self.cfg.get_value(section, "automationName"),
@@ -137,7 +137,7 @@ class AppiumServerConfigFile(object):
 
     def __init__(self):
         self.fi = FileInspector()
-        if self.fi.is_has_file("owl-appium.ini"):
+        if self.fi.is_has_file("owl.ini"):
             fp = self.fi.get_file_abspath()
             self.cfg = ConfigControl(fp)
         self.log4py = LoggingPorter()
