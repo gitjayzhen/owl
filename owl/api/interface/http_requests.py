@@ -22,6 +22,7 @@ class Requester(object):
         self.log4py = LoggingPorter()
         self.timeout = 5
         self.s = Session()
+        self.headers = None
 
     def init_config(self, url, headers, data):
         """
@@ -68,20 +69,20 @@ class Requester(object):
             return result
         return None
 
-    def do_get(self, url, req_headers, req_params):
+    def do_get(self, url, req_headers=None, req_params=None):
         """
         url必须入参、headers可选入参、params可选入参
         """
         if url is None or url == "":
-            self.log4py.debug("get请求的url为空".decode("utf-8"))
+            self.log4py.debug("get请求的url为空")
             return None
         if req_headers is None or req_headers == "":
-            self.log4py.debug("get请求的header为空".decode("utf-8"))
+            self.log4py.debug("get请求的header为空")
             req_headers = None
         if req_params is None or req_params == "":
-            self.log4py.debug("get请求的parameter为空".decode("utf8"))
+            self.log4py.debug("get请求的parameter为空")
             req_params = None
-        self.execute_request(method="get", url=url, req_headers=req_headers, req_params=req_params)
+        return self.execute_request(method="get", url=url, req_headers=req_headers, req_params=req_params)
 
     def do_put(self, url, data, file_name):
         work_path = os.getcwd()
@@ -124,7 +125,6 @@ class Requester(object):
         # prepped = req.prepare()
         prepped = self.s.prepare_request(req)  # 建议使用这种方法
         resp = self.s.send(prepped, verify=True, timeout=self.timeout)
-
         # self.log4py.debug("返回结果：{} - {}".format(resp.status_code, resp.text.encode("utf-8")))
         try:
             res_json = resp.json()

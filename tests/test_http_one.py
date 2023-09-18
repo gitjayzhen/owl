@@ -11,6 +11,8 @@ import json
 
 import requests
 
+from owl.api.interface.http_requests import Requester
+
 
 class TestHttpInterface:
 
@@ -18,4 +20,6 @@ class TestHttpInterface:
         """
         3A 原则
         """
-        pass
+        url = "https://api.vvhan.com/api/hotlist?type=baiduRD"
+        resp = Requester().do_get(url=url)
+        assert resp['success'], "接口请求异常"
