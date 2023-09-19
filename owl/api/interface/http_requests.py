@@ -38,7 +38,7 @@ class Requester(object):
             self.log4py.debug("post 请求的data为空")
         return flag
 
-    def post_form(self, url, headers, form_data):
+    def post_form(self, url, headers=None, form_data=None):
         """
         url必须入参、headers可选入参、form_data可选入参
         这个方法处理的是将表单中的数据提交数据库，就是‘x-www-form-urlencoded’的内容
@@ -48,7 +48,7 @@ class Requester(object):
             return result
         return None
 
-    def post_json(self, url, headers, json_data):
+    def post_json(self, url, headers=None, json_data=None):
         """
         url必须入参、headers可选入参、json可选入参(data和json看后台接口需要识别什么形式的)
         接口如果使用json传输数据 ，那就使用这个也就是‘Content-Type: Application/json’

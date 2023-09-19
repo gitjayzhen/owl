@@ -142,7 +142,7 @@ class AppiumServerConfigFile(object):
             self.cfg = ConfigControl(fp)
         self.log4py = LoggingPorter()
         self.log4py.info("-----配置文件操作开始-----")
-        self.f_path = os.path.join(self.fi.get_project_path(), self.cfg.get_value("ResultPath", "appiumService"))
+        self.f_path = os.path.join(self.fi.get_project_path(), self.cfg.get_value("appium.ResultPath", "appiumService"))
 
     def __del__(self):
         self.log4py.info("-----配置文件操作结束-----")
@@ -224,7 +224,7 @@ class AppiumServerConfigFile(object):
         return port_list
 
     def get_appium_logs_path(self):
-        path = os.path.join(self.fi.get_project_path(), self.cfg.get_value("ResultPath", "appiumlogPath"))
+        path = os.path.join(self.fi.get_project_path(), self.cfg.get_value("appium.ResultPath", "appiumlogPath"))
         if PATH(path):
             if not os.path.exists(path):
                 os.makedirs(path)

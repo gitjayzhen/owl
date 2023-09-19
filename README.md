@@ -108,3 +108,5 @@
 
 - https://www.selenium.dev/zh-cn/documentation/webdriver/getting_started/upgrade_to_selenium_4/
 - https://appium.io/docs/en/2.0/quickstart/test-py/
+
+**UIAutomator2 is only supported since Android 5.0 (Lollipop)**
