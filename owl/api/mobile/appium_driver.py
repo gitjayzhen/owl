@@ -11,6 +11,7 @@ import subprocess
 from urllib.error import URLError
 
 from appium import webdriver
+from selenium.webdriver.remote.errorhandler import ErrorHandler
 
 from owl.api.mobile.appium_api import AppiumBaseApi
 from owl.core.adb.adb import AndroidDebugBridge
@@ -93,6 +94,9 @@ class InitAppiumDriver(object):
                 self.log4py.error("连接appium服务，实例化driver时出错，尝试重连...({})".format(num))
                 num = num + 1
                 continue
+            except ErrorHandler as e2:
+                self.log4py.error("appium {} 服务 404, 请手动检查".format(url))
+                raise AppiumServiceNotRunningException(url)
             if self.run_data["wait_activity"] is not None:
                 driver.wait_activity(self.run_data["wait_activity"], 10)
             else:
