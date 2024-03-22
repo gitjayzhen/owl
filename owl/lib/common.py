@@ -69,6 +69,18 @@ class Utils(object):
                 os.system("taskkill -F -PID" + str(pid))
             print("进程PID：%s 关闭端口服务成功" % pid)
 
+    @staticmethod
+    def get_system_symbal():
+        system = platform.system()
+        if system == "Windows":
+            print("The system is Windows.")
+        elif system == "Linux":
+            print("The system is Linux.")
+        elif system == "Darwin":
+            print("The system is macOS.")
+        else:
+            print("Unknown system.")
+
 
 class EnumDirectValueMeta(EnumMeta):
     """

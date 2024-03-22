@@ -1,10 +1,8 @@
-#!/usr/bin/usr python
 # -*- coding:utf8 -*-
+
 """
-@version: python2.7
-@author: ‘jayzhen‘
-@software: PyCharm Community Edition
-@time: 2017/3/29  13:12
+@author: jayzhen
+@time: 2024/3/22  13:12
 该日志类可以把不同级别的日志输出到不同的日志文件中
 
 1. 日志对象
@@ -16,8 +14,12 @@ import os
 import datetime
 import logging
 import inspect
+from sys import platform
 
-LOG_FILE_PATH = os.getcwd().split("owl")[0] + "owl/result/log/"
+from owl.lib.decorator import singleton
+
+# 关于这个路径有两个选择，完全使用一个相对路径，或者使用一个配置方式，然后两者设置优先级
+LOG_FILE_PATH = os.path.join(os.getcwd(), "logs")
 if not os.path.exists(LOG_FILE_PATH):
     os.makedirs(LOG_FILE_PATH)
 
@@ -27,15 +29,11 @@ hds = logging.StreamHandler()
 handlers = {logging.DEBUG: [hd, hds], logging.INFO: [hd, hds], logging.WARNING: [hd, hds], logging.ERROR: [hd, hds]}
 
 
-def time_now_formate():
-    return datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S,%f')
-
-
+@singleton
 class LoggingPorter(object):
     """
-    日志报告
+    日志文档
     """
-
     def __init__(self, level=logging.NOTSET):
         self.__loggers = {}
         log_levels = handlers.keys()
@@ -47,22 +45,25 @@ class LoggingPorter(object):
             self.__loggers.update({level: logger})
 
     def __del__(self):
-        # self.info("******关闭日志文件使用的handler*****")
         hd.close()
 
     def get_log_message(self, level, message):
         frame, filename, lineNo, functionName, code, unknowField = inspect.stack()[2]
         '''日志格式：[时间] [类型] [记录代码] 信息'''
-
         try:
             relative_path = filename.split("owl")[-1]
-            relative_path = relative_path.replace("/", ".")
-            # relative_path = relative_path.replace("\\", ".")
+            system = platform.system()
+            if system == "Windows":
+                relative_path = relative_path.replace("\\", ".")
+            elif system == "Linux" or system == "Darwin":
+                relative_path = relative_path.replace("/", ".")
             relative_path = relative_path.replace(".", "", 1)
         except IndexError as ie:
             print("日志获取当前脚本的绝对路径发生了错误{}".format(str(ie)))
             relative_path = filename
-        return "%s [%s] %s %s - %s" % (time_now_formate(), level, relative_path, lineNo, message)
+        return "%s [%s] %s(%s) - %s" % (
+            datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S,%f'),
+            level, relative_path, lineNo, message)
 
     def info(self, message):
         message = self.get_log_message("INFO", message)

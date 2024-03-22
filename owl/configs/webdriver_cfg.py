@@ -58,7 +58,10 @@ class WebdriverConfiger(object):
             wp.baseURL = self.conf.get_value("selenium.baseURL", "baseURL")
             wp.browser = self.conf.get_value("selenium.run", "browser")
             wp.type = self.conf.get_value("selenium.run", "type")
-            wp.browserdriver = os.path.join(self.__project_path, self.conf.get_value("selenium.driver", wp.browser))
+            wp.browserdriver = self.get_file_path(
+                os.path.join(self.__project_path,
+                             self.conf.get_value("selenium.driver", wp.browser)
+                             ), "SELENIUM_DRIVER")
             wp.isHeadless = self.conf.get_value("selenium.driver", "isHeadless")
             print(wp.browserdriver)
             if wp.type == "0":
@@ -71,3 +74,14 @@ class WebdriverConfiger(object):
         except Exception as e:
             self.log4py.error("实例化selenium配置文件对象时，出现异常 ：" + str(e))
         return wp
+
+    def get_file_path(self, prop_path, env_key):
+        if not self.is_absolute_and_exists(prop_path):
+            return os.environ.get(env_key)
+        return prop_path
+
+    @classmethod
+    def is_absolute_and_exists(cls, path):
+        if os.path.isabs(path) and os.path.exists(path):
+            return True
+        return False

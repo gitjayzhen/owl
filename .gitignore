@@ -98,3 +98,4 @@ ENV/
 .DS_Store
 chromedriver
 *.apk
+logs/
