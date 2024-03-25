@@ -38,7 +38,7 @@ class SeleniumWorkApi(object):
             self.driver.quit()
             self.log4py.debug("stop web driver")
         except Exception as e:
-            self.log4py.error("执行stopWebDriver()方法发生异常，异常信息：" + str(e))
+            self.log4py.error("执行 stopWebDriver() 方法发生异常，异常信息：" + str(e))
 
     def pause(self, second):
         """

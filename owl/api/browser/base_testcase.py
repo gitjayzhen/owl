@@ -22,4 +22,5 @@ class BaseTestCase:
 
     # 方法级结束--类里每个测试方法执行后执行
     def teardown(self):
-        self.driver.stop_web_driver()
+        if self.driver:
+            self.driver.stop_web_driver()

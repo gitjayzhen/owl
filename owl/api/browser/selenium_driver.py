@@ -38,9 +38,9 @@ class BrowserDriver(object):
         try:
             resp = requests.get(self.se_properties.baseURL, timeout=(3.05, 20))
             if resp.status_code != 200:
-                self.log4py.error("浏览器实例化driver失败，请检查你的被测试服务是否启动或baseURL是否设置正确: {}".format(self.se_properties.baseURL))
+                self.log4py.warning("浏览器实例化driver失败，请检查你的被测试服务是否启动或baseURL是否设置正确: {}".format(self.se_properties.baseURL))
         except exceptions.ConnectionError as e:
-            self.log4py.error("浏览器实例化driver失败，请检查你的被测试服务是否启动或baseURL是否设置正确: {}".format(self.se_properties.baseURL))
+            self.log4py.warning("浏览器实例化driver失败，请检查你的被测试服务是否启动或baseURL是否设置正确: {}".format(self.se_properties.baseURL))
         self.driver_instance = WebBrowser(self.se_properties).start_browser()
         if self.driver_instance is None:
             self.log4py.error("浏览器实例化driver失败，请重新检查驱动及启动参数")

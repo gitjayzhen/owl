@@ -8,6 +8,7 @@
 @time: 2023/9/4 18:56
 """
 import time
+import warnings
 from functools import wraps
 
 
@@ -37,6 +38,7 @@ def record_transaction_time(func):
 
     return record
 
+
 # 共享状态的单例
 class SingletonClass:
     _instance = None
@@ -60,4 +62,9 @@ class SingletonMeta(type):
 #     pass
 
 
+def deprecated(func):
+    def wrapper(*args, **kwargs):
+        warnings.warn(f"OWL Deprecated: {func.__name__} is deprecated.", category=DeprecationWarning, stacklevel=2)
+        return func(*args, **kwargs)
+    return wrapper
 

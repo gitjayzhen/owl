@@ -35,6 +35,8 @@ class WebBrowser(object):
             self.driver = self.__start_ie_browser()
         elif "firefox" == browser_name:
             self.driver = self.__start_firefox_browser()
+        elif "safari" == browser_name:
+            self.driver = self.__start_safari_browser()
         else:
             self.driver = self.__start_firefox_browser()
         return self.driver
@@ -70,6 +72,26 @@ class WebBrowser(object):
         except Exception as e:
             self.log4py.error("getFirefoxDriver()方法发生异常，异常信息：" + str(e))
             driver.quit()
+            return None
+        return driver
+
+    def __start_safari_browser(self):
+        """
+        https://www.selenium.dev/zh-cn/documentation/webdriver/browsers/safari/
+        """
+        driver = None
+        try:
+            if self.properties.type == '0':
+                # 实例化remote driver
+                pass
+            elif self.properties.type == '1':
+                options = webdriver.SafariOptions()
+                service = webdriver.SafariService(executable_path='/usr/bin/safaridriver')
+                driver = webdriver.Safari(options=options, service=service)
+            self.__config_browser(driver)
+            self.log4py.debug("初始化safari浏览器成功")
+        except Exception as e:
+            self.log4py.error("__start_safari_browser()方法发生异常，异常信息：" + str(e))
             return None
         return driver
 
@@ -156,7 +178,7 @@ class WebBrowser(object):
         driver.set_script_timeout(self.properties.scriptTimeout)
         self.log4py.error("set scriptTimeout : " + self.properties.scriptTimeout)
         driver.maximize_window()
-        self.__open_index_url(driver, self.properties.baseURL)
+        # self.__open_index_url(driver, self.properties.baseURL)
 
     def __open_index_url(self, driver, url, action_count=1):
         for i in range(action_count):

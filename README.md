@@ -60,7 +60,9 @@
 
 ### 20230816 升级到 selenium4、appium2
 
+- https://github.com/gitjayzhen/airtest-uitesting-template/blob/main/pytest.ini
 - https://www.selenium.dev/zh-cn/documentation/webdriver/getting_started/upgrade_to_selenium_4/
 - https://appium.io/docs/en/2.0/quickstart/test-py/
+- https://www.selenium.dev/zh-cn/documentation/webdriver/browsers/safari/
 
 **UIAutomator2 is only supported since Android 5.0 (Lollipop)**
