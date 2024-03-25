@@ -14,7 +14,7 @@ import os
 import datetime
 import logging
 import inspect
-from sys import platform
+import platform
 
 from owl.lib.decorator import singleton
 
@@ -48,8 +48,8 @@ class LoggingPorter(object):
         hd.close()
 
     def get_log_message(self, level, message):
+        """日志格式：[时间] [类型] [记录代码] 信息"""
         frame, filename, lineNo, functionName, code, unknowField = inspect.stack()[2]
-        '''日志格式：[时间] [类型] [记录代码] 信息'''
         try:
             relative_path = filename.split("owl")[-1]
             system = platform.system()

@@ -3,8 +3,8 @@
 """
 @author: jayzhen 
 @license: Apache Licence
-@file: ConfigPaserUtil.py
-@time: 2017/7/26 16:19
+@file: config_resolver.py
+@time: 2024/3/25 13:19
 """
 import os
 from configparser import ConfigParser

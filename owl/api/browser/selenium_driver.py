@@ -33,6 +33,7 @@ class BrowserDriver(object):
         self.__beforeTestStart = 0
 
     def get_driver(self):
+        # 获取配置文件中的参数
         self.se_properties = WebdriverConfiger().properties
         try:
             resp = requests.get(self.se_properties.baseURL, timeout=(3.05, 20))
