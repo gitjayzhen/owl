@@ -26,7 +26,7 @@ class SeleniumWorkApi(object):
     def __init__(self, driver, properties):
         self.log4py = LoggingPorter()
 
-        self.capturePath = properties.capture_path
+        self.capturePath = properties.capturePath
         self.pauseTime = int(properties.pauseTime)
         self.implicitly_wait_time = int(properties.waitTimeout)
 
@@ -99,7 +99,7 @@ class SeleniumWorkApi(object):
                 self.log4py.debug("navigate to url [ " + url + " ]")
                 break
             except Exception as e:
-                self.log4py.error(e)
+                self.log4py.error(str(e))
         self.operation_check("get", is_succeed)
 
     def navigate_back(self):

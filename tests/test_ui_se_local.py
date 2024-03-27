@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-@author: jay.zhen
+@author: jayzhen
 @file: test_ui_se_local.py
 @time: 2023/3/25 12:49
 """
