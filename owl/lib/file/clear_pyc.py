@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- encoding: utf-8  -*-
 
 """ 
@@ -11,23 +10,27 @@ import re
 import sys
 
 
-#返回函数式方法
+# 返回函数式方法
 def file_end_with(*endstring):
     ends = endstring
+
     def run(s):
-        f = map(s.endswith,ends)
+        f = map(s.endswith, ends)
         if True in f:
             return s
+
     return run
 
-def san_path(abs_path,end_string):
-    backfunc= file_end_with(end_string)
-    for filepath,dirs,filelist in os.walk(abs_path):
-        print filelist
-        if not re.search("\.git",filepath):
-            f_file = filter(backfunc,filelist)
+
+def san_path(abs_path, end_string):
+    backfunc = file_end_with(end_string)
+    for filepath, dirs, filelist in os.walk(abs_path):
+        print(filelist)
+        if not re.search("\.git", filepath):
+            f_file = filter(backfunc, filelist)
             for i in f_file:
-                print os.path.join(filepath,i)
+                print(os.path.join(filepath, i))
+
 
 def pwd_file_list(abs_path, end_string):
     data = []
@@ -38,15 +41,20 @@ def pwd_file_list(abs_path, end_string):
         if os.path.isfile(i) and i.endswith("json"):
             data.append(i)
     return data
+
+
 """
 file name patinal content
 """
+
+
 def get_specified_file(fnpc):
-    file_list = pwd_file_list(os.getcwd(), ('.json'))
+    file_list = pwd_file_list(os.getcwd(), '.json')
     reg = re.compile(fnpc)
     for i in file_list:
         if re.search(reg, i):
-            print i
+            print(i)
+
 
 if __name__ == '__main__':
     # print os.getcwd()
@@ -59,14 +67,3 @@ if __name__ == '__main__':
         if op == "-t":
             reg_param = value
             get_specified_file(reg_param)
-
-
-
-
-
-
-
-
-
-
-

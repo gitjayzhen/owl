@@ -3,7 +3,7 @@
 """
 @author: jayzhen
 @license:  Apache Licence
-@software: PyCharm & Python 3.7+
+@software: PyCharm & Python 3.8+
 @file: test_http_one.py
 @time: 2023/8/16 12:43
 """

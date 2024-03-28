@@ -78,4 +78,8 @@
 - https://appium.io/docs/en/2.0/quickstart/test-py/
 - https://www.selenium.dev/zh-cn/documentation/webdriver/browsers/safari/
 
-**UIAutomator2 is only supported since Android 5.0 (Lollipop)**
+**UIAutomator2 is only supported since Android 5.0 (Lollipop)** 
+
+### 20240328
+
+- [接口测试工具 Pycurl vs Requests](https://github.com/0xyd/Pycurl-vs-Requests)

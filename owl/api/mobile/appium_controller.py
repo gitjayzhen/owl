@@ -5,7 +5,7 @@
 @file: appium_controller.py
 @time: 2017/12/26 23:08
 """
-from owl.api.mobile.appium_api import AppiumBaseApi
+from owl.api.mobile.appium_api import AppiumWorkApi
 from owl.api.mobile.appium_driver import InitAppiumDriver
 from owl.configs.appium_cfg import AppiumConfiger
 
@@ -28,11 +28,11 @@ class PostRunController(object):
         device_list = [self.sno]
         if self.sno is None:
             device_list = impl.android.get_device_list()
-        api_list = {}
+        work_api_list = {}
         if len(device_list) > 0:
             for d in device_list:
-                api_list[d] = impl.get_appium_driver(d)
-        return api_list
+                work_api_list[d] = impl.get_appium_driver(d)
+        return work_api_list
 
     def __str__(self):
-        return "当前是设备{}的操作者".format("testing")
+        return "当前操作的设备号是 {} ".format(self.sno)

@@ -64,7 +64,6 @@ class AppiumConfiger(object):
             if not os.path.exists(ap.permissionPath):
                 os.makedirs(ap.permissionPath)
             ap.appiumService = os.path.join(self.project_root_path, self.cfg.get_value("appium.run", "appiumService"))
-
         except Exception as e:
             self.log4py.error("实例化appium配置文件对象时，出现异常 ：" + str(e))
         return ap

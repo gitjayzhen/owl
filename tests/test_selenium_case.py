@@ -3,7 +3,7 @@
 
 """
 @author: jayzhen
-@file: test_ui_se_local.py
+@file: test_selenium_case.py
 @time: 2023/3/25 12:49
 """
 import time

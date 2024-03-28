@@ -59,7 +59,7 @@ class FileInspector(object):
                 for fl in filelist:
                     if operator.eq(fl, filename):
                         self.__file_abs_path = os.path.join(filep, fl)
-                        self.log4py.info("当前项目下查找的[%s]配置文件存在." % filename)
+                        self.log4py.info("当前项目下查找的[{}]配置文件存在: {}".format(filename, self.__file_abs_path))
                         return True
             return False
         except Exception as e:

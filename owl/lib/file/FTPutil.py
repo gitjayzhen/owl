@@ -36,16 +36,17 @@ ftp.rename(fromname, toname)#将fromname修改名称为toname。
 ftp.storbinaly("STOR filename.txt",file_handel,bufsize)  #上传目标文件
 ftp.retrbinary("RETR filename.txt",file_handel,bufsize)  #下载FTP文件
 """
-from ftplib import error_perm
-from ftplib import FTP
+import getopt
 import os
 import socket
-import getopt
 import sys
 import time
+from ftplib import FTP
+from ftplib import error_perm
+
 
 class FTPController:
-    '''ftp自动下载、自动上传脚本，可以递归目录操作'''
+    """ftp自动下载、自动上传脚本，可以递归目录操作"""
     def __init__(self, hostaddr, username, password, remotedir, port=21):
         self.hostaddr = hostaddr
         self.username = username

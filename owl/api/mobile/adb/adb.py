@@ -14,6 +14,8 @@ import subprocess
 import sys
 import time
 
+from owl.api.mobile.adb import event_keys as EventKeys
+
 """
 利用可变参数来初始化*（tuple），**（dict）:约定参数中的key只能是sno
 a(1,2,3,4,4,Z=8,k=2) ： *接受k=v之前的内容，**接受k=v 

@@ -23,7 +23,7 @@ from owl.lib.reporter.logging_porter import LoggingPorter
 PATH = lambda a: os.path.abspath(a)
 
 
-class AppiumBaseApi(object):
+class AppiumWorkApi(object):
     """
     对 appium 的 api 进行封装
     """

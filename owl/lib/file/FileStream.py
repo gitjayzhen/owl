@@ -49,5 +49,5 @@ class FileStream(object):
 
 if __name__ == "__main__":
     obj = FileStream()
-    dicts = obj.show_file_properties("T:\OneDrive\icloud\Project\PyRequestsForInterfaceTest\src\com\interface\common\UrlManager.py")
+    dicts = obj.show_file_properties("T:\common\UrlManager.py")
     print(dicts)
