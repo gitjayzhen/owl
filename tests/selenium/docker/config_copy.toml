@@ -1,0 +1,464 @@
+
+[server]
+# Whether the Selenium server should allow web browser connections from any host
+# Type: boolean
+# Default: false
+# Example: 
+allow-cors = false
+
+
+# Whether the server should bind to the host address/name, or only use it to report its reachable url. Helpful in complex network topologies where the server cannot report itself with the current IP/hostname but rather an external IP or hostname (e.g. inside a Docker container).
+# Type: boolean
+# Default: true
+# Example: 
+bind-host = true
+
+
+# Server IP or hostname: usually determined automatically.
+# Type: string
+# Example: 
+host = "localhost"
+
+
+# Server certificate for https. Get more detailed information by running "java -jar docker-server.jar info security"
+# Type: path
+# Example: 
+https-certificate = "/path/to/cert.pem"
+
+
+# Private key for https. Get more detailed information by running "java -jar docker-server.jar info security"
+# Type: path
+# Example: 
+https-private-key = "/path/to/key.pkcs8"
+
+
+# Maximum number of listener threads. Default value is: (available processors) * 3.
+# Type: int
+# Default: 0
+# Example: 
+max-threads = 12
+
+
+# Port to listen on. There is no default as this parameter is used by different components, for example Router/Hub/Standalone will use 4444 and Node will use 5555.
+# Type: integer
+# Example: 
+port = 4444
+
+
+# Node registration secret
+# Type: string
+# Example: 
+registration-secret = "Hunter2"
+
+
+[node]
+# Autodetect which drivers are available on the current system, and add them to the Node.
+# Type: boolean
+# Default: true
+# Example: 
+detect-drivers = true
+
+
+# Drain and shutdown the Node after X sessions have been executed. Useful for environments like Kubernetes. A value higher than zero enables this feature.
+# Type: int
+# Default: 0
+# Example: 
+drain-after-session-count = 1
+
+
+# List of configured drivers a Node supports. It is recommended to provide this type of configuration through a toml config file to improve readability. Command line example: --drivers-configuration display-name="Firefox Nightly" max-sessions=2 webdriver-path="/usr/local/bin/geckodriver" stereotype='{"browserName": "firefox", "browserVersion": "86", "moz:firefoxOptions": {"binary":"/Applications/Firefox Nightly.app/Contents/MacOS/firefox-bin"}}'
+# Type: list of strings
+# Example: 
+[[node.driver-configuration]]
+display-name = "Firefox Nightly"
+webdriver-executable = "/usr/local/bin/geckodriver"
+max-sessions = 2
+stereotype = "{\"browserName\": \"firefox\", \"browserVersion\": \"86\", \"moz:firefoxOptions\": {\"binary\":\"/Applications/Firefox Nightly.app/Contents/MacOS/firefox-bin\"}}"
+
+
+# Mapping of fully qualified class name to a browser configuration that this matches against. --driver-factory org.openqa.docker.example.LynxDriverFactory '{"browserName": "lynx"}'
+# Type: list of strings
+# Example: 
+driver-factories = ["org.openqa.selenium.example.LynxDriverFactory '{"browserName": "lynx"}']
+
+
+# Drivers that should be checked. If specified, will skip autoconfiguration. Example: -I "firefox" -I "chrome"
+# Type: list of strings
+# Default: []
+# Example: 
+driver-implementation = ["firefox", "chrome"]
+
+
+# Enable BiDi proxying in Grid. A Grid admin can disable BiDi if the network does not allow websockets. True by default
+# Type: boolean
+# Default: true
+# Example: 
+enable-bidi = true
+
+
+# Enable CDP proxying in Grid. A Grid admin can disable CDP if the network does not allow websockets. True by default
+# Type: boolean
+# Default: true
+# Example: 
+enable-cdp = true
+
+
+# When enabled, the Grid node will automatically do the following: 1. Creates a temporary directory which will now represent the directory into which files downloaded by Chrome/Firefox/Edge browser will be under. 2. For every new session, a sub-directory will be created/deleted so that all files that were downloaded for a given session are stored in.
+# Type: boolean
+# Example: 
+enable-managed-downloads = false
+
+
+# Public URL of the Grid as a whole (typically the address of the Hub or the Router)
+# Type: string
+# Example: 
+grid-url = "https://grid.example.com"
+
+
+# How often, in seconds, will the Node send heartbeat events to the Distributor to inform it that the Node is up.
+# Type: int
+# Default: 60
+# Example: 
+heartbeat-period = 60
+
+
+# The address of the Hub in a Hub-and-Node configuration. This can be a plain hostname or IP address (`hostname`), in which case the Hub will be assumed to be `http://hostname:4444`, the `--grid-url` will be the same, `--publish-events` will be `tcp://hostname:4442` and `--subscribe-events` will be `tcp://hostname:4443`. If `hostname` contains a port number, that will be used for `--grid-url` but the URIs for the event bus will remain the same. Any of these default values may be overridden but setting the correct flags. If the hostname has  a protocol (such as `https`) that will be used too.
+# Type: string
+# Example: 
+hub = hub.grid.example.com
+
+
+# Full classname of non-default Node implementation. This is used to manage a session's lifecycle.
+# Type: string
+# Default: org.openqa.docker.grid.node.local.LocalNodeFactory
+# Example: 
+implementation = "org.openqa.selenium.grid.node.local.LocalNodeFactory"
+
+
+# Maximum number of concurrent sessions. Default value is the number of available processors.
+# Type: int
+# Default: 10
+# Example: 
+max-sessions = 10
+
+
+# If VNC is available, sets the port where the local noVNC stream can be obtained
+# Type: int
+# Default: 7900
+# Example: 
+no-vnc-port = 7900
+
+
+# The # of available processors is the recommended max sessions value (1 browser session per processor). Setting this flag to true allows the recommended max value to be overwritten. Session stability and reliability might suffer as the host could run out of resources.
+# Type: boolean
+# Default: false
+# Example: 
+override-max-sessions = false
+
+
+# How often, in seconds, the Node will try to register itself for the first time to the Distributor.
+# Type: int
+# Default: 10
+# Example: 
+register-cycle = 10
+
+
+# How long, in seconds, will the Node try to register to the Distributor for the first time. After this period is completed, the Node will not attempt to register again.
+# Type: int
+# Default: 120
+# Example: 
+register-period = 120
+
+
+# When drivers are not available on the current system, use, Selenium Manager.
+# Type: boolean
+# Default: false
+# Example: 
+selenium-manager = false
+
+
+# Let X be the session-timeout in seconds. The Node will automatically kill a session that has not had any activity in the last X seconds. This will release the slot for other tests.
+# Type: int
+# Default: 300
+# Example: 
+session-timeout = 300
+
+
+# Environment variable to check in order to determine if a vnc stream is available or not.
+# Type: string
+# Default: SE_START_XVFB
+# Example: 
+vnc-env-var = "SE_START_XVFB"
+
+
+[router]
+# Password clients must use to connect to the server. Both this and the username need to be set in order to be used.
+# Type: string
+# Example: 
+password = hunter2
+
+
+# User name clients must use to connect to the server. Both this and password need to be set in order to be used.
+# Type: string
+# Example: 
+username = admin
+
+
+[relay]
+# Configuration for the service where calls will be relayed to. It is recommended to provide this type of configuration through a toml config file to improve readability. Command line example: --service-configuration max-sessions=2 stereotype='{"browserName": "safari", "platformName": "iOS", "appium:platformVersion": "14.5"}}'
+# Type: list of strings
+# Example: 
+[[relay.configs]]
+max-sessions = 2
+stereotype = "{\"browserName\": \"safari\", \"platformName\": \"iOS\", \"appium:platformVersion\": \"14.5\" }}"
+
+
+# Host name where the service that supports WebDriver commands is running
+# Type: string
+# Example: 
+host = "localhost"
+
+
+# Port where the service that supports WebDriver commands is running
+# Type: integer
+# Example: 
+port = 4723
+
+
+# Endpoint to query the WebDriver service status, an HTTP 200 response is expected
+# Type: string
+# Example: 
+status-endpoint = "/status"
+
+
+# URL for connecting to the service that supports WebDriver commands, like an Appium server or a cloud service.
+# Type: string
+# Example: 
+url = "http://localhost:4723"
+
+
+[logging]
+# Enable http logging. Tracing should be enabled to log http logs.
+# Type: boolean
+# Default: false
+# Example: 
+http-logs = false
+
+
+# Log encoding
+# Type: string
+# Example: 
+log-encoding = "UTF-8"
+
+
+# File to write out logs. Ensure the file path is compatible with the operating system's file path. Windows path example: \\path\to\file\gridlog.log OR C:\path\path\to\file\gridlog.log Linux/Unix/MacOS path example: /path/to/file/gridlog.log
+# Type: string
+# Example: 
+log-file = '\\path\to\file\gridlog.log'
+
+# Example: 
+log-file = 'C:\path\path\to\file\gridlog.log'
+
+# Example: 
+log-file = '/path/to/file/gridlog.log'
+
+
+# Log level. Default logging level is INFO. Log levels are described here https://docs.oracle.com/javase/7/docs/api/java/util/logging/Level.html
+# Type: string
+# Default: INFO
+# Example: 
+log-level = "INFO"
+
+
+# Format of the timestamp in log output
+# Type: string
+# Example: 
+log-timestamp-format = HH:mm:ss.SSS
+
+
+# Use plain log lines
+# Type: boolean
+# Default: true
+# Example: 
+plain-logs = true
+
+
+# Use structured logs
+# Type: boolean
+# Default: false
+# Example: 
+structured-logs = false
+
+
+# Enable trace collection
+# Type: boolean
+# Default: true
+# Example: 
+tracing = true
+
+
+[sessionqueue]
+# Address of the session queue server.
+# Type: uri
+# Example: 
+host = "http://localhost:1237"
+
+
+# Host on which the session queue server is listening.
+# Type: string
+# Example: 
+hostname = "localhost"
+
+
+# Port on which the session queue server is listening.
+# Type: integer
+# Example: 
+port = 1234
+
+
+# Timeout in seconds. New incoming session request is added to the queue. Requests sitting in the queue for longer than the configured time will timeout.
+# Type: int
+# Default: 300
+# Example: 
+session-request-timeout = 300
+
+
+# In seconds, how often the timeout for new session requests is checked.
+# Type: int
+# Default: 10
+# Example: 
+session-request-timeout-period = 10
+
+
+# Session creation interval in milliseconds. If all slots are busy, new session request will be retried after the given interval.
+# Type: int
+# Default: 15
+# Example: 
+session-retry-interval = 15
+
+
+# Maximum batch size that can consumed from queue based on the available slots.
+# Type: int
+# Default: 30
+# Example: 
+sessionqueue-batch-size = 30
+
+
+[distributor]
+# How often, in seconds, will the health check run for all Nodes.This ensures the server can ping all the Nodes successfully.
+# Type: int
+# Default: 120
+# Example: 
+healthcheck-interval = 120
+
+
+# Url of the distributor.
+# Type: uri
+# Example: 
+host = "http://localhost:5553"
+
+
+# Host on which the distributor is listening.
+# Type: string
+# Example: 
+hostname = "localhost"
+
+
+# Full classname of non-default distributor implementation
+# Type: string
+# Default: org.openqa.docker.grid.distributor.local.LocalDistributor
+# Example: 
+implementation = "org.openqa.selenium.grid.distributor.local.LocalDistributor"
+
+
+# The Distributor uses a fixed-sized thread pool to create new sessions as it consumes new session requests from the queue.This allows configuring the size of the thread pool. The default value is no. of available processors * 3. Note: If the no. of threads is way greater than the available processors it will not always increase the performance. A high number of threads causes more context switching which is an expensive operation. 
+# Type: int
+# Default: 30
+# Example: 
+newsession-threadpool-size = 30
+
+
+# Port on which the distributor is listening.
+# Type: integer
+# Example: 
+port = 5553
+
+
+# Allow the Distributor to reject a request immediately if the Grid does not support the requested capability.Rejecting requests immediately is suitable for Grid set up that does not spin up Nodes on demand.
+# Type: boolean
+# Default: false
+# Example: 
+reject-unsupported-caps = false
+
+
+# Full classname of non-default slot matcher to use. This is used to determine whether a Node can support a particular session.
+# Type: string
+# Default: org.openqa.docker.grid.data.DefaultSlotMatcher
+# Example: 
+slot-matcher = "org.openqa.selenium.grid.data.DefaultSlotMatcher"
+
+
+# Full classname of non-default slot selector. This is used to select a slot in a Node once the Node has been matched.
+# Type: string
+# Default: org.openqa.docker.grid.distributor.selector.DefaultSlotSelector
+# Example: 
+slot-selector = "org.openqa.selenium.grid.distributor.selector.DefaultSlotSelector"
+
+
+[network]
+# Relax checks on origin header and content type of incoming requests, in contravention of strict W3C spec compliance.
+# Type: boolean
+# Default: false
+# Example: 
+relax-checks = false
+
+
+# A sub-path that should be considered for all user facing routes on the Hub/Router/Standalone
+# Type: string
+# Example: 
+sub-path = my_company/selenium_grid
+
+
+[docker]
+# Absolute path where assets will be stored
+# Type: string
+# Example: 
+assets-path = "/opt/selenium/assets"
+
+
+# Docker configs which map image name to stereotype capabilities (example: -D docker/standalone-firefox:latest '{"browserName": "firefox"}')
+# Type: list of strings
+# Example: 
+configs = ["selenium/standalone-firefox:latest", "{\"browserName\": \"firefox\"}"]
+
+
+# Exposes devices to a container. Each device mapping declaration must have  at least the path of the device in both host and container separated by a colon like in this example: /device/path/in/host:/device/path/in/container
+# Type: list of strings
+# Example: 
+devices = ["/dev/kvm:/dev/kvm"]
+
+
+# Host name where the docker daemon is running
+# Type: string
+# Example: 
+host = "localhost"
+
+
+# Port where the docker daemon is running
+# Type: integer
+# Example: 
+port = 2375
+
+
+# URL for connecting to the docker daemon
+# Type: string
+# Example: 
+url = "unix:/var/run/docker.sock"
+
+
+# Docker image to be used when video recording is enabled
+# Type: string
+# Default: docker/video:latest
+# Example: 
+video-image = "selenium/video:latest"
+

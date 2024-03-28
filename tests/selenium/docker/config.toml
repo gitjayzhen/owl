@@ -1,0 +1,37 @@
+[network]
+relax-checks = true
+
+[node]
+session-timeout = "300"
+override-max-sessions = false
+detect-drivers = false
+drain-after-session-count = 0
+max-sessions = 1
+
+[[node.driver-configuration]]
+display-name = "chrome"
+stereotype = '{"browserName": "chrome", "browserVersion": "119", "platformName": "mac"}'
+max-sessions = 1
+# List of configured drivers a Node supports. It is recommended to provide this type of configuration through a toml config file to improve readability. Command line example: --drivers-configuration display-name="Firefox Nightly" max-sessions=2 webdriver-path="/usr/local/bin/geckodriver" stereotype='{"browserName": "firefox", "browserVersion": "86", "moz:firefoxOptions": {"binary":"/Applications/Firefox Nightly.app/Contents/MacOS/firefox-bin"}}'
+webdriver-executable = "./chromedriver"
+#
+#vim /opt/docker/config.toml
+## ls /opt/docker
+##assets  browser_name  chromedriver-119.0.6045.105  chromedriver-linux64  config.toml  docker-server.jar
+# vim /opt/docker/config.toml
+## cat /opt/docker/config.toml
+#[network]
+#relax-checks = true
+#
+#[node]
+#session-timeout = "300"
+#override-max-sessions = false
+#detect-drivers = false
+#drain-after-session-count = 0
+#max-sessions = 1
+#
+#[[node.driver-configuration]]
+#display-name = "chrome"
+#stereotype = '{"browserName": "chrome", "browserVersion": "119.0", "platformName": "Linux"}'
+#max-sessions = 1
+#webdriver-executable = "./chromedriver-119.0.6045.105"

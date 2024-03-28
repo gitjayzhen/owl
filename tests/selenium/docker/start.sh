@@ -1,0 +1,2 @@
+# docker run -d -p 4444:4444 -p 7900:7900 --shm-size="2g" --privileged=true --platform linux/amd64 docker/standalone-chrome:latest
+nohup java -jar selenium-server-4.15.0.jar standalone --port 4444 --config config.toml > se.log 2>&1 &

@@ -31,6 +31,30 @@
 """
 
 
+# 使用json.dumps将JSON对象转换为字符串，并设置缩进和排序参数
+# json_str = json.dumps(resp.json(), indent=4)
+#
+# # 定义一个递归函数来处理嵌套的JSON对象并保留引号和括号
+# def pretty_print_json(obj, indent=0):
+#     if isinstance(obj, dict):
+#         print('{' + (' ' if obj else ''))
+#         for key, value in obj.items():
+#             print(' ' * (indent + 4) + '"' + str(key) + '": ', end='')
+#             pretty_print_json(value, indent + 4)
+#         print(' ' * indent + '}' + ('' if indent == 0 else ','))
+#     elif isinstance(obj, list):
+#         print('[' + (' ' if obj else ''))
+#         for item in obj:
+#             print(' ' * (indent + 4), end='')
+#             pretty_print_json(item, indent + 4)
+#         print(' ' * indent + ']' + ('' if indent == 0 else ','))
+#     else:
+#         print(json.dumps(obj), end='')
+#
+# # 调用递归函数打印格式化后的JSON字符串
+# pretty_print_json(json.loads(json_str))
+
+
 class MyObject(object):
 
     def __str__(self):

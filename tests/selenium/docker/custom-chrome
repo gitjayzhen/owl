@@ -1,0 +1,26 @@
+FROM --platform=linux/amd64 python:3.10
+# https://github.com/SeleniumHQ/docker-selenium/blob/trunk/NodeChrome/Dockerfile
+
+# Install Chrome browser dependencies
+RUN apt-get update && \
+    apt-get install -y \
+    curl \
+    wget \
+    gnupg \
+    unzip \
+    fonts-liberation
+
+# Download and install Chrome browser
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+RUN apt-get -y update
+RUN apt-get install -y google-chrome-stable
+
+# Install specific version of chromedriver
+RUN CHROME_DRIVER_VERSION=120.0.6099.71 && \
+    wget --no-verbose -O /tmp/chromedriver.zip https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$CHROME_DRIVER_VERSION/linux64/chromedriver-linux64.zip  && \
+    unzip /tmp/chromedriver.zip -d /usr/local/bin && \
+    rm /tmp/chromedriver.zip
+
+# Install Selenium and other required packages
+RUN pip install selenium

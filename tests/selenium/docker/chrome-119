@@ -1,0 +1,6 @@
+FROM selenium/standalone-chrome:latest
+
+USER root
+RUN echo 'echo "webdriver-executable = \"/opt/selenium/chromedriver-120.0.6099.71\"" >> "$FILENAME"' >> /opt/bin/generate_config
+
+
