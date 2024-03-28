@@ -24,14 +24,14 @@ class SeleniumIniDomain(object):
         # 截图保存的路径
         self.capturePath = None
         # html报告路径
-        self.htmlreportPath = None
+        self.htmlReportPath = None
         self.logsPath = None
         # 浏览器初始化界面URL
         self.baseURL = None
         # 测试的时候需要使用哪个浏览器，就配置成那个
         self.browser = None
         # run那个浏览器 就取那个浏览器的驱动
-        self.browserdriver = None
+        self.browserDriver = None
         # 执行浏览器的type
         self.type = None
         # 远程访问浏览器的配置:{}
@@ -45,10 +45,10 @@ class SeleniumIniDomain(object):
                " ;\n异步加载等待时间 : " + str(self.scriptTimeout) + \
                " ;\n延迟时间，单位：毫秒： " + str(self.pauseTime) + \
                " ;\n截图保存的路径 : " + str(self.capturePath) + \
-               " ;\nhtml报告路径 : " + str(self.htmlreportPath) + \
+               " ;\nhtml报告路径 : " + str(self.htmlReportPath) + \
                " ;\n日志路径 : " + str(self.logsPath) + \
                " ;\n浏览器初始化界面URL :" + str(self.baseURL) + \
                " ;\n启动的浏览器 : " + str(self.browser) + \
-               " ;\nrun那个浏览器 就取那个浏览器的驱动 : " + str(self.browserdriver) + \
+               " ;\nrun那个浏览器 就取那个浏览器的驱动 : " + str(self.browserDriver) + \
                " ;\n执行本地浏览器还是远程浏览器 ： " + str(self.type) + \
                " ;\n远程浏览器配置 : " + str(self.remoteProfile)

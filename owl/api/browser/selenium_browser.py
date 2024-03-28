@@ -64,9 +64,9 @@ class WebBrowser(object):
                 # 实例化remote driver
                 pass
             elif self.properties.type == '1':
-                os.environ["webdriver.firefox.driver"] = self.properties.browserdriver
+                os.environ["webdriver.firefox.driver"] = self.properties.browserDriver
                 log_path = os.path.join(self.properties.logsPath, "geckodriver.log")
-                driver = webdriver.Firefox(executable_path=self.properties.browserdriver, log_path=log_path)
+                driver = webdriver.Firefox(executable_path=self.properties.browserDriver, log_path=log_path)
             self.__config_browser(driver)
             self.log4py.debug("初始化火狐浏览器成功")
         except Exception as e:
@@ -139,7 +139,7 @@ class WebBrowser(object):
                 # driver = webdriver.Chrome(executable_path=self.properties.browserdriver,
                 #                           desired_capabilities=d,
                 #                           chrome_options=chrome_options)
-                driver = webdriver.Chrome(options=chrome_options, service=Service(self.properties.browserdriver))
+                driver = webdriver.Chrome(options=chrome_options, service=Service(self.properties.browserDriver))
             self.__config_browser(driver)
             self.log4py.debug("初始化谷歌浏览器成功")
         except Exception as e:
@@ -160,8 +160,8 @@ class WebBrowser(object):
             ie_dc['NATIVE_EVENTS'] = False
             ie_dc["unexpectedAlertBehaviour"] = "accept"
 
-            os.environ["webdriver.ie.driver"] = self.properties.browserdriver
-            driver = webdriver.Ie(self.properties.browserdriver, ie_dc)
+            os.environ["webdriver.ie.driver"] = self.properties.browserDriver
+            driver = webdriver.Ie(self.properties.browserDriver, ie_dc)
             self.__config_browser(driver)
             self.log4py.debug("初始化IE浏览器成功")
         except Exception as e:

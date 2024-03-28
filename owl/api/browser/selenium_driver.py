@@ -2,12 +2,9 @@
 
 import time
 
-import requests
-from requests import exceptions
-
 from owl.api.browser.selenium_api import SeleniumWorkApi
 from owl.api.browser.selenium_browser import WebBrowser
-from owl.configs.webdriver_cfg import WebdriverConfiger
+from owl.configs.selenium_cfg import SeleniumConfiger
 from owl.exception.owl_type import BrowserDriverError
 from owl.lib.date.date_formatter import get_formate_time
 from owl.lib.reporter.logging_porter import LoggingPorter
@@ -37,9 +34,8 @@ class BrowserDriver(object):
         return self.get_driver()
 
     def get_driver(self):
-        # 获取配置文件中的参数
         try:
-            self.selenium_props = WebdriverConfiger().properties
+            self.selenium_props = SeleniumConfiger().properties
             self.driver_instance = WebBrowser(self.selenium_props).start_browser()
             self.se_api = SeleniumWorkApi(self.driver_instance, self.selenium_props)
             return self.se_api

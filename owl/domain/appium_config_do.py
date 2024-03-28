@@ -24,9 +24,9 @@ class AppiumIniDomain(object):
         # 截图保存的路径
         self.capturePath = None
         # html报告路径
-        self.htmlreportPath = None
+        self.htmlReportPath = None
         # appium服务的日志路径
-        self.appiumlogPath = None
+        self.appiumLogPath = None
         # 保存页面的xml文件路径
         self.dumpxmlPath = None
         # appium服务启动后的端口记录文件
@@ -40,6 +40,6 @@ class AppiumIniDomain(object):
                " ;\n异步加载等待时间 : " + str(self.scriptTimeout) + \
                " ;\n延迟时间，单位：毫秒： " + str(self.pauseTime) + \
                " ;\n截图保存的路径 : " + str(self.capturePath) + \
-               " ;\nhtml报告路径 : " + str(self.htmlreportPath) + \
-               " ;\n日志路径 : " + str(self.appiumlogPath) + \
+               " ;\nhtml报告路径 : " + str(self.htmlReportPath) + \
+               " ;\n日志路径 : " + str(self.appiumLogPath) + \
                " ;\n保存的页面xml文件 :" + str(self.dumpxmlPath)

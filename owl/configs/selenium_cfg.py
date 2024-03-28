@@ -4,7 +4,7 @@
 @author: jayzhen
 @license: Apache Licence 
 @version: Python 3.8+
-@file: webdriver_cfg.py
+@file: selenium_cfg.py
 @time: 2023/9/5 10:39
 """
 
@@ -17,7 +17,7 @@ from owl.lib.file.file_inspector import FileInspector
 from owl.lib.reporter.logging_porter import LoggingPorter
 
 
-class WebdriverConfiger(object):
+class SeleniumConfiger(object):
     """
     读取配置文件.conf的内容，返回driver的绝对路径
     """
@@ -41,31 +41,31 @@ class WebdriverConfiger(object):
         """
         wp = SeleniumIniDomain()
         try:
-            wp.pageLoadTimeout = self.conf.get_value("selenium.TimeSet", "pageLoadTimeout")
-            wp.waitTimeout = self.conf.get_value("selenium.TimeSet", "waitTimeout")
-            wp.scriptTimeout = self.conf.get_value("selenium.TimeSet", "scriptTimeout")
-            wp.pauseTime = self.conf.get_value("selenium.TimeSet", "pauseTime")
+            wp.pageLoadTimeout = self.conf.get_value("selenium.driver", "pageLoadTimeout")
+            wp.waitTimeout = self.conf.get_value("selenium.driver", "waitTimeout")
+            wp.scriptTimeout = self.conf.get_value("selenium.driver", "scriptTimeout")
+            wp.pauseTime = self.conf.get_value("selenium.driver", "pauseTime")
 
-            wp.capturePath = os.path.join(self.__project_path, self.conf.get_value("selenium.ResultPath", "capturePath"))
+            wp.capturePath = os.path.join(self.__project_path, self.conf.get_value("selenium.run", "capturePath"))
             if not os.path.exists(wp.capturePath):
                 os.makedirs(wp.capturePath)
-            wp.htmlreportPath = os.path.join(self.__project_path, self.conf.get_value("selenium.ResultPath", "htmlreportPath"))
-            if not os.path.exists(wp.htmlreportPath):
-                os.makedirs(wp.htmlreportPath)
+            wp.htmlReportPath = os.path.join(self.__project_path, self.conf.get_value("selenium.run", "htmlReportPath"))
+            if not os.path.exists(wp.htmlReportPath):
+                os.makedirs(wp.htmlReportPath)
             wp.browser = self.conf.get_value("selenium.run", "browser")
             wp.type = self.conf.get_value("selenium.run", "type")
-            wp.browserdriver = self.get_file_path(
+            wp.browserDriver = self.get_file_path(
                 os.path.join(self.__project_path,
                              self.conf.get_value("selenium.driver", wp.browser)
                              ), "SELENIUM_DRIVER")
             wp.isHeadless = self.conf.get_value("selenium.driver", "isHeadless")
-            print(wp.browserdriver)
+            print(wp.browserDriver)
             if wp.type == "0":
-                d = {'url': self.conf.get_value('selenium.remoteProfile', 'url'),
-                     'browserName': self.conf.get_value('selenium.remoteProfile', 'browserName'),
-                     'browserVersion': self.conf.get_value('selenium.remoteProfile', 'browserVersion'),
-                     'maxinstance': self.conf.get_value('selenium.remoteProfile', 'maxInstance'),
-                     'platformName': self.conf.get_value('selenium.remoteProfile', 'platformName')}
+                d = {'url': self.conf.get_value('selenium.run', 'nodeURL'),
+                     'browserName': self.conf.get_value('selenium.run', 'browserName'),
+                     'browserVersion': self.conf.get_value('selenium.run', 'browserVersion'),
+                     'maxinstance': self.conf.get_value('selenium.run', 'maxInstance'),
+                     'platformName': self.conf.get_value('selenium.run', 'platformName')}
                 wp.remoteProfile = d
         except Exception as e:
             self.log4py.error("实例化selenium配置文件对象时，出现异常 ：" + str(e))

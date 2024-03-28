@@ -6,6 +6,7 @@
 @file: test_ui_se_local.py
 @time: 2023/3/25 12:49
 """
+import time
 
 from owl.api.browser.base_testcase import BaseTestCase
 from owl.domain.selector_enum import FindBy
@@ -17,4 +18,5 @@ class TestSeleniumInLocal(BaseTestCase):
         self.driver.get("https://baidu.com")
         self.driver.send_keys(FindBy.CSS_SELECTOR, "#kw", "jayzhen")
         self.driver.click(FindBy.CSS_SELECTOR, "#su")
+        time.sleep(5)
         self.driver.capture()

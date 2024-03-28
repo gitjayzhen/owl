@@ -32,7 +32,7 @@ class EmailController(object):
             self.receiver_pa = conf.get_value("message", "receiver_pa")
             self.sender = conf.get_value("message", "sender")
             self.sender_pa = conf.get_value("message", "sender_pa")
-            self.report_path = os.path.join(self.fc.get_project_path(), conf.get_value("ResultPath", "htmlreportPath"))
+            self.report_path = os.path.join(self.fc.get_project_path(), conf.get_value("ResultPath", "htmlReportPath"))
         self.log4py = LoggingPorter()
 
     def send_email_is_html(self):

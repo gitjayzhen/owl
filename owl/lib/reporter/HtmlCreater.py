@@ -26,7 +26,7 @@ def html_reporter():
     if boolean:
         inipath = fc.get_file_abspath()
         cf = ConfigControl(inipath)
-    htmlrp_path = cf.get_value("ResultPath", "htmlreportPath")
+    htmlrp_path = cf.get_value("ResultPath", "htmlReportPath")
     htmreportl_abs_path = os.path.join(pro_path, htmlrp_path)
     timecurrent = get_formate_time("%Y-%m-%d-%H-%M-%S")
     logger.debug("=====创建了一个html文件报告,路径是：："+htmreportl_abs_path)

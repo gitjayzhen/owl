@@ -48,22 +48,22 @@ class AppiumConfiger(object):
             ap.scriptTimeout = self.cfg.get_value("appium.TimeSet", "scriptTimeout")
             ap.pauseTime = self.cfg.get_value("appium.TimeSet", "pauseTime")
 
-            ap.capturePath = os.path.join(self.project_root_path, self.cfg.get_value("appium.ResultPath", "capturePath"))
+            ap.capturePath = os.path.join(self.project_root_path, self.cfg.get_value("appium.run", "capturePath"))
             if not os.path.exists(ap.capturePath):
                 os.makedirs(ap.capturePath)
-            ap.htmlreportPath = os.path.join(self.project_root_path, self.cfg.get_value("appium.ResultPath", "htmlreportPath"))
-            if not os.path.exists(ap.htmlreportPath):
-                os.makedirs(ap.htmlreportPath)
-            ap.dumpxmlPath = os.path.join(self.project_root_path, self.cfg.get_value("appium.ResultPath", "dumpxmlPath"))
+            ap.htmlReportPath = os.path.join(self.project_root_path, self.cfg.get_value("appium.run", "htmlReportPath"))
+            if not os.path.exists(ap.htmlReportPath):
+                os.makedirs(ap.htmlReportPath)
+            ap.dumpxmlPath = os.path.join(self.project_root_path, self.cfg.get_value("appium.run", "dumpxmlPath"))
             if not os.path.exists(ap.dumpxmlPath):
                 os.makedirs(ap.dumpxmlPath)
-            ap.appiumlogPath = os.path.join(self.project_root_path, self.cfg.get_value("appium.ResultPath", "appiumlogPath"))
-            if not os.path.exists(ap.appiumlogPath):
-                os.makedirs(ap.appiumlogPath)
-            ap.permissionPath = os.path.join(self.project_root_path, self.cfg.get_value("appium.ResultPath", "permissionPath"))
+            ap.appiumLogPath = os.path.join(self.project_root_path, self.cfg.get_value("appium.run", "appiumlogPath"))
+            if not os.path.exists(ap.appiumLogPath):
+                os.makedirs(ap.appiumLogPath)
+            ap.permissionPath = os.path.join(self.project_root_path, self.cfg.get_value("appium.run", "permissionPath"))
             if not os.path.exists(ap.permissionPath):
                 os.makedirs(ap.permissionPath)
-            ap.appiumService = os.path.join(self.project_root_path, self.cfg.get_value("appium.ResultPath", "appiumService"))
+            ap.appiumService = os.path.join(self.project_root_path, self.cfg.get_value("appium.run", "appiumService"))
 
         except Exception as e:
             self.log4py.error("实例化appium配置文件对象时，出现异常 ：" + str(e))
@@ -109,7 +109,7 @@ class AppiumConfiger(object):
         return flag
 
     def get_desired_caps_conf(self):
-        section = "appium.desired_caps"
+        section = "appium.driver"
         # 这些参数都是启动app时需要的，但是在代码读取参数的时候，不一定都读取，因为有些参数不是固定的
         dc = {
             "automationName": self.cfg.get_value(section, "automationName"),
@@ -142,7 +142,7 @@ class AppiumServerConfigFile(object):
             self.cfg = ConfigControl(fp)
         self.log4py = LoggingPorter()
         self.log4py.info("-----配置文件操作开始-----")
-        self.f_path = os.path.join(self.fi.get_project_path(), self.cfg.get_value("appium.ResultPath", "appiumService"))
+        self.f_path = os.path.join(self.fi.get_project_path(), self.cfg.get_value("appium.run", "appiumService"))
 
     def __del__(self):
         self.log4py.info("-----配置文件操作结束-----")
@@ -224,7 +224,7 @@ class AppiumServerConfigFile(object):
         return port_list
 
     def get_appium_logs_path(self):
-        path = os.path.join(self.fi.get_project_path(), self.cfg.get_value("appium.ResultPath", "appiumlogPath"))
+        path = os.path.join(self.fi.get_project_path(), self.cfg.get_value("appium.run", "appiumLogPath"))
         if PATH(path):
             if not os.path.exists(path):
                 os.makedirs(path)
