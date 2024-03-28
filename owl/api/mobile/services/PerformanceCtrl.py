@@ -5,7 +5,7 @@
 """
 # 需要安装pychartdir模块
 import string
-from owl.core.adb.adb import AndroidDebugBridge
+from owl.api.mobile.adb.adb import AndroidDebugBridge
 from pychartdir import *
 
 

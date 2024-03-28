@@ -1,22 +1,18 @@
-#!/usr/bin/env python
 # -*-coding=utf8 -*-
+
 """
-@version: v1.0
 @author: jayzhen
 @license: Apache Licence
-@site: https://blog.csdn.net/u013948858
-@software: PyCharm
 """
+
+import json
 import os
 import platform
 import re
+import string
 import subprocess
 import sys
 import time
-import string
-import json
-
-from owl.core.adb import EventKeys
 
 """
 利用可变参数来初始化*（tuple），**（dict）:约定参数中的key只能是sno

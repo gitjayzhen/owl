@@ -1,15 +1,18 @@
-# -*- coding:UTF-8 -*-
+# -*- coding: utf-8 -*-
+
 """
-@version: python2.7
 @author: ‘jayzhen‘
 @software: PyCharm Community Edition
-@time: 2017/3/29  13:12
+@time: 2024/3/28  10:12
 """
+
 import os
-from owl.lib.reporter.logging_porter import LoggingPorter
-from owl.lib.file.file_inspector import FileInspector
+
+from owl.lib.date.date_formatter import get_formate_time
 from owl.lib.file.config_resolver import ConfigControl
-from owl.lib.date.date_formatter import formated_time
+from owl.lib.file.file_inspector import FileInspector
+from owl.lib.reporter.logging_porter import LoggingPorter
+
 '''
 创建一个html文件，并返回文件的对象
 '''
@@ -25,7 +28,7 @@ def html_reporter():
         cf = ConfigControl(inipath)
     htmlrp_path = cf.get_value("ResultPath", "htmlreportPath")
     htmreportl_abs_path = os.path.join(pro_path, htmlrp_path)
-    timecurrent = formated_time("%Y-%m-%d-%H-%M-%S")
+    timecurrent = get_formate_time("%Y-%m-%d-%H-%M-%S")
     logger.debug("=====创建了一个html文件报告,路径是：："+htmreportl_abs_path)
     file_path = str(htmreportl_abs_path)+timecurrent+"-LDP-TestingRreporter.html"
     try:

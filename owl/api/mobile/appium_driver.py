@@ -5,7 +5,6 @@
 @time: 2023/8/3  17:22 当前只能是一个设备
 @TODO 多线程并发执行脚本时，需要将端口、手机设备的关联做好;多个设备时desired_capabilities属性只能是一个设备
 """
-import platform
 import re
 import subprocess
 from urllib.error import URLError
@@ -14,7 +13,7 @@ from appium import webdriver
 from selenium.webdriver.remote.errorhandler import ErrorHandler
 
 from owl.api.mobile.appium_api import AppiumBaseApi
-from owl.core.adb.adb import AndroidDebugBridge
+from owl.api.mobile.adb.adb import AndroidDebugBridge
 from owl.exception.server_type import AppiumServiceNotRunningException
 from owl.lib.common import Utils
 from owl.lib.file.config_resolver import ConfigControl

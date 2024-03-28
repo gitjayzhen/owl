@@ -8,6 +8,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 
+from owl.exception.owl_type import BrowserDriverError
 from owl.lib.date.date_formatter import get_formate_time
 from owl.lib.reporter.logging_porter import LoggingPorter
 
@@ -24,12 +25,12 @@ class SeleniumWorkApi(object):
     """
 
     def __init__(self, driver, properties):
+        if driver is None:
+            raise BrowserDriverError()
         self.log4py = LoggingPorter()
-
         self.capturePath = properties.capturePath
         self.pauseTime = int(properties.pauseTime)
         self.implicitly_wait_time = int(properties.waitTimeout)
-
         self.driver = driver
         self.Find = By
 
@@ -504,7 +505,7 @@ class SeleniumWorkApi(object):
 
     def close_window(self, window_title, index):
         """
-        * close window  window title and its index if has the same title,
+        * close window title and its index if it has the same title,
         *  full pattern</BR> 按照网页标题选择并且关闭窗口，重名窗口按照指定的重名的序号关闭
         * </BR>适用于有重名title的窗口，标题内容需要全部匹配。
         * @param windowTitle:the title of the window to be closed.

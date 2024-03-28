@@ -8,6 +8,7 @@ from requests import exceptions
 from owl.api.browser.selenium_api import SeleniumWorkApi
 from owl.api.browser.selenium_browser import WebBrowser
 from owl.configs.webdriver_cfg import WebdriverConfiger
+from owl.exception.owl_type import BrowserDriverError
 from owl.lib.date.date_formatter import get_formate_time
 from owl.lib.reporter.logging_porter import LoggingPorter
 
@@ -25,29 +26,27 @@ class BrowserDriver(object):
         """
         self.log4py = LoggingPorter()
         self.className = clazz.__class__.__module__ + "." + clazz.__class__.__name__
-        self.se_properties = None
+        self.selenium_props = None
         self.driver_instance = None
         self.se_api = None
         self.__beforeSuiteStart = 0
         self.__beforeClassStart = 0
         self.__beforeTestStart = 0
 
+    def init_driver(self):
+        return self.get_driver()
+
     def get_driver(self):
         # 获取配置文件中的参数
-        self.se_properties = WebdriverConfiger().properties
         try:
-            resp = requests.get(self.se_properties.baseURL, timeout=(3.05, 20))
-            if resp.status_code != 200:
-                self.log4py.warning("浏览器实例化driver失败，请检查你的被测试服务是否启动或baseURL是否设置正确: {}".format(self.se_properties.baseURL))
-        except exceptions.ConnectionError as e:
-            self.log4py.warning("浏览器实例化driver失败，请检查你的被测试服务是否启动或baseURL是否设置正确: {}".format(self.se_properties.baseURL))
-        self.driver_instance = WebBrowser(self.se_properties).start_browser()
-        if self.driver_instance is None:
-            self.log4py.error("浏览器实例化driver失败，请重新检查驱动及启动参数")
+            self.selenium_props = WebdriverConfiger().properties
+            self.driver_instance = WebBrowser(self.selenium_props).start_browser()
+            self.se_api = SeleniumWorkApi(self.driver_instance, self.selenium_props)
+            return self.se_api
+        except BrowserDriverError as e:
+            self.log4py.error(str(e))
             return None
-        self.se_api = SeleniumWorkApi(self.driver_instance, self.se_properties)
-        return self.se_api
-    
+
     def before_suite(self):
         begins = get_formate_time("%Y-%m-%d %H:%M:%S:%f")
         self.__beforeSuiteStart = time.time()
@@ -84,7 +83,7 @@ class BrowserDriver(object):
             self.log4py.info("案例 【" + str(self.className) + "." + method_name + "】 运行通过！")
         else:
             date_time = get_formate_time("-%Y%m%d-%H%M%S%f")
-            capture_name = self.se_properties.capture_path + str(self.className) + "." + method_name + str(date_time) + ".png"
+            capture_name = self.selenium_props.capture_path + str(self.className) + "." + method_name + str(date_time) + ".png"
             self.capture_screenshot(capture_name)
             self.log4py.error("案例 【" + str(self.className) + "." + method_name + "】 运行失败，请查看截图快照：" + capture_name)
         self.log4py.info("======" + ends + "：案例【" + str(self.className) + "." + method_name + "】结束======")
@@ -99,7 +98,7 @@ class BrowserDriver(object):
          """
         time.sleep(3)
         date_time = get_formate_time("-%Y%m%d-%H%M%S-%f")
-        capture_name = self.se_properties.capture_path + name + date_time + ".png"
+        capture_name = self.selenium_props.capture_path + name + date_time + ".png"
         self.capture_screenshot(capture_name)
         self.log4py.debug("请查看截图快照：" + capture_name)
 

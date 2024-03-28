@@ -30,3 +30,4 @@ class ExceptionMsg(Enum, metaclass=EnumDirectValueMeta):
     AppiumServiceNotRunning = "the appium service is not running"
     NoDeviceConnection = "no mobile devices are connected to the current machine"
     SingletonInstantiation = "This class is a singleton!"
+    BrowserDriverError = "The browser failed to instantiate the driver, please recheck"

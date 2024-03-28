@@ -52,10 +52,6 @@ class WebdriverConfiger(object):
             wp.htmlreportPath = os.path.join(self.__project_path, self.conf.get_value("selenium.ResultPath", "htmlreportPath"))
             if not os.path.exists(wp.htmlreportPath):
                 os.makedirs(wp.htmlreportPath)
-            wp.logsPath = os.path.join(self.__project_path, self.conf.get_value("selenium.ResultPath", "logsPath"))
-            if not os.path.exists(wp.logsPath):
-                os.makedirs(wp.logsPath)
-            wp.baseURL = self.conf.get_value("selenium.baseURL", "baseURL")
             wp.browser = self.conf.get_value("selenium.run", "browser")
             wp.type = self.conf.get_value("selenium.run", "type")
             wp.browserdriver = self.get_file_path(

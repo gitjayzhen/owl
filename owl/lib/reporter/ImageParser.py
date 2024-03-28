@@ -15,7 +15,7 @@ import shutil
 from functools import reduce
 
 from PIL import Image
-from owl.core.adb.adb import AndroidDebugBridge
+from owl.api.mobile.adb.adb import AndroidDebugBridge
 
 PATH = lambda p: os.path.abspath(p)
 

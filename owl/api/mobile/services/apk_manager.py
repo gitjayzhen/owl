@@ -8,7 +8,7 @@ import os
 import re
 
 from device_info import DeviceController
-from owl.core.adb.adb import AndroidDebugBridge
+from owl.api.mobile.adb.adb import AndroidDebugBridge
 
 
 class ApkManager(object):

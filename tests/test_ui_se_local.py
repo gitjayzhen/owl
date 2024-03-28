@@ -6,6 +6,7 @@
 @file: test_ui_se_local.py
 @time: 2023/3/25 12:49
 """
+
 from owl.api.browser.base_testcase import BaseTestCase
 from owl.domain.selector_enum import FindBy
 

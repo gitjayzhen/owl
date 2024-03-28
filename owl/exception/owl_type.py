@@ -14,3 +14,9 @@ class SingletonInstantiationException(Exception):
     def __init__(self, message=ExceptionMsg.SingletonInstantiation):
         self.message = message
         super().__init__(self.message)
+
+
+class BrowserDriverError(Exception):
+    def __init__(self, message=ExceptionMsg.BrowserDriverError):
+        self.message = message
+        super().__init__(self.message)

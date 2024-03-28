@@ -1,11 +1,8 @@
-#!/usr/bin/env python
 # -*-coding=utf8 -*-
+
 """
-@version: v1.0
 @author: jayzhen
 @license: Apache Licence
-@site: http://blog.csdn.net/u013948858
-@software: PyCharm
 
 执行window下特定的dos命令:包括并发执行appium脚本后的关闭启动的端口。
 """
@@ -35,7 +32,7 @@ class WindowCmder(object):
                 flog = False
             else:
                 self.log4py.error(str(port_num) + " port has been occupied.")
-        except Exception, e:
+        except Exception as e:
             self.log4py.error(str(port_num) + " port get occupied status failure: " + str(e))
         return flog
 

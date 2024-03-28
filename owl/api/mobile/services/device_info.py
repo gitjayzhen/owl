@@ -4,7 +4,7 @@
 """
 import re
 
-from owl.core.adb.adb import AndroidDebugBridge
+from owl.api.mobile.adb.adb import AndroidDebugBridge
 from owl.lib.reporter.logging_porter import LoggingPorter
 
 
