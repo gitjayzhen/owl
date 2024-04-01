@@ -10,7 +10,7 @@
 """
 
 
-class AppiumIniDomain(object):
+class AppiumConfigDomain(object):
 
     def __init__(self):
         # 页面加载等待时间，单位：秒
@@ -33,6 +33,7 @@ class AppiumIniDomain(object):
         self.appiumService = None
         # 手机权限配置文件
         self.permissionPath = None
+        self.isAutoStartAppiumService = True
 
     def __str__(self):
         return "页面加载等待时间，单位：秒 :" + str(self.pageLoadTimeout) + \

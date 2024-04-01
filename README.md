@@ -83,7 +83,6 @@
 ### 20240328
 
 - 项目用于归纳脚本级内容
-
 1. 新技术或设计模式脚本
 2. thrift 接口测试脚本
 3. 自动化测试脚本
@@ -91,8 +90,15 @@
 5. web3 测试脚本
 6. websocket 测试脚本
 
-- 去除conda前的(base) 标识
-
-`conda config --set changeps1 false`
-
+- 去除conda前的(base) 标识: `conda config --set changeps1 false`
 - [接口测试工具 Pycurl vs Requests](https://github.com/0xyd/Pycurl-vs-Requests)
+
+### 20240329 @TODO
+
+1. 重新规划日志输入的目录结构；
+2. 重新规范 appium 测试用例执行前，appium-server 启动以及映射问题且不重复执行；
+
+## 资料
+
+- [Appium server arguments V1](https://github.com/appium/appium/blob/releases/1.22/docs/en/writing-running-appium/server-args.md)
+- [Appium server arguments V2](https://appium.io/docs/en/latest/cli/args/)

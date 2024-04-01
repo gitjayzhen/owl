@@ -19,7 +19,10 @@ import platform
 from owl.lib.decorator import singleton
 
 # 关于这个路径有两个选择，完全使用一个相对路径，或者使用一个配置方式，然后两者设置优先级
-LOG_FILE_PATH = os.path.join(os.getcwd(), "logs")
+pwd = os.getcwd()
+if "tests" in pwd:
+    pwd = os.path.join(pwd.split("tests")[0], "tests")
+LOG_FILE_PATH = os.path.join(pwd, "logs")
 if not os.path.exists(LOG_FILE_PATH):
     os.makedirs(LOG_FILE_PATH)
 

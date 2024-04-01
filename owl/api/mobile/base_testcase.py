@@ -19,9 +19,11 @@ class BaseTestCase:
     driver = None
 
     def setup(self):
+        # 根据当前链接的设备，实例化 appium server
         devices = PostRunController().get_device_map_appium()
         assert len(devices.keys()) > 0, "No device connection"
         self.driver: AppiumWorkApi = devices.get(random.choice(list(devices.keys())))
 
     def teardown(self):
-        self.driver.driver.quit()
+        if self.driver.driver:
+            self.driver.driver.quit()

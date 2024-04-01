@@ -55,8 +55,29 @@ class ConfigControl(object):
         if key is None or key == " ":
             return None
         try:
-            value = self.ini_reader.get(section, key)
-            return value
+            return self.ini_reader.get(section, key)
+        except Exception as e:
+            self.log4py.error("获取配置文件的 key 的 value 发生错误: {}".format(e))
+            return None
+
+    def get_int(self, section, key):
+        if section is None or section == " ":
+            return None
+        if key is None or key == " ":
+            return None
+        try:
+            return self.ini_reader.getint(section, key)
+        except Exception as e:
+            self.log4py.error("获取配置文件的 key 的 value 发生错误: {}".format(e))
+            return None
+
+    def get_boolean(self, section, key):
+        if section is None or section == " ":
+            return None
+        if key is None or key == " ":
+            return None
+        try:
+            return self.ini_reader.getboolean(section, key)
         except Exception as e:
             self.log4py.error("获取配置文件的 key 的 value 发生错误: {}".format(e))
             return None

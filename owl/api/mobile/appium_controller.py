@@ -23,8 +23,8 @@ class PostRunController(object):
         self.sno = sno
 
     def get_device_map_appium(self):
-        props = AppiumConfiger()
-        impl = InitAppiumDriver(props)
+        appium_props = AppiumConfiger()
+        impl = InitAppiumDriver(appium_props)
         device_list = [self.sno]
         if self.sno is None:
             device_list = impl.android.get_device_list()

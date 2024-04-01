@@ -11,10 +11,13 @@ import time
 from urllib.error import URLError
 
 from appium import webdriver
+from appium.options.android import UiAutomator2Options
+from selenium.common import WebDriverException
 from selenium.webdriver.remote.errorhandler import ErrorHandler
 
 from owl.api.mobile.appium_api import AppiumWorkApi
 from owl.api.mobile.adb.adb import AndroidDebugBridge
+from owl.api.mobile.appium_server import AppiumServerRunner
 from owl.exception.server_type import AppiumServiceNotRunningException
 from owl.lib.common import Utils
 from owl.lib.date.date_formatter import get_formate_time
@@ -24,14 +27,13 @@ from owl.lib.reporter.logging_porter import LoggingPorter
 
 class InitAppiumDriver(object):
 
-    def __init__(self, props_obj):
+    def __init__(self, appium_props):
         self.log4py = LoggingPorter()
-        self.run_cfg = props_obj
+        self.appium_props = appium_props
         self.android = AndroidDebugBridge()
         self.run_data = None
         self.driver = None
         self.className = None
-        self.log4py = LoggingPorter()
         self.__beforeSuiteStarts = 0
         self.__beforeClassStarts = 0
         self.__beforeTestStarts = 0
@@ -53,22 +55,26 @@ class InitAppiumDriver(object):
         except Exception as e:
             self.log4py.error("获取手机信息时出错 :" + str(e))
             return None
-        desired_caps_conf = self.run_cfg.get_desired_caps_conf()
+        desired_caps_conf = self.appium_props.get_desired_caps_conf()
         device_info.update(desired_caps_conf)
         return device_info
 
     def __get_appium_server_port(self, sno):
         """
-        这里读取启动服务时生成的那个ini配置文件，读取其中sno对应的状态及服务的port
+        这里读取启动服务时生成的那个 ini 配置文件，读取其中 sno 对应的状态及服务的 port
+        1. 如果链接的 sno 没有启动对应的 server，这里就启动一下
         """
-        server_mark = ConfigControl(self.run_cfg.properties.appiumService)
-        port = server_mark.get_value(sno, sno)
-        self.log4py.info("获取到 {} 设备对应的appium服务端口 {}".format(sno, port))
-        if not Utils.is_port_used(port):
-            info = "设备号 {} 对应的 appium 服务没有启动".format(sno)
-            self.log4py.debug(info)
-            raise AppiumServiceNotRunningException(info)
-        return port
+        try:
+            server_mark = ConfigControl(self.appium_props.properties.appiumService)
+            port = server_mark.get_int(sno, sno)
+            self.log4py.info("获取到 {} 设备对应的appium服务端口 {}".format(sno, port))
+            if not Utils.is_port_used(port):
+                info = "设备号 {} 对应的 appium 服务没有启动".format(sno)
+                self.log4py.debug(info)
+                port = AppiumServerRunner().start_server(sno)
+            return port
+        except FileNotFoundError as e:
+            return None
 
     def __require_install_apk(self, sno):
         """
@@ -77,29 +83,34 @@ class InitAppiumDriver(object):
         :return:
         """
         self.android.set_serial_num(sno)
-        self.run_data = self.run_cfg.get_run_conf()
-        if int(self.run_data["is_first"]) == 0:
+        self.run_data = self.appium_props.get_run_conf()
+        if self.run_data["is_first"]:
             if self.android.is_install_app(self.run_data["pkg_name"]):
                 self.android.do_uninstall_app(self.run_data["pkg_name"])
                 self.log4py.info("对测试设备进行卸载应用操作：{}".format(self.run_data["pkg_name"]))
             res = self.android.do_install_app(self.run_data["apk_file_path"], self.run_data["pkg_name"])
             self.log4py.info(
                 "重新安装应用{} : {} : {}".format(self.run_data["apk_file_path"], self.run_data["pkg_name"], res))
-        elif int(self.run_data["is_first"]) == 1:
+        else:
             self.log4py.info("非首次执行，可以直接进行正常用例操作")
 
     def get_appium_driver(self, sno):
         desired_caps = self.__get_device_capabilities(sno)
         self.__require_install_apk(desired_caps['udid'])
+        # 这里去判断是否启动了对应的 server，并获取 启动的服务端口
         port = self.__get_appium_server_port(desired_caps["udid"])
-        url = 'http://127.0.0.1:%s/wd/hub' % (port.strip())
+        url = 'http://127.0.0.1:%s/wd/hub' % (str(port).strip())
         num = 0
         driver = None
         while num <= 5:
             try:
-                driver = webdriver.Remote(url, desired_caps)
+                driver = webdriver.Remote(command_executor=url, options=UiAutomator2Options().load_capabilities(desired_caps))
             except URLError as e:
-                self.log4py.error("连接appium服务，实例化driver时出错，尝试重连...({})".format(num))
+                self.log4py.error("连接appium服务 URLError，尝试重连...({})".format(num))
+                num = num + 1
+                continue
+            except WebDriverException as e1:
+                self.log4py.error("连接appium服务 WebDriverException，尝试重连 {}...({})".format(url, num))
                 num = num + 1
                 continue
             except ErrorHandler as e2:
@@ -111,7 +122,7 @@ class InitAppiumDriver(object):
                 driver.implicitly_wait(10)
             self.log4py.info("webdriver连接信息：{}：{}".format(url, str(desired_caps)))
             break
-        api = AppiumWorkApi(driver, self.run_cfg.properties)
+        api = AppiumWorkApi(driver, self.appium_props.properties)
         return api
 
     def get_api_driver(self, sno):

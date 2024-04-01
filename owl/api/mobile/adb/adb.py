@@ -98,7 +98,7 @@ class AndroidDebugBridge(object):
         try:
             result = subprocess.Popen("adb devices", shell=True, stdout=subprocess.PIPE,
                                       stderr=subprocess.PIPE).stdout.readlines()
-            result.reverse()  # 将readlines结果反向排序
+            result.reverse()  # 将 readlines 结果反向排序
             for line in result[1:]:
                 """
                 List of devices attached

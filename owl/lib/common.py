@@ -10,7 +10,10 @@ import os
 import platform
 import re
 import subprocess
+import time
 from enum import EnumMeta
+
+import psutil
 
 
 class Utils(object):
@@ -61,13 +64,28 @@ class Utils(object):
         return new_port_list
 
     @staticmethod
-    def kill_service_by_pid(self, pid):
+    def kill_service_by_pid(pid):
         if pid is not None:
             if platform.system() != "Windows":
                 os.system("kill -9 " + str(pid))
+                time.sleep(3)
             else:
                 os.system("taskkill -F -PID" + str(pid))
             print("进程PID：%s 关闭端口服务成功" % pid)
+
+    @staticmethod
+    def find_and_kill_processes(process_name):
+        # 遍历所有运行的进程
+        for p in psutil.process_iter(['pid', 'name']):
+            # 检查进程名是否包含指定的字符串
+            if process_name.lower() in p.info['name'].lower():
+                print(f"Found process with PID: {p.info['pid']} and name: {p.info['name']}")
+                try:
+                    # 尝试关闭进程
+                    p.kill()
+                    print(f"Killed process with PID: {p.info['pid']}")
+                except (psutil.NoSuchProcess, PermissionError):
+                    print(f"Failed to kill process with PID: {p.info['pid']}")
 
     @staticmethod
     def get_system_symbal():

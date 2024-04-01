@@ -5,13 +5,13 @@
 @license: Apache Licence 
 @version: Python 3.8+
 @file: appium_cfg.py
-@time: 2023/9/5 10:40
+@time: 2024/4/1 10:40
 """
 
 
 import os
 
-from owl.domain.appium_config_do import AppiumIniDomain
+from owl.domain.appium_config_do import AppiumConfigDomain
 from owl.lib.file.config_resolver import ConfigControl
 from owl.lib.file.file_inspector import FileInspector
 from owl.lib.reporter.logging_porter import LoggingPorter
@@ -35,35 +35,33 @@ class AppiumConfiger(object):
             raise FileNotFoundError("owl.ini is not found")
         self.cfg = ConfigControl(self.config_path)
 
+    def __validator_path(self, section, key):
+        file_path = os.path.join(self.project_root_path, self.cfg.get_value(section, key))
+        if not os.path.exists(file_path):
+            os.makedirs(file_path)
+        return file_path
+
     @property
     def properties(self):
         """
         获取配置文件中的内容并返回对应的对象
         :return:
         """
-        ap = AppiumIniDomain()
+        ap = AppiumConfigDomain()
         try:
-            ap.pageLoadTimeout = self.cfg.get_value("appium.TimeSet", "pageLoadTimeout")
-            ap.waitTimeout = self.cfg.get_value("appium.TimeSet", "waitTimeout")
-            ap.scriptTimeout = self.cfg.get_value("appium.TimeSet", "scriptTimeout")
-            ap.pauseTime = self.cfg.get_value("appium.TimeSet", "pauseTime")
+            section = "appium.run"
+            ap.isAutoStartAppiumService = self.cfg.get_boolean(section, 'isAutoStartAppiumService')
+            ap.pageLoadTimeout = self.cfg.get_value(section, "pageLoadTimeout")
+            ap.waitTimeout = self.cfg.get_value(section, "waitTimeout")
+            ap.scriptTimeout = self.cfg.get_value(section, "scriptTimeout")
+            ap.pauseTime = self.cfg.get_value(section, "pauseTime")
 
-            ap.capturePath = os.path.join(self.project_root_path, self.cfg.get_value("appium.run", "capturePath"))
-            if not os.path.exists(ap.capturePath):
-                os.makedirs(ap.capturePath)
-            ap.htmlReportPath = os.path.join(self.project_root_path, self.cfg.get_value("appium.run", "htmlReportPath"))
-            if not os.path.exists(ap.htmlReportPath):
-                os.makedirs(ap.htmlReportPath)
-            ap.dumpxmlPath = os.path.join(self.project_root_path, self.cfg.get_value("appium.run", "dumpxmlPath"))
-            if not os.path.exists(ap.dumpxmlPath):
-                os.makedirs(ap.dumpxmlPath)
-            ap.appiumLogPath = os.path.join(self.project_root_path, self.cfg.get_value("appium.run", "appiumlogPath"))
-            if not os.path.exists(ap.appiumLogPath):
-                os.makedirs(ap.appiumLogPath)
-            ap.permissionPath = os.path.join(self.project_root_path, self.cfg.get_value("appium.run", "permissionPath"))
-            if not os.path.exists(ap.permissionPath):
-                os.makedirs(ap.permissionPath)
-            ap.appiumService = os.path.join(self.project_root_path, self.cfg.get_value("appium.run", "appiumService"))
+            ap.capturePath = self.__validator_path(section, "capturePath")
+            ap.htmlReportPath = self.__validator_path(section,  "htmlReportPath")
+            ap.dumpxmlPath = self.__validator_path(section,  "dumpxmlPath")
+            ap.appiumLogPath = self.__validator_path(section,  "appiumlogPath")
+            ap.permissionPath = self.__validator_path(section, "permissionPath")
+            ap.appiumService = os.path.join(self.project_root_path, self.cfg.get_value(section, "appiumService"))
         except Exception as e:
             self.log4py.error("实例化appium配置文件对象时，出现异常 ：" + str(e))
         return ap
@@ -71,7 +69,7 @@ class AppiumConfiger(object):
     def get_run_conf(self):
         section = "appium.run"
         # 是否是第一次跑，或者是重新跑，为0时会重新安装指定apk，并执行任务；为1时直接启动安装的app进行任务操作
-        is_first = self.cfg.get_value(section, "isFirst")
+        is_first = self.cfg.get_boolean(section, "isFirst")
         # app的包名
         pkg_name = self.cfg.get_value(section, "pkgName")
         # 启动app的main activity
@@ -126,7 +124,7 @@ class AppiumConfiger(object):
 PATH = lambda a: os.path.abspath(a)
 
 
-class AppiumServerConfigFile(object):
+class AppiumServiceConfiger(object):
     """
     1.该类主要处理appium多机并发测试场景下生成的端口与机器的设备号映射。
     a.接受初始化service中接受到device_list和service_list
@@ -141,7 +139,7 @@ class AppiumServerConfigFile(object):
             self.cfg = ConfigControl(fp)
         self.log4py = LoggingPorter()
         self.log4py.info("-----配置文件操作开始-----")
-        self.f_path = os.path.join(self.fi.get_project_path(), self.cfg.get_value("appium.run", "appiumService"))
+        self.appium_service_pids = os.path.join(self.fi.get_project_path(), self.cfg.get_value("appium.run", "appiumService"))
 
     def __del__(self):
         self.log4py.info("-----配置文件操作结束-----")
@@ -152,10 +150,10 @@ class AppiumServerConfigFile(object):
         :param devices: 手机uuid
         :param ports: pc启动的appium服务端口
         """
-        bol = self.create_config_file(self.f_path)
+        bol = self.create_config_file(self.appium_service_pids)
         if bol:
-            self.log4py.info("创建appiumService.ini文件成功：{}".format(self.f_path))
-            ap = ConfigControl(self.f_path)
+            self.log4py.info("创建appiumService.ini文件成功：{}".format(self.appium_service_pids))
+            ap = ConfigControl(self.appium_service_pids)
             if len(devices) > 0 and len(ports) > 0:
                 for i in range(len(devices)):
                     filed = devices[i]
@@ -168,33 +166,32 @@ class AppiumServerConfigFile(object):
                         "设备sno与appium服务端口映射已写入appiumService.ini配置文件:{}--{}".format(key, value))
                 ap.flush()
 
-    def set_appium_uuid_port(self, device, port, bp):
+    def set_appium_uuid_port(self, device, port):
         """
         如果这样一个一个的写入到配置文件中，是追加还是覆盖？如果是覆盖的，服务启动完成后就剩一个配置，所以不行
         如果是追加，需要判断配置文件中是否已经有了相同的section，有就更新，没有就添加
         :param device: 手机uuid
         :param port pc启动的appium服务端口
         """
-        bol = self.create_config_file(self.f_path)
+        bol = self.create_config_file(self.appium_service_pids)
         if bol:
             if device is not None and port is not None:
-                ap = ConfigControl(self.f_path)
+                ap = ConfigControl(self.appium_service_pids)
                 sec = device
                 key = device
                 value = port
                 if ap.had_section(sec):
                     ap.set_value(sec, key, value)
-                    ap.set_value(sec, "bp", bp)
                     ap.set_value(sec, "run", "0")
                 else:
                     ap.add_section_key_value(sec, key, value)
-                    ap.set_value(sec, "bp", bp)
                     ap.set_value(sec, "run", "0")
                 ap.flush()
                 self.log4py.debug(
-                    "设备sno与appium服务端口映射已写入appiumService.ini配置文件:{}--{}".format(key, value))
+                    "设备 sno 与 appium 服务端口映射已写入 appium-service.ini 配置文件: {}={}".format(key, value))
 
-    def create_config_file(self, path):
+    @classmethod
+    def create_config_file(cls, path):
         """
         如果path这个文件不存在，就创建这个文件;存在就清空文件
         :param path: 是一个文件的绝对路径
@@ -212,17 +209,15 @@ class AppiumServerConfigFile(object):
         return False
 
     def get_all_appium_server_port(self):
-
         port_list = []
-        if os.path.exists(self.f_path):
-            ap = ConfigControl(self.f_path)
-            section_list = ap.get_sections()
+        if os.path.exists(self.appium_service_pids):
+            asp = ConfigControl(self.appium_service_pids)
+            section_list = asp.get_sections()
             for sl in section_list:
-                port_list.append(ap.get_value(sl, sl))
-                port_list.append(ap.get_value(sl, "bp"))
+                port_list.append(asp.get_value(sl, sl))
         return port_list
 
-    def get_appium_logs_path(self):
+    def get_appium_log_path(self):
         path = os.path.join(self.fi.get_project_path(), self.cfg.get_value("appium.run", "appiumLogPath"))
         if PATH(path):
             if not os.path.exists(path):
