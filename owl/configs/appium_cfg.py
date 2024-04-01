@@ -23,20 +23,21 @@ class AppiumConfiger(object):
     """
 
     def __init__(self):
-        self.config_path = None
-        self.project_root_path = None
+        self.__appium_cfg_path = None
+        self.__project_root_path = None
         self.log4py = LoggingPorter()
         fc = FileInspector()
-        boolean = fc.is_has_file("owl.ini")
-        if boolean:
-            self.config_path = fc.get_file_abspath()
-            self.project_root_path = fc.get_project_path()
+        if fc.is_has_file("owl.ini"):
+            self.__appium_cfg_path = fc.get_file_abspath()
+            self.__project_root_path = fc.get_project_path()
+            if "tests" in self.__project_root_path:
+                self.__project_root_path = os.path.join(self.__project_root_path.split("tests")[0], "/tests")
         else:
             raise FileNotFoundError("owl.ini is not found")
-        self.cfg = ConfigControl(self.config_path)
+        self.cfg = ConfigControl(self.__appium_cfg_path)
 
     def __validator_path(self, section, key):
-        file_path = os.path.join(self.project_root_path, self.cfg.get_value(section, key))
+        file_path = os.path.join(self.__project_root_path, self.cfg.get_value(section, key))
         if not os.path.exists(file_path):
             os.makedirs(file_path)
         return file_path
@@ -61,7 +62,7 @@ class AppiumConfiger(object):
             ap.dumpxmlPath = self.__validator_path(section,  "dumpxmlPath")
             ap.appiumLogPath = self.__validator_path(section,  "appiumlogPath")
             ap.permissionPath = self.__validator_path(section, "permissionPath")
-            ap.appiumService = os.path.join(self.project_root_path, self.cfg.get_value(section, "appiumService"))
+            ap.appiumService = os.path.join(self.__project_root_path, self.cfg.get_value(section, "appiumService"))
         except Exception as e:
             self.log4py.error("实例化appium配置文件对象时，出现异常 ：" + str(e))
         return ap
@@ -78,6 +79,7 @@ class AppiumConfiger(object):
         wait_activity = self.cfg.get_value(section, "waitActivity")
         # 到isFirst为0时，就进行安装操作
         apk_file_path = self.cfg.get_value(section, "apkFilePath")
+        # @TODO 这个需要优化
         if not os.path.isabs(apk_file_path):
             base = os.getcwd()
             base = os.path.join((base.split('owl'))[0], 'owl')
@@ -102,7 +104,7 @@ class AppiumConfiger(object):
             self.cfg.set_value(section, "apkFilePath", apk_file_path)
             flag = True
         except Exception as e:
-            return None
+            return flag
         return flag
 
     def get_desired_caps_conf(self):
