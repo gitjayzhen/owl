@@ -1,11 +1,7 @@
-#!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
 """
 @author:    jayzhen
-@email:     jayzhen_testing@163.com
-@site:      https://github.com/gitjayzhen
-@software:  PyCharm & Python 3.7
 @file:      test_gather
 @time:      2020-12-25 15:42
 """

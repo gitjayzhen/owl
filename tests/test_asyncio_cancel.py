@@ -1,11 +1,7 @@
-#!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
 """
 @author:    jayzhen
-@email:     jayzhen_testing@163.com
-@site:      https://github.com/gitjayzhen
-@software:  PyCharm & Python 3.7
 @file:      asyncio_cancel.py
 @time:      2020-08-07 15:37
 """
