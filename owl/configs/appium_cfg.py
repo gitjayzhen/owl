@@ -14,8 +14,6 @@ import os
 from owl.configs import BaseOwlConfiger
 from owl.domain.appium_config_do import AppiumConfigDomain
 from owl.lib.file.config_resolver import ConfigControl
-from owl.lib.file.file_inspector import FileInspector
-from owl.lib.reporter.logging_porter import LoggingPorter
 
 
 class AppiumConfiger(BaseOwlConfiger):
@@ -173,24 +171,6 @@ class AppiumServiceConfiger(BaseOwlConfiger):
                 ap.flush()
                 self.log4py.debug(
                     "设备 sno 与 appium 服务端口映射已写入配置文件: {}={}".format(key, value))
-
-    @classmethod
-    def create_config_file(cls, path):
-        """
-        如果path这个文件不存在，就创建这个文件;存在就清空文件
-        :param path: 是一个文件的绝对路径
-        :return:
-        """
-        if os.path.exists(path) and os.path.isfile(path):
-            return True
-        dir_name = os.path.dirname(path)
-        if not os.path.exists(dir_name):
-            os.makedirs(dir_name)
-        f = open(path, "w+")
-        f.close()
-        if os.path.exists(path) and os.path.isfile(path):
-            return True
-        return False
 
     def get_all_appium_server_port(self):
         port_list = []

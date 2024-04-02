@@ -73,3 +73,33 @@ class BaseOwlConfiger(object):
     @property
     def properties(self):
         return None
+
+    @classmethod
+    def is_absolute_and_exists(cls, path):
+        if os.path.isabs(path) and os.path.exists(path):
+            return True
+        return False
+
+    @classmethod
+    def get_file_path(cls, prop_path, env_key):
+        if not cls.is_absolute_and_exists(prop_path):
+            return os.environ.get(env_key)
+        return prop_path
+
+    @classmethod
+    def create_config_file(cls, path):
+        """
+        如果path这个文件不存在，就创建这个文件;存在就清空文件
+        :param path: 是一个文件的绝对路径
+        :return:
+        """
+        if os.path.exists(path) and os.path.isfile(path):
+            return True
+        dir_name = os.path.dirname(path)
+        if not os.path.exists(dir_name):
+            os.makedirs(dir_name)
+        f = open(path, "w+")
+        f.close()
+        if os.path.exists(path) and os.path.isfile(path):
+            return True
+        return False

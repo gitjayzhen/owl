@@ -61,13 +61,3 @@ class SeleniumConfiger(BaseOwlConfiger):
             self.log4py.error("实例化selenium配置文件对象时，出现异常 ：" + str(e))
         return wp
 
-    def get_file_path(self, prop_path, env_key):
-        if not self.is_absolute_and_exists(prop_path):
-            return os.environ.get(env_key)
-        return prop_path
-
-    @classmethod
-    def is_absolute_and_exists(cls, path):
-        if os.path.isabs(path) and os.path.exists(path):
-            return True
-        return False
