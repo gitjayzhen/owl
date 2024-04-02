@@ -15,15 +15,15 @@ from pyhessian.client import HessianProxy
 
 # 这个是用来进行把咱们python的数据类型序列化成二进制的
 
-def dubbo_api(url, interface, method, param_obj, **kwargs):
-    '''
+def hessian_api(url, interface, method, param_obj, **kwargs):
+    """
     :param url: url地址
     :param interface: 接口名称，因为这里可能还有别的服务要测，接口名不一样，这里定义成变量
     :param method: 调用哪个方法
     :param param_obj: 入参的对象
     :param kwargs: 这个用关键字参数，因为每个接口的参数都不一样，不固定，所以这里用关键字参数
     :return:
-        '''
+        """
     req_param = protocol.object_factory(param_obj, **kwargs)
     # 这个是用来构造二进制的入参的，也就是把入参序列化
     try:  # 用try捕捉一下异常
@@ -46,6 +46,6 @@ if __name__ == '__main__':
     param_obj = 'yz.rpc.api.param.Param'
     params = {"sth": "rpc", "ints": [1, 2, 3], "maps": {"name": "rpc"}}
     # 这个入参，为了不定义多个变量，咱们把它写成字典形式的,就和stu=dubbo这种方式调用是一样的
-    over = dubbo_api(url, interface, method, param_obj, **params)
+    over = hessian_api(url, interface, method, param_obj, **params)
     # 测试调用一下
     print(over)  # 打印结果

@@ -7,9 +7,6 @@
 @file: test_http_one.py
 @time: 2023/8/16 12:43
 """
-import json
-
-import requests
 
 from owl.api.interface.http_requests import Requester
 

@@ -3,9 +3,9 @@
 """
 @author: jayzhen 
 @file: appium_controller.py
-@time: 2017/12/26 23:08
+@time: 2024/3/26 23:08
 """
-from owl.api.mobile.appium_api import AppiumWorkApi
+
 from owl.api.mobile.appium_driver import InitAppiumDriver
 from owl.configs.appium_cfg import AppiumConfiger
 
