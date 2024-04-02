@@ -5,10 +5,12 @@
 @author: jayzhen
 @file: __init__.py.py
 """
+import os
 
 from owl.exception.owl_type import SingletonInstantiationException
 from owl.lib.file.config_resolver import ConfigControl
 from owl.lib.file.file_inspector import FileInspector
+from owl.lib.reporter.logging_porter import LoggingPorter
 
 
 class ConfigReader:
@@ -49,3 +51,25 @@ class ConfigReader:
             'user': self.conf.ini_reader.get('db.mysql', 'user'),
             'password': self.conf.ini_reader.get('db.mysql', 'password')
         }
+
+
+class BaseOwlConfiger(object):
+
+    def __init__(self):
+        self.__base_owl_cfg_name = "owl.ini"
+        self.__cfg_path = None
+        self.__project_root_path = None
+        self.log4py = LoggingPorter()
+        self.fc = FileInspector()
+        if self.fc.is_has_file(self.__base_owl_cfg_name):
+            self.__cfg_path = self.fc.get_file_abspath()
+            self.__project_root_path = self.fc.get_project_path()
+            if "tests" in self.__project_root_path:
+                self.project_root_path = os.path.join(self.__project_root_path.split("tests")[0], "/tests")
+        else:
+            raise FileNotFoundError(f"{self.__base_owl_cfg_name} is not found")
+        self.cfg = ConfigControl(self.__cfg_path)
+
+    @property
+    def properties(self):
+        return None

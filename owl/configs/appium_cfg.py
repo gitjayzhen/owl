@@ -11,30 +11,20 @@
 
 import os
 
+from owl.configs import BaseOwlConfiger
 from owl.domain.appium_config_do import AppiumConfigDomain
 from owl.lib.file.config_resolver import ConfigControl
 from owl.lib.file.file_inspector import FileInspector
 from owl.lib.reporter.logging_porter import LoggingPorter
 
 
-class AppiumConfiger(object):
+class AppiumConfiger(BaseOwlConfiger):
     """
     读取配置文件.conf的内容，返回driver的绝对路径
     """
 
     def __init__(self):
-        self.__appium_cfg_path = None
-        self.__project_root_path = None
-        self.log4py = LoggingPorter()
-        fc = FileInspector()
-        if fc.is_has_file("owl.ini"):
-            self.__appium_cfg_path = fc.get_file_abspath()
-            self.__project_root_path = fc.get_project_path()
-            if "tests" in self.__project_root_path:
-                self.__project_root_path = os.path.join(self.__project_root_path.split("tests")[0], "/tests")
-        else:
-            raise FileNotFoundError("owl.ini is not found")
-        self.cfg = ConfigControl(self.__appium_cfg_path)
+        super().__init__()
 
     def __validator_path(self, section, key):
         file_path = os.path.join(self.__project_root_path, self.cfg.get_value(section, key))
@@ -126,7 +116,7 @@ class AppiumConfiger(object):
 PATH = lambda a: os.path.abspath(a)
 
 
-class AppiumServiceConfiger(object):
+class AppiumServiceConfiger(BaseOwlConfiger):
     """
     1.该类主要处理appium多机并发测试场景下生成的端口与机器的设备号映射。
     a.接受初始化service中接受到device_list和service_list
@@ -135,16 +125,8 @@ class AppiumServiceConfiger(object):
     """
 
     def __init__(self):
-        self.fi = FileInspector()
-        if self.fi.is_has_file("owl.ini"):
-            fp = self.fi.get_file_abspath()
-            self.cfg = ConfigControl(fp)
-        self.log4py = LoggingPorter()
-        self.log4py.info("-----配置文件操作开始-----")
-        self.appium_service_pids = os.path.join(self.fi.get_project_path(), self.cfg.get_value("appium.run", "appiumService"))
-
-    def __del__(self):
-        self.log4py.info("-----配置文件操作结束-----")
+        super().__init__()
+        self.appium_service_cfg_path = os.path.join(self.__project_root_path, self.cfg.get_value("appium.run", "appiumService"))
 
     def set_appium_uuids_ports(self, devices, ports):
         """
@@ -152,10 +134,10 @@ class AppiumServiceConfiger(object):
         :param devices: 手机uuid
         :param ports: pc启动的appium服务端口
         """
-        bol = self.create_config_file(self.appium_service_pids)
+        bol = self.create_config_file(self.appium_service_cfg_path)
         if bol:
-            self.log4py.info("创建appiumService.ini文件成功：{}".format(self.appium_service_pids))
-            ap = ConfigControl(self.appium_service_pids)
+            self.log4py.info("创建文件成功：{}".format(self.appium_service_cfg_path))
+            ap = ConfigControl(self.appium_service_cfg_path)
             if len(devices) > 0 and len(ports) > 0:
                 for i in range(len(devices)):
                     filed = devices[i]
@@ -165,7 +147,7 @@ class AppiumServiceConfiger(object):
                     ap.add_section_key_value(filed, key, value)
                     ap.set_value(filed, "run", "0")
                     self.log4py.debug(
-                        "设备sno与appium服务端口映射已写入appiumService.ini配置文件:{}--{}".format(key, value))
+                        "设备sno与appium服务端口映射已写入配置文件:{}--{}".format(key, value))
                 ap.flush()
 
     def set_appium_uuid_port(self, device, port):
@@ -175,10 +157,10 @@ class AppiumServiceConfiger(object):
         :param device: 手机uuid
         :param port pc启动的appium服务端口
         """
-        bol = self.create_config_file(self.appium_service_pids)
+        bol = self.create_config_file(self.appium_service_cfg_path)
         if bol:
             if device is not None and port is not None:
-                ap = ConfigControl(self.appium_service_pids)
+                ap = ConfigControl(self.appium_service_cfg_path)
                 sec = device
                 key = device
                 value = port
@@ -190,7 +172,7 @@ class AppiumServiceConfiger(object):
                     ap.set_value(sec, "run", "0")
                 ap.flush()
                 self.log4py.debug(
-                    "设备 sno 与 appium 服务端口映射已写入 appium-service.ini 配置文件: {}={}".format(key, value))
+                    "设备 sno 与 appium 服务端口映射已写入配置文件: {}={}".format(key, value))
 
     @classmethod
     def create_config_file(cls, path):
@@ -212,15 +194,15 @@ class AppiumServiceConfiger(object):
 
     def get_all_appium_server_port(self):
         port_list = []
-        if os.path.exists(self.appium_service_pids):
-            asp = ConfigControl(self.appium_service_pids)
+        if os.path.exists(self.appium_service_cfg_path):
+            asp = ConfigControl(self.appium_service_cfg_path)
             section_list = asp.get_sections()
             for sl in section_list:
                 port_list.append(asp.get_value(sl, sl))
         return port_list
 
     def get_appium_log_path(self):
-        path = os.path.join(self.fi.get_project_path(), self.cfg.get_value("appium.run", "appiumLogPath"))
+        path = os.path.join(self.__project_root_path, self.cfg.get_value("appium.run", "appiumLogPath"))
         if PATH(path):
             if not os.path.exists(path):
                 os.makedirs(path)

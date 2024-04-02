@@ -11,30 +11,17 @@
 
 import os
 
+from owl.configs import BaseOwlConfiger
 from owl.domain.se_config_do import SeleniumIniDomain
-from owl.lib.file.config_resolver import ConfigControl
-from owl.lib.file.file_inspector import FileInspector
-from owl.lib.reporter.logging_porter import LoggingPorter
 
 
-class SeleniumConfiger(object):
+class SeleniumConfiger(BaseOwlConfiger):
     """
     读取配置文件.conf的内容，返回driver的绝对路径
     """
 
     def __init__(self):
-        self.__selenium_cfg_path = None
-        self.__project_root_path = None
-        self.log4py = LoggingPorter()
-        fc = FileInspector()
-        if fc.is_has_file("owl.ini"):
-            self.__selenium_cfg_path = fc.get_file_abspath()
-            self.__project_root_path = fc.get_project_path()
-            if "tests" in self.__project_root_path:
-                self.project_root_path = os.path.join(self.__project_root_path.split("tests")[0], "/tests")
-        else:
-            raise FileNotFoundError("owl.ini is not found")
-        self.cfg = ConfigControl(self.__selenium_cfg_path)
+        super().__init__()
 
     @property
     def properties(self):
