@@ -101,6 +101,10 @@
 1. 重新规划日志输入的目录结构；
 2. 重新规范 appium 测试用例执行前，appium-server 启动以及映射问题且不重复执行；
 
+### 20240408
+
+- [pytest-allure 进行用例报告整理](https://allurereport.org/docs/pytest-reference/)
+- pytest-rerunfailures 进行重试
 ## 资料
 
 - [Appium server arguments V1](https://github.com/appium/appium/blob/releases/1.22/docs/en/writing-running-appium/server-args.md)
