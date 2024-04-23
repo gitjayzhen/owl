@@ -13,6 +13,13 @@ Story: 标注Features功能模块下的分支功能
 Severity: 标注测试用例的重要级别
 Step: 标注测试用例的重要步骤
 Issue和TestCase: 标注Issue、Case，可加入URL
+
+Allure中对严重级别的定义：
+1、 Blocker级别：中断缺陷（客户端程序无响应，无法执行下一步操作）
+2、 Critical级别：临界缺陷（ 功能点缺失）
+3、 Normal级别：普通缺陷（数值计算错误）
+4、 Minor级别：次要缺陷（界面错误与UI需求不符）
+5、 Trivial级别：轻微缺陷（必输项无提示，或者提示不规范
 """
 import allure
 

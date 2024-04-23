@@ -11,24 +11,13 @@
 
 import pymongo as pm
 
+from owl.lib.decorator import SingletonClass
+
 
 # pip install pymongo
-# 单例模式
-# 方法1,实现__new__方法
-# 并在将一个类的实例绑定到类变量_instance上,
-# 如果cls._instance为None说明该类还没有实例化过,实例化该类,并返回
-# 如果cls._instance不为None,直接返回cls._instance
 
 
-class Singleton(object):
-    # 单例模式写法,参考：http://ghostfromheaven.iteye.com/blog/1562618
-    def __new__(cls, *args, **kwargs):
-        if not hasattr(cls, '_instance'):
-            cls._instance = super(Singleton, cls).__new__(cls, *args, **kwargs)
-        return cls._instance
-
-
-class MongoOperator(Singleton):
+class MongoOperator(SingletonClass):
     def __init__(self, host, port, db_name, default_collection):
         """
         设置mongodb的地址，端口以及默认访问的集合，后续访问中如果不指定collection，则访问这个默认的

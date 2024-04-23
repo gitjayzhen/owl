@@ -12,6 +12,11 @@ import warnings
 from functools import wraps
 
 
+# 单例模式
+# 方法1,实现__new__方法
+# 并在将一个类的实例绑定到类变量_instance上,
+# 如果cls._instance为None说明该类还没有实例化过,实例化该类,并返回
+# 如果cls._instance不为None,直接返回cls._instance
 # 装饰器实现的单例
 def singleton(cls):
 
@@ -39,13 +44,14 @@ def record_transaction_time(func):
     return record
 
 
-# 共享状态的单例
+# 共享状态的单例，通过继承
 class SingletonClass:
+    # 单例模式写法,参考：http://ghostfromheaven.iteye.com/blog/1562618
     _instance = None
 
     def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super().__new__(cls, *args, **kwargs)
+        if not cls._instance or not hasattr(cls, '_instance'):
+            cls._instance = super(SingletonClass, cls).__new__(cls, *args, **kwargs)
         return cls._instance
 
 

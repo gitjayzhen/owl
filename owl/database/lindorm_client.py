@@ -105,6 +105,7 @@ class DBUtilsDemo:
         finally:
             self._close(connection, statement)
 
+
 if __name__ == '__main__':
     # Lindorm 宽表SQL连接地址。
     url = 'http://ld-bp1p7e07ohamf****-proxy-lindorm-pub.lindorm.rds.aliyuncs.com:30060'
