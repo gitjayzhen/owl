@@ -3,7 +3,7 @@
 """
 @author: jayzhen 
 @license: Apache Licence
-@file: config_resolver.py
+@file: config_processor.py
 @time: 2024/3/25 13:19
 """
 import os

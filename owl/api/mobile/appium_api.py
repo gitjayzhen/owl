@@ -17,7 +17,7 @@ from appium.webdriver.common.mobileby import MobileBy as By
 from appium.webdriver.common.touch_action import TouchAction
 
 from owl.api.mobile.adb.adb import AndroidDebugBridge
-from owl.lib.date.date_formatter import get_formate_time
+from owl.lib.processor.date_processor import get_formate_time
 from owl.lib.reporter.logging_porter import LoggingPorter
 
 PATH = lambda a: os.path.abspath(a)

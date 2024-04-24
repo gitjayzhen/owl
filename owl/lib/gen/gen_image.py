@@ -5,7 +5,7 @@
 @author: jayzhen
 @site: https://github.com/gitjayzhen
 @software: PyCharm & Python 2.7
-@file: ImageGenerate.py 
+@file: gen_image.py
 @time: 2018/06/22 17:08 
 """
 from PIL import Image, ImageDraw, ImageFont

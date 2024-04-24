@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # coding: utf-8
 
 import time
@@ -21,7 +20,7 @@ safe否表示是否是保密消息，0表示否，1表示是，默认0
 # securl = 'https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=%s' % access_token
 
 
-class WeChatMSG(object):
+class WeChatMessage(object):
 
     def __init__(self, content):
         self.gettoken_url = 'https://qyapi.weixin.qq.com/cgi-bin/gettoken'
@@ -64,7 +63,7 @@ class WeChatMSG(object):
 if __name__ == '__main__':
     content = sys.argv[1]
 
-    msgsender = WeChatMSG(content)
+    msgsender = WeChatMessage(content)
     access_token_response = msgsender.geturl(msgsender.gettoken_url, msgsender.gettoken_content)
     access_token = json.loads(access_token_response)['access_token']
     sendmsg_url = 'https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=%s' % access_token

@@ -16,7 +16,7 @@ pytest用例运行级别：
 """
 import allure
 
-from owl.lib.file.file_inspector import FileInspector
+from owl.lib.processor.file_processor import FileInspector
 
 
 def setup_module():

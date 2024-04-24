@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 """
-@version: v1.0
 @author: jayzhen
 @license: Apache Licence 
-@file: __init__.py.py
-@time: 2018/3/31 21:40
+@version: Python 3.8+
+@file: __init__.py
+@time: 2024/4/24 15:46
 """

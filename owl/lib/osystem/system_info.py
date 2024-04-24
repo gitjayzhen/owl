@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
 
@@ -39,12 +38,12 @@ SHOW_LOG = True
 
 
 def get_platform():
-    '''获取操作系统名称及版本号'''
+    """获取操作系统名称及版本号"""
     return platform.platform()
 
 
 def get_version():
-    '''获取操作系统版本号'''
+    """获取操作系统版本号"""
     return platform.version()
 
 

@@ -1,15 +1,12 @@
-#!/usr/bin/env python
 # -*-coding=utf8 -*-
 """
 @version: v1.0
 @author: jayzhen
 @license: Apache Licence
-@site: http://blog.csdn.net/u013948858
-@software: PyCharm
 """
-from xml.etree import ElementTree as ET
-import os
 
+import os
+from xml.etree import ElementTree as ET
 
 PATH = lambda a: os.path.abspath(a)
 

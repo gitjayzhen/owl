@@ -18,12 +18,12 @@ class ConvertObject(object):
     @staticmethod
     def convert_to_dict(obj):
         """把Object对象转换成Dict对象"""
-        dict = {}
-        dict.update(obj.__dict__)
-        return dict
+        result = {}
+        result.update(obj.__dict__)
+        return result
 
     @staticmethod
-    def convert_to_dicts(objs):
+    def convert_to_list(objs):
         """把对象列表转换为字典列表"""
         obj_arr = []
 
@@ -47,21 +47,21 @@ class ConvertObject(object):
             obj_arr = []
             for o in obj:
                 # 把Object对象转换成Dict对象
-                dict = {}
-                dict.update(o.__dict__)
-                obj_arr.append(dict)
+                result = {}
+                result.update(o.__dict__)
+                obj_arr.append(result)
             return obj_arr
         else:
-            dict = {}
-            dict.update(obj.__dict__)
-            return dict
+            result = {}
+            result.update(obj.__dict__)
+            return result
 
 
 if __name__ == "__main__":
     stu = Student('zhangsan', 20)
     clz = ConvertObject()
     print(clz.convert_to_dict(stu))
-    print(clz.convert_to_dicts([stu, stu]))
+    print(clz.convert_to_list([stu, stu]))
     print(clz.class_to_dict(stu))
     print(clz.class_to_dict([stu, stu]))
 

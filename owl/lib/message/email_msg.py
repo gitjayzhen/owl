@@ -13,12 +13,12 @@ from email.mime.text import MIMEText
 from email.header import Header
 from email.mime.multipart import MIMEMultipart
 
-from owl.lib.file.file_inspector import FileInspector
-from owl.lib.file.config_resolver import ConfigControl
+from owl.lib.processor.file_processor import FileInspector
+from owl.lib.processor.config_processor import ConfigControl
 from owl.lib.reporter.logging_porter import LoggingPorter
 
 
-class EmailController(object):
+class EmailMessage(object):
 
     def __init__(self):
         self.fc = FileInspector()

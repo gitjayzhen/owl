@@ -1,11 +1,7 @@
-#!/usr/bin/env python
 # -*-coding=utf8 -*-
 """
 @version: v1.0
 @author: jayzhen
-@license: Apache Licence
-@site: http://blog.csdn.net/u013948858
-@software: PyCharm
 
 python实现读取Excel文件中的内容
 准备：环境中必须有相关的包
@@ -16,9 +12,10 @@ python实现读取Excel文件中的内容
 """
 
 import xlrd
-from com.framework.utils.fileUtil.FileInspector import FileInspector
-from com.framework.utils.reporterUtil.LoggingPorter import LoggingPorter
 from xlutils.copy import copy
+
+from owl.lib.processor.file_processor import FileInspector
+from owl.lib.reporter.logging_porter import LoggingPorter
 
 
 class ExcelParser(object):

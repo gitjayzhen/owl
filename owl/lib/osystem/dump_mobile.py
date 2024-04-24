@@ -6,9 +6,9 @@
 """
 
 import json
-import os
-import wx
-from owl.lib.file.file_inspector import FileInspector
+
+from owl.lib.processor.file_processor import FileInspector
+
 """
 这个类中主要用于将手机的基础信息以json的形式保存到文档中
 """

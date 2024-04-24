@@ -9,7 +9,7 @@ from requests import Session, Request
 from styleframe import Styler, utils, StyleFrame
 
 from owl.domain.request_struct_do import DataStruct
-from owl.lib.file.file_inspector import FileInspector
+from owl.lib.processor.file_processor import FileInspector
 from owl.lib.reporter.logging_porter import LoggingPorter
 
 

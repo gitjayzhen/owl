@@ -1,11 +1,8 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """
 @author: jayzhen
 @license: Apache License 
-@software: PyCharm
-@file: SuperFormatUtil
 @time: 2022/08/12  13:59
 """
 import re

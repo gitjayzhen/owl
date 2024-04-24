@@ -64,6 +64,6 @@ def generatorname(pre):
     return names[random.randint(0, 9)]
 
 
-print (genneratorPhone())
+print(genneratorPhone())
 print(genneratorid())
 print(generatorname('众'))

@@ -13,7 +13,7 @@ import os
 
 from owl.configs import BaseOwlConfiger
 from owl.domain.appium_config_do import AppiumConfigDomain
-from owl.lib.file.config_resolver import ConfigControl
+from owl.lib.processor.config_processor import ConfigControl
 
 
 class AppiumConfiger(BaseOwlConfiger):
