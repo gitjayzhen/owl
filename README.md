@@ -6,16 +6,6 @@
 * [OWL](#owl)
   * [项目设计](#)
   * [运行环境](#)
-  * [重要改动](#)
-    * [20180331 设计完成工具类 utils](#20180331--utils)
-    * [20180408 web自动化的基础架构已初步完成](#20180408-web)
-    * [20180815 可以使用新的测试和报告库](#20180815-)
-    * [20181215 对于http，thrift，dubbo，hessian协议的测试](#20181215-httpthriftdubbohessian)
-    * [20190414 完善三类测试手册](#20190414-)
-    * [20230816 升级到 selenium4、appium2](#20230816--selenium4appium2)
-    * [20240328](#20240328)
-    * [20240329](#20240329-todo)
-  * [资料](#)
 <!-- TOC -->
 
 **背景：** 这个工程是为了练习或者总结什么而创建的？因为想过去一段时间使用到的 ui自动化(mobile、web)、接口自动化、网络爬虫都融合在同一个工具里，通过 python 来实现。
@@ -40,72 +30,3 @@
 
 **开始选择了 virtualenv, 升级 python3+ 后用的 conda**
 
-## 重要改动
-
-### 20180331 设计完成工具类 utils
-
-* 日志: 格式化日志的输入内容，文件和控制台形式打印日志。
-* 文件检索：在项目目录下，检索是否存在给定文件名的文件。
-* 字符串操作： 自定义fomat，及字符串转字典的场景方法。
-* 日期格式化： 对date和time的输出进行格式化。
-* 加密处理：zip等文件的解压操作，md5操作。
-* 配置文件操作：对配置文件进行读写。
-
-### 20180408 web自动化的基础架构已初步完成
-
-### 20180815 可以使用新的测试和报告库
-
-1. allure
-2. allure-pytest
-3. pytest
-4. allure-pytset-adapter 通过 pytest 测试产生数据，让 allure 来展示
-
-### 20181215 对于http，thrift，dubbo，hessian协议的测试
-
-1. http -> requests\httpx
-2. thrift -> thrift
-3. dubbo -> dubbo-client
-4. hessian -> python-hessian (forked mustaine)
-
-### 20190414 完善三类测试手册
-
-详细的功能模块内容：
-* [mobile](owl/api/mobile/README.md)
-* [web](owl/api/browser/README.md)
-* [interface](owl/api/interface/README.md)
-
-### 20230816 升级到 selenium4、appium2
-
-- https://github.com/gitjayzhen/airtest-uitesting-template/blob/main/pytest.ini
-- https://www.selenium.dev/zh-cn/documentation/webdriver/getting_started/upgrade_to_selenium_4/
-- https://appium.io/docs/en/2.0/quickstart/test-py/
-- https://www.selenium.dev/zh-cn/documentation/webdriver/browsers/safari/
-
-**UIAutomator2 is only supported since Android 5.0 (Lollipop)** 
-
-### 20240328
-
-- 项目用于归纳脚本级内容
-1. 新技术或设计模式脚本
-2. thrift 接口测试脚本
-3. 自动化测试脚本
-4. http 测试脚本
-5. web3 测试脚本
-6. websocket 测试脚本
-
-- 去除conda前的(base) 标识: `conda config --set changeps1 false`
-- [接口测试工具 Pycurl vs Requests](https://github.com/0xyd/Pycurl-vs-Requests)
-
-### 20240329
-
-1. 重新规划日志输入的目录结构；
-2. 重新规范 appium 测试用例执行前，appium-server 启动以及映射问题且不重复执行；
-
-### 20240408
-
-- [pytest-allure 进行用例报告整理](https://allurereport.org/docs/pytest-reference/)
-- pytest-rerunfailures 进行重试
-## 资料
-
-- [Appium server arguments V1](https://github.com/appium/appium/blob/releases/1.22/docs/en/writing-running-appium/server-args.md)
-- [Appium server arguments V2](https://appium.io/docs/en/latest/cli/args/)
