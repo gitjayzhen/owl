@@ -22,7 +22,7 @@ from owl.exception.server_type import AppiumServiceNotRunningException
 from owl.lib.common import Utils
 from owl.lib.processor.date_processor import get_formate_time
 from owl.lib.processor.config_processor import ConfigControl
-from owl.lib.reporter.logging_porter import LoggingPorter
+from owl.lib.reporter.log4py import LoggingPorter
 
 
 class InitAppiumDriver(object):

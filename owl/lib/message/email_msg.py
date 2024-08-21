@@ -15,7 +15,7 @@ from email.mime.multipart import MIMEMultipart
 
 from owl.lib.processor.file_processor import FileInspector
 from owl.lib.processor.config_processor import ConfigControl
-from owl.lib.reporter.logging_porter import LoggingPorter
+from owl.lib.reporter.log4py import LoggingPorter
 
 
 class EmailMessage(object):

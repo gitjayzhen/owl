@@ -11,7 +11,7 @@ import os
 from owl.lib.processor.date_processor import get_formate_time
 from owl.lib.processor.config_processor import ConfigControl
 from owl.lib.processor.file_processor import FileInspector
-from owl.lib.reporter.logging_porter import LoggingPorter
+from owl.lib.reporter.log4py import LoggingPorter
 
 '''
 创建一个html文件，并返回文件的对象

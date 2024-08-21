@@ -5,7 +5,7 @@
 import re
 
 from owl.api.mobile.adb.adb import AndroidDebugBridge
-from owl.lib.reporter.logging_porter import LoggingPorter
+from owl.lib.reporter.log4py import LoggingPorter
 
 
 class DeviceController:

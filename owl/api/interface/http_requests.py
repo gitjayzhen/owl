@@ -10,7 +10,7 @@ from styleframe import Styler, utils, StyleFrame
 
 from owl.domain.request_struct_do import DataStruct
 from owl.lib.processor.file_processor import FileInspector
-from owl.lib.reporter.logging_porter import LoggingPorter
+from owl.lib.reporter.log4py import LoggingPorter
 
 
 class Requester(object):

@@ -14,7 +14,7 @@ from owl.configs.appium_cfg import AppiumServiceConfiger
 from owl.api.mobile.adb.adb import AndroidDebugBridge
 from owl.exception.device_type import NoDeviceConnectionException
 from owl.lib.common import Utils
-from owl.lib.reporter.logging_porter import LoggingPorter
+from owl.lib.reporter.log4py import LoggingPorter
 
 
 class ServerRunner(threading.Thread):

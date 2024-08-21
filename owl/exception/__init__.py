@@ -9,19 +9,9 @@
 @file: __init__.py
 @time: 2023/8/18 11:44
 """
-from enum import Enum, unique, EnumMeta
+from enum import Enum, unique
 
-
-class EnumDirectValueMeta(EnumMeta):
-    """
-    可以解决调用枚举属性时，由类型 enum 变成 string
-    需要枚举类继承: Enum, metaclass=EnumDirectValueMeta
-    """
-    def __getattribute__(cls, name):
-        value = super().__getattribute__(name)
-        if isinstance(value, cls):
-            value = value.value
-        return value
+from owl.lib.common import EnumDirectValueMeta
 
 
 @unique

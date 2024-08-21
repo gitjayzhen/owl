@@ -8,6 +8,7 @@ from algorithms.map import (
 
 import unittest
 
+
 class TestHashTable(unittest.TestCase):
     def test_one_entry(self):
         m = HashTable(10)

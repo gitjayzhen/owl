@@ -7,7 +7,7 @@ from owl.api.browser.selenium_browser import WebBrowser
 from owl.configs.selenium_cfg import SeleniumConfiger
 from owl.exception.owl_type import BrowserDriverError
 from owl.lib.processor.date_processor import get_formate_time
-from owl.lib.reporter.logging_porter import LoggingPorter
+from owl.lib.reporter.log4py import LoggingPorter
 
 
 class BrowserDriver(object):

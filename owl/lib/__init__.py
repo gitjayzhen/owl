@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """
@@ -7,5 +6,5 @@
 @license: Apache Licence 
 @software: PyCharm
 @file: __init__.py
-@time: 2018/3/30  13:55
+@time: 2024/3/30  13:55
 """

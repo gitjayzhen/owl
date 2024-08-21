@@ -12,6 +12,7 @@ import re
 import subprocess
 import time
 from enum import EnumMeta
+from urllib.parse import urlparse
 
 import psutil
 
@@ -98,6 +99,27 @@ class Utils(object):
             print("The system is macOS.")
         else:
             print("Unknown system.")
+
+    @staticmethod
+    def is_valid_url(url):
+        try:
+            result = urlparse(url)
+            return all([result.scheme, result.netloc])
+        except ValueError:
+            return False
+
+    @staticmethod
+    def is_valid_url_re(url):
+        regex = re.compile(
+            r'^(?:http|ftp)s?://'  # http:// 或 https://
+            r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # 域名
+            r'localhost|'  # 或 localhost
+            r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|'  # 或 IPv4 地址
+            r'\[?[A-F0-9]*:[A-F0-9:]+\]?)'  # 或 IPv6 地址
+            r'(?::\d+)?'  # 可选端口
+            r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+
+        return re.match(regex, url) is not None
 
 
 class EnumDirectValueMeta(EnumMeta):

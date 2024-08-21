@@ -11,7 +11,7 @@ import os
 import time
 
 from owl.lib.decorator import deprecated
-from owl.lib.reporter.logging_porter import LoggingPorter
+from owl.lib.reporter.log4py import LoggingPorter
 
 
 class FileInspector(object):

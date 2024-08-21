@@ -5,12 +5,13 @@
 @author: jayzhen
 @file: __init__.py.py
 """
+
 import os
 
 from owl.exception.owl_type import SingletonInstantiationException
 from owl.lib.processor.config_processor import ConfigControl
 from owl.lib.processor.file_processor import FileInspector
-from owl.lib.reporter.logging_porter import LoggingPorter
+from owl.lib.reporter.log4py import LoggingPorter
 
 
 class ConfigReader:

@@ -10,7 +10,7 @@ from selenium.webdriver.support.ui import Select
 
 from owl.exception.owl_type import BrowserDriverError
 from owl.lib.processor.date_processor import get_formate_time
-from owl.lib.reporter.logging_porter import LoggingPorter
+from owl.lib.reporter.log4py import LoggingPorter
 
 '''
  * 封装整体思路：

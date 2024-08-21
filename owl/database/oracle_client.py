@@ -189,7 +189,7 @@ def dict_select(num):
     try:
         for d in select_sql_dict:
             row = db.execute_select(select_sql_dict[d], {'id': num})
-            print ("{}表： -- {}".format(data_info[d], str(row)))
+            print("{}表： -- {}".format(data_info[d], str(row)))
     except Exception as e:
         pass
     finally:

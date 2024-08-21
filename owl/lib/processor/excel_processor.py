@@ -15,7 +15,7 @@ import xlrd
 from xlutils.copy import copy
 
 from owl.lib.processor.file_processor import FileInspector
-from owl.lib.reporter.logging_porter import LoggingPorter
+from owl.lib.reporter.log4py import LoggingPorter
 
 
 class ExcelParser(object):

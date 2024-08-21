@@ -8,7 +8,7 @@
 """
 
 import subprocess
-from owl.lib.reporter.logging_porter import LoggingPorter
+from owl.lib.reporter.log4py import LoggingPorter
 
 
 class WindowCmder(object):

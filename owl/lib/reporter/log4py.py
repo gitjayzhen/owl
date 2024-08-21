@@ -15,19 +15,19 @@ import datetime
 import logging
 import inspect
 import platform
+from pathlib import Path
 
 from owl.lib.decorator import singleton
 
 # 关于这个路径有两个选择，完全使用一个相对路径，或者使用一个配置方式，然后两者设置优先级
-pwd = os.getcwd()
-if "tests" in pwd:
-    pwd = os.path.join(pwd.split("tests")[0], "tests")
-LOG_FILE_PATH = os.path.join(pwd, "logs")
-if not os.path.exists(LOG_FILE_PATH):
-    os.makedirs(LOG_FILE_PATH)
+runtime_pwd = Path.cwd()  # 获取的是程序运行时的当前工作目录
+
+log_dir = runtime_pwd / "logs"
+log_dir.mkdir(parents=True, exist_ok=True)
+LOG_FILE_PATH = log_dir / "owl.log"
 
 # 将对应文件实例化成一个FileHandler对象，让不用级别的日志共用该Filehandler，这样做到日志打印到一个文件中
-hd = logging.FileHandler(os.path.abspath(os.path.join(LOG_FILE_PATH, "owl.log")))
+hd = logging.FileHandler(LOG_FILE_PATH)
 hds = logging.StreamHandler()
 handlers = {logging.DEBUG: [hd, hds], logging.INFO: [hd, hds], logging.WARNING: [hd, hds], logging.ERROR: [hd, hds]}
 
